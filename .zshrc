@@ -12,7 +12,11 @@ plugins=(
 	zsh-syntax-highlighting
   copyfile
   copypath
+  ssh-agent
 )
+
+zstyle :omz:plugins:ssh-agent identities id_ed25519_github id_ed25519_gitlab id_ed25519_sign
+zstyle :omz:plugins:ssh-agent quiet yes
 
 source $ZSH/oh-my-zsh.sh
 
@@ -48,6 +52,7 @@ alias cpfile="copyfile"
 alias cppath="copypath"
 
 alias lgit="lazygit"
+alias v="nvim"
 
 function gsetup {
   git remote add origin $1
