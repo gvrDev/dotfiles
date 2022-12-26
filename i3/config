@@ -205,6 +205,11 @@ bar {
   status_command i3status --config ~/.config/i3/i3status.conf
 }
 
+#flameshot
+bindsym $mod+Shift+s exec flameshot gui
+
+#remove borders
 for_window [class="^.*"] border pixel 0
 
 exec_always ~/.config/my-autostart.sh
+
