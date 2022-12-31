@@ -7,8 +7,7 @@ local b = null_ls.builtins
 
 local sources = {
 	-- format html and markdown
-	b.formatting.prettierd.with({ filetypes = { "html", "yaml", "markdown", "typescript", "javascript" } }),
-	b.diagnostics.eslint_d.with({ filetypes = { "typescript", "javascript" } }),
+	b.formatting.dprint.with({ filetypes = { "html", "yaml", "markdown", "typescript", "javascript" } }),
 	-- markdown diagnostic
 	b.diagnostics.markdownlint,
 	-- Lua formatting
