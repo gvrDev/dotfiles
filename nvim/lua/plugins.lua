@@ -16,6 +16,7 @@ require("packer").startup(function(use)
 	use("luisiacc/gruvbox-baby")
 
 	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
+	use({ "elgiano/nvim-treesitter-angular", branch = "topic/jsx-fix" })
 
 	use("windwp/nvim-autopairs")
 	use("windwp/nvim-ts-autotag")
@@ -60,6 +61,8 @@ require("packer").startup(function(use)
 			{ "rafamadriz/friendly-snippets" },
 		},
 	})
+
+	use("simrat39/rust-tools.nvim")
 
 	use("jose-elias-alvarez/null-ls.nvim")
 
