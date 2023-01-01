@@ -174,6 +174,11 @@ _G.packer_plugins = {
     path = "/home/gui/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-colorizer.lua"] = {
+    loaded = true,
+    path = "/home/gui/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua",
+    url = "https://github.com/NvChad/nvim-colorizer.lua"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/home/gui/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
@@ -188,6 +193,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/gui/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
+  ["nvim-treesitter-angular"] = {
+    loaded = true,
+    path = "/home/gui/.local/share/nvim/site/pack/packer/start/nvim-treesitter-angular",
+    url = "https://github.com/elgiano/nvim-treesitter-angular"
   },
   ["nvim-ts-autotag"] = {
     loaded = true,
@@ -208,6 +218,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/gui/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["rust-tools.nvim"] = {
+    loaded = true,
+    path = "/home/gui/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
+    url = "https://github.com/simrat39/rust-tools.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
