@@ -11,7 +11,6 @@ ts.setup({
 	sync_install = false,
 	ensure_installed = {
 		"help",
-		"javascript",
 		"typescript",
 		"toml",
 		"json",

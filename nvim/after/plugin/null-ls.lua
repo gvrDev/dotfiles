@@ -12,6 +12,8 @@ local sources = {
 	b.diagnostics.markdownlint,
 	-- Lua formatting
 	b.formatting.stylua,
+
+	b.formatting.rustfmt,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
