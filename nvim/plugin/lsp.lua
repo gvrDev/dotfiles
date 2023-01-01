@@ -17,6 +17,7 @@ lsp.ensure_installed({
 	"jsonls",
 	"yamlls",
 	"bashls",
+	"svelte",
 })
 
 lsp.configure("emmet_ls", {
