@@ -33,6 +33,8 @@ vim.opt.colorcolumn = "80"
 vim.g.mapleader = " "
 vim.opt.backspace = "start,eol,indent"
 
+vim.o.shell = "/usr/bin/zsh"
+
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()

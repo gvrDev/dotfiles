@@ -67,6 +67,7 @@ require("packer").startup(function(use)
 	use("jose-elias-alvarez/null-ls.nvim")
 
 	use("NvChad/nvim-colorizer.lua")
+	use("NvChad/nvterm")
 
 	if is_bootstrap then
 		require("packer").sync()
