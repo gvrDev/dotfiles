@@ -9,6 +9,7 @@ ts.setup({
 		additional_vim_regex_highlighting = false,
 	},
 	sync_install = false,
+	auto_install = true,
 	ensure_installed = {
 		"help",
 		"typescript",
@@ -22,4 +23,5 @@ ts.setup({
 		"bash",
 		"svelte",
 	},
+	ignore_install = { "javascript" },
 })
