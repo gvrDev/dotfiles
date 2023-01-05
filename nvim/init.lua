@@ -1,3 +1,4 @@
-require("base")
-require("remap")
-require("plugins")
+require("user.options")
+require("user.autocmd")
+require("user.remap")
+require("user.plugins")
