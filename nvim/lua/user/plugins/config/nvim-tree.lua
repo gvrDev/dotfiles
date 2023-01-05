@@ -15,6 +15,25 @@ require("nvim-tree").setup({
 	filters = {
 		custom = { "^\\.git", "^\\.vscode" },
 	},
+	renderer = {
+		icons = {
+			show = {
+				git = false,
+				modified = false,
+			},
+		},
+	},
+	git = {
+		enable = false,
+	},
+	modified = {
+		enable = false,
+	},
+	actions = {
+		open_file = {
+			quit_on_open = true,
+		},
+	},
 })
 
 vim.keymap.set("n", "<leader>b", function()
