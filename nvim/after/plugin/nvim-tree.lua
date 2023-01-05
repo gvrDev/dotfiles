@@ -23,9 +23,6 @@ tree.setup({
 })
 
 vim.keymap.set("n", "<leader>b", function()
-	vim.cmd("NvimTreeToggle")
-end)
-vim.keymap.set("n", "<leader>e", function()
 	vim.cmd("NvimTreeFocus")
 end)
 
