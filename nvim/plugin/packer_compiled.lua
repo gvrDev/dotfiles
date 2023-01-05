@@ -126,6 +126,11 @@ _G.packer_plugins = {
     path = "/home/gui/.local/share/nvim/site/pack/packer/start/gruvbox-baby",
     url = "https://github.com/luisiacc/gruvbox-baby"
   },
+  ["gruvbox-material"] = {
+    loaded = true,
+    path = "/home/gui/.local/share/nvim/site/pack/packer/start/gruvbox-material",
+    url = "https://github.com/sainnhe/gruvbox-material"
+  },
   harpoon = {
     config = { "require('user.plugins.config.harpoon')" },
     loaded = true,
@@ -252,10 +257,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: nvim-ts-autotag
-time([[Config for nvim-ts-autotag]], true)
-require('user.plugins.config.autotag')
-time([[Config for nvim-ts-autotag]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
 require('user.plugins.config.telescope')
@@ -264,34 +265,30 @@ time([[Config for telescope.nvim]], false)
 time([[Config for null-ls.nvim]], true)
 require('user.plugins.config.null-ls')
 time([[Config for null-ls.nvim]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-require('user.plugins.config.gitsigns')
-time([[Config for gitsigns.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-require('user.plugins.config.nvim-tree')
-time([[Config for nvim-tree.lua]], false)
--- Config for: rust-tools.nvim
-time([[Config for rust-tools.nvim]], true)
-require('user.plugins.config.rust-tools')
-time([[Config for rust-tools.nvim]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-require('user.plugins.config.autopairs')
-time([[Config for nvim-autopairs]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-require('user.plugins.config.treesitter')
-time([[Config for nvim-treesitter]], false)
 -- Config for: lualine.nvim
 time([[Config for lualine.nvim]], true)
 require('user.plugins.config.lualine')
 time([[Config for lualine.nvim]], false)
+-- Config for: harpoon
+time([[Config for harpoon]], true)
+require('user.plugins.config.harpoon')
+time([[Config for harpoon]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+require('user.plugins.config.nvim-tree')
+time([[Config for nvim-tree.lua]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+require('user.plugins.config.autopairs')
+time([[Config for nvim-autopairs]], false)
 -- Config for: lsp-zero.nvim
 time([[Config for lsp-zero.nvim]], true)
 require('user.plugins.config.lsp')
 time([[Config for lsp-zero.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require('user.plugins.config.treesitter')
+time([[Config for nvim-treesitter]], false)
 -- Config for: undotree
 time([[Config for undotree]], true)
 require('user.plugins.config.undotree')
@@ -300,18 +297,26 @@ time([[Config for undotree]], false)
 time([[Config for Comment.nvim]], true)
 require('user.plugins.config.comment')
 time([[Config for Comment.nvim]], false)
--- Config for: harpoon
-time([[Config for harpoon]], true)
-require('user.plugins.config.harpoon')
-time([[Config for harpoon]], false)
--- Config for: nvim-colorizer.lua
-time([[Config for nvim-colorizer.lua]], true)
-require('user.plugins.config.colorizer')
-time([[Config for nvim-colorizer.lua]], false)
 -- Config for: indent-blankline.nvim
 time([[Config for indent-blankline.nvim]], true)
 require('user.plugins.config.indent-blankline')
 time([[Config for indent-blankline.nvim]], false)
+-- Config for: rust-tools.nvim
+time([[Config for rust-tools.nvim]], true)
+require('user.plugins.config.rust-tools')
+time([[Config for rust-tools.nvim]], false)
+-- Config for: nvim-colorizer.lua
+time([[Config for nvim-colorizer.lua]], true)
+require('user.plugins.config.colorizer')
+time([[Config for nvim-colorizer.lua]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+require('user.plugins.config.gitsigns')
+time([[Config for gitsigns.nvim]], false)
+-- Config for: nvim-ts-autotag
+time([[Config for nvim-ts-autotag]], true)
+require('user.plugins.config.autotag')
+time([[Config for nvim-ts-autotag]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

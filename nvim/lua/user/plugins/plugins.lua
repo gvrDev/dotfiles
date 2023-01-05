@@ -19,6 +19,7 @@ require("packer").startup(function(use)
 
   use({ "nvim-lualine/lualine.nvim", config = give_path("lualine") })
   use("luisiacc/gruvbox-baby")
+  use("sainnhe/gruvbox-material")
 
   use({ "nvim-treesitter/nvim-treesitter", config = give_path("treesitter") })
   use({ "elgiano/nvim-treesitter-angular", branch = "topic/jsx-fix" })
