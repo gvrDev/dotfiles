@@ -26,5 +26,5 @@ opt.incsearch = true
 opt.signcolumn = "yes"
 opt.isfname:append("@-@")
 
-opt.colorcolumn = "0"
+-- opt.colorcolumn = "0"
 opt.termguicolors = true
