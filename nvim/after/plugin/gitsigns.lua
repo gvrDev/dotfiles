@@ -11,5 +11,5 @@ gitsigns.setup({
 		topdelete = { text = "‾" },
 		changedelete = { text = "~" },
 	},
-	signcolumn = false,
+	signcolumn = true,
 })
