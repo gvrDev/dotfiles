@@ -29,7 +29,7 @@ opt.isfname:append("@-@")
 
 opt.updatetime = 50
 
-opt.colorcolumn = "80"
+opt.colorcolumn = "0"
 
 vim.g.mapleader = " "
 opt.backspace = "start,eol,indent"
