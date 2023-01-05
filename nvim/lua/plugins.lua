@@ -36,7 +36,6 @@ require("packer").startup(function(use)
 	use("ThePrimeagen/harpoon")
 	use("mbbill/undotree")
 
-	use("kdheepak/lazygit.nvim")
 	use("lewis6991/gitsigns.nvim")
 	use("numToStr/Comment.nvim")
 
@@ -67,7 +66,6 @@ require("packer").startup(function(use)
 	use("jose-elias-alvarez/null-ls.nvim")
 
 	use("NvChad/nvim-colorizer.lua")
-	use("NvChad/nvterm")
 
 	if is_bootstrap then
 		require("packer").sync()
