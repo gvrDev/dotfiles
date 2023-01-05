@@ -1,7 +1,4 @@
-local status, rt = pcall(require, "rust-tools")
-if not status then
-	return
-end
+local rt = require("rust-tools")
 
 rt.setup({
 	server = {
