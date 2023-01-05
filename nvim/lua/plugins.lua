@@ -20,6 +20,7 @@ require("packer").startup(function(use)
 
 	use("windwp/nvim-autopairs")
 	use("windwp/nvim-ts-autotag")
+	use("tpope/vim-surround")
 	use("lukas-reineke/indent-blankline.nvim")
 
 	use({
@@ -62,7 +63,6 @@ require("packer").startup(function(use)
 	})
 
 	use("simrat39/rust-tools.nvim")
-
 	use("jose-elias-alvarez/null-ls.nvim")
 
 	use("NvChad/nvim-colorizer.lua")
