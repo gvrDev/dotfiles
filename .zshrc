@@ -16,7 +16,7 @@ plugins=(
   ssh-agent
 )
 
-zstyle :omz:plugins:ssh-agent identities id_ed25519_github id_ed25519_gitlab id_ed25519_sign
+zstyle :omz:plugins:ssh-agent identities ed25519_github ed25519_skey
 zstyle :omz:plugins:ssh-agent quiet yes
 
 source $ZSH/oh-my-zsh.sh
@@ -85,7 +85,7 @@ function guserg {
 
 function gssh {
   git config --global gpg.format ssh
-  git config --global user.signingKey "$*"
+  git config --global user.signingKey $*
   git config --global commit.gpgsign true
   git config --global tag.gpgsign true
 }
@@ -93,3 +93,4 @@ function gssh {
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+source /usr/share/nvm/init-nvm.sh
