@@ -2,7 +2,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH="$HOME/.emacs.d/bin:$PATH"
+export PATH="/home/gui/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -38,8 +38,9 @@ alias autostartconfig="$EDITOR ~/.my-dotfiles/my-autostart.sh"
 alias i3config="$EDITOR ~/.my-dotfiles/i3/"
 alias nvimconfig="$EDITOR ~/.my-dotfiles/nvim/"
 alias kittyconfig="$EDITOR ~/.my-dotfiles/kitty/kitty.conf"
+alias polybarconfig="$EDITOR ~/.my-dotfiles/polybar/config.ini"
 alias dotfilesconfig="$EDITOR ~/.my-dotfiles/"
-alias setupconfig="$EDITOR ~/dev/bash/scripts/setup.sh"
+alias setupconfig="$EDITOR ~/dev/bash/scripts"
 
 alias cd..="cd .."
 alias ..="cd .."
