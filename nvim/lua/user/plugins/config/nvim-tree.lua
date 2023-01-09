@@ -26,9 +26,6 @@ require("nvim-tree").setup({
 	git = {
 		enable = false,
 	},
-	modified = {
-		enable = false,
-	},
 	actions = {
 		open_file = {
 			quit_on_open = true,

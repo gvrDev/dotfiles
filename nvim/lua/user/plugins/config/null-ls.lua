@@ -2,15 +2,25 @@ local null_ls = require("null-ls")
 local b = null_ls.builtins
 
 local sources = {
-	-- format html and markdown
+
 	b.formatting.prettierd.with({ filetypes = { "html", "yaml", "markdown", "typescript", "javascript", "svelte" } }),
-	-- markdown diagnostic
-	b.diagnostics.markdownlint,
-	-- Lua formatting
+	require("typescript.extensions.null-ls.code-actions"),
+
 	b.formatting.stylua,
 
 	b.formatting.rustfmt,
+
+	b.formatting.shfmt,
 }
+
+local lsp_formatting = function(bufnr)
+	vim.lsp.buf.format({
+		filter = function(client)
+			return client.name == "null-ls"
+		end,
+		bufnr = bufnr,
+	})
+end
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local on_attach = function(client, bufnr)
@@ -20,8 +30,7 @@ local on_attach = function(client, bufnr)
 			group = augroup,
 			buffer = bufnr,
 			callback = function()
-				-- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-				vim.lsp.buf.format({ bufnr = bufnr })
+				lsp_formatting(bufnr)
 			end,
 		})
 	end

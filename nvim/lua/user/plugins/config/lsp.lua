@@ -17,6 +17,8 @@ lsp.ensure_installed({
 	"svelte",
 })
 
+lsp.skip_server_setup({ "tsserver" })
+
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({

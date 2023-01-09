@@ -20,6 +20,7 @@ require("packer").startup(function(use)
 	use({ "nvim-lualine/lualine.nvim", config = give_path("lualine") })
 	use("luisiacc/gruvbox-baby")
 	use("sainnhe/gruvbox-material")
+	use("sainnhe/everforest")
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	use({ "nvim-treesitter/nvim-treesitter", config = give_path("treesitter") })
@@ -74,6 +75,7 @@ require("packer").startup(function(use)
 
 	use({ "simrat39/rust-tools.nvim", config = give_path("rust-tools") })
 	use({ "jose-elias-alvarez/null-ls.nvim", config = give_path("null-ls") })
+	use({ "jose-elias-alvarez/typescript.nvim", config = give_path("typescript") })
 
 	use({ "NvChad/nvim-colorizer.lua", config = give_path("colorizer") })
 
