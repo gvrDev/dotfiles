@@ -85,7 +85,7 @@ function guserg {
 
 function gssh {
   git config --global gpg.format ssh
-  git config --global user.signingKey $*
+  git config --global user.signingKey "$*"
   git config --global commit.gpgsign true
   git config --global tag.gpgsign true
 }
