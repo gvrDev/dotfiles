@@ -47,10 +47,9 @@ require("lazy").setup({
 		end,
 	},
 
-	"luisiacc/gruvbox-baby",
-	-- "sainnhe/gruvbox-material",
-	-- "sainnhe/everforest",
-	-- { "catppuccin/nvim", as = "catppuccin" },
+	"sainnhe/everforest",
+	{ "catppuccin/nvim", name = "catppuccin" },
+	"ellisonleao/gruvbox.nvim",
 
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -84,7 +83,7 @@ require("lazy").setup({
 
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.0",
+		tag = "0.1.1",
 		config = function()
 			setup_plugin("telescope")
 		end,
@@ -132,12 +131,10 @@ require("lazy").setup({
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		dependencies = {
-			-- LSP Support
 			{ "neovim/nvim-lspconfig" },
 			{ "williamboman/mason.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
 
-			-- Autocompletion
 			{ "hrsh7th/nvim-cmp" },
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-path" },
@@ -145,9 +142,7 @@ require("lazy").setup({
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-nvim-lua" },
 
-			-- Snippets
 			{ "L3MON4D3/LuaSnip" },
-			{ "rafamadriz/friendly-snippets" },
 		},
 		config = function()
 			setup_plugin("lsp-zero")
@@ -161,13 +156,6 @@ require("lazy").setup({
 			setup_plugin("lspsaga")
 		end,
 	},
-
-	-- {
-	-- 	"simrat39/rust-tools.nvim",
-	-- 	config = function()
-	-- 		setup_plugin("rust-tools")
-	-- 	end,
-	-- },
 
 	{
 		"jose-elias-alvarez/null-ls.nvim",

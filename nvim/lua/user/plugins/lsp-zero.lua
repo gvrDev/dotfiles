@@ -8,15 +8,8 @@ local plugin = {
 			"tsserver",
 			"sumneko_lua",
 			"angularls",
-			"rust_analyzer",
 			"eslint",
-			"html",
-			"cssls",
 			"emmet_ls",
-			"jsonls",
-			"yamlls",
-			"bashls",
-			"svelte",
 		})
 
 		lsp.skip_server_setup({ "tsserver" })
