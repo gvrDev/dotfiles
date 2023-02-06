@@ -1,11 +1,7 @@
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 export PATH="/home/gui/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="robbyrussell"
 
 plugins=(
 	git
@@ -16,31 +12,14 @@ plugins=(
   ssh-agent
 )
 
-zstyle :omz:plugins:ssh-agent identities ed25519_github ed25519_skey
+zstyle :omz:plugins:ssh-agent identities 25519_github 25519_skey 25519_gitlab
 zstyle :omz:plugins:ssh-agent quiet yes
 
 source $ZSH/oh-my-zsh.sh
 
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='nvim'
- else
-   export EDITOR='nvim'
- fi
-
 bindkey '^ ' autosuggest-accept
 bindkey '^H' backward-kill-word
 bindkey '5~' kill-word
-
-alias zshconfig="$EDITOR ~/.my-dotfiles/.zshrc"
-alias autostartconfig="$EDITOR ~/.my-dotfiles/my-autostart.sh"
-alias i3config="$EDITOR ~/.my-dotfiles/i3/"
-alias nvimconfig="$EDITOR ~/.my-dotfiles/nvim/"
-alias kittyconfig="$EDITOR ~/.my-dotfiles/kitty/kitty.conf"
-alias polybarconfig="$EDITOR ~/.my-dotfiles/polybar/config.ini"
-alias dotfilesconfig="$EDITOR ~/.my-dotfiles/"
-alias setupconfig="$EDITOR ~/dev/bash/scripts"
 
 alias cd..="cd .."
 alias ..="cd .."
@@ -55,8 +34,9 @@ alias cppath="copypath"
 
 alias lgit="lazygit"
 alias v="nvim ."
+alias vim="nvim"
 
-function gsetup {
+function mgit_setup {
   git remote add origin $1
   git branch -M main
   git add .
@@ -64,7 +44,7 @@ function gsetup {
   git push -u origin main
 }
 
-function ginit {  
+function mgit_init {  
   git init
   git remote add origin $1
   git branch -M main
@@ -73,17 +53,12 @@ function ginit {
   git push -u origin main
 }
 
-function guser {
-  git config user.name $1
-  git config user.email $2
-}
-
-function guserg {
+function mgit_user {
   git config --global user.name $1
   git config --global user.email $2
 }
 
-function gssh {
+function mgit_ssh {
   git config --global gpg.format ssh
   git config --global user.signingKey "$*"
   git config --global commit.gpgsign true
@@ -93,4 +68,3 @@ function gssh {
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-source /usr/share/nvm/init-nvm.sh
