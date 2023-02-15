@@ -59,10 +59,17 @@ require("lazy").setup({
 	},
 	{ "elgiano/nvim-treesitter-angular", branch = "topic/jsx-fix" },
 
+	-- {
+	-- 	"windwp/nvim-autopairs",
+	-- 	config = function()
+	-- 		setup_plugin("autopairs")
+	-- 	end,
+	-- },
+
 	{
-		"windwp/nvim-autopairs",
+		"altermo/ultimate-autopair.nvim",
 		config = function()
-			setup_plugin("autopairs")
+			require("ultimate-autopair").setup({})
 		end,
 	},
 
@@ -87,17 +94,7 @@ require("lazy").setup({
 		config = function()
 			setup_plugin("telescope")
 		end,
-	},
-
-	{
-		"nvim-tree/nvim-tree.lua",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons", -- optional, for file icons
-		},
-		tag = "nightly", -- optional, updated every week. (see issue #1193)
-		config = function()
-			setup_plugin("nvim-tree")
-		end,
+		dependencies = { { "nvim-telescope/telescope-file-browser.nvim" } },
 	},
 
 	{
@@ -155,6 +152,7 @@ require("lazy").setup({
 		config = function()
 			setup_plugin("lspsaga")
 		end,
+		dependencies = { { "nvim-tree/nvim-web-devicons" } },
 	},
 
 	{
