@@ -1,5 +1,19 @@
-local plugin = {
-	name = "nvim-treesitter.configs",
+return {
+	"nvim-treesitter/nvim-treesitter",
+	event = "BufReadPre",
+	dependencies = {
+		{ "elgiano/nvim-treesitter-angular", branch = "topic/jsx-fix" },
+		{
+			"windwp/nvim-ts-autotag",
+			config = function()
+				require("nvim-treesitter.configs").setup({
+					autotag = {
+						enable = true,
+					},
+				})
+			end,
+		},
+	},
 	opts = {
 		highlight = {
 			enable = true,
@@ -24,4 +38,3 @@ local plugin = {
 		ignore_install = { "javascript" },
 	},
 }
-return plugin

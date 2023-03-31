@@ -1,5 +1,6 @@
-local plugin = {
-	name = "gitsigns",
+return {
+	"lewis6991/gitsigns.nvim",
+	event = "BufReadPre",
 	opts = {
 		signs = {
 			add = { text = "+" },
@@ -11,5 +12,3 @@ local plugin = {
 		signcolumn = true,
 	},
 }
-
-return plugin

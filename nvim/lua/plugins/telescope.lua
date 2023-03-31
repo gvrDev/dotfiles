@@ -1,5 +1,10 @@
-local plugin = {
-	setup = function()
+return {
+	"nvim-telescope/telescope.nvim",
+	dependencies = {
+		{ "nvim-telescope/telescope-file-browser.nvim" },
+		{ "nvim-telescope/telescope-fzf-native.nvim" },
+	},
+	config = function()
 		local actions = require("telescope.actions")
 		local builtin = require("telescope.builtin")
 		local telescope = require("telescope")
@@ -19,9 +24,18 @@ local plugin = {
 				},
 			},
 			extensions = {
+				fzf = {
+					fuzzy = true,
+					override_generic_sorter = true,
+					override_file_sorter = true,
+					case_mode = "smart_case",
+				},
 				file_browser = {
 					theme = "dropdown",
 					hijack_netrw = true,
+					grouped = true,
+					hide_parent_dir = true,
+					hidden = true,
 					mappings = {
 						["n"] = {
 							["N"] = fb_actions.create,
@@ -36,7 +50,11 @@ local plugin = {
 		})
 
 		telescope.load_extension("file_browser")
+		telescope.load_extension("fzf")
 
+		vim.keymap.set("n", "<leader>cs", function()
+			builtin.colorscheme({ enable_preview = true })
+		end)
 		vim.keymap.set("n", "<leader>ff", function()
 			builtin.find_files({
 				no_ignore = false,
@@ -56,9 +74,16 @@ local plugin = {
 			builtin.diagnostics()
 		end)
 		vim.keymap.set("n", "<leader>pf", function()
-			vim.cmd("Telescope file_browser")
+			telescope.extensions.file_browser.file_browser({
+				path = "%:p:h",
+				cwd = telescope_buffer_dir(),
+				respect_gitignore = false,
+				hidden = true,
+				grouped = true,
+				previewer = false,
+				initial_mode = "normal",
+				layout_config = { height = 40 },
+			})
 		end, { noremap = true })
 	end,
 }
-
-return plugin

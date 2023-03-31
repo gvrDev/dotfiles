@@ -1,8 +1,7 @@
-local plugin = {
-	name = "nvim-autopairs",
+return {
+	"windwp/nvim-autopairs",
+	event = "BufReadPost",
 	opts = {
 		disable_filetype = { "TelescopePrompt", "vim" },
 	},
 }
-
-return plugin
