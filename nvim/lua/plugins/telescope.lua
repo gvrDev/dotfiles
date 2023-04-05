@@ -2,7 +2,7 @@ return {
 	"nvim-telescope/telescope.nvim",
 	dependencies = {
 		{ "nvim-telescope/telescope-file-browser.nvim" },
-		{ "nvim-telescope/telescope-fzf-native.nvim" },
+		{ "nvim-telescope/telescope-fzf-native.nvim", build="cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build" },
 	},
 	config = function()
 		local actions = require("telescope.actions")

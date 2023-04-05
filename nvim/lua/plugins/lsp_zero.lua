@@ -71,6 +71,7 @@ return {
 					"lua",
 				},
 				["rust_analyzer"] = { "rust" },
+				["clangd"] = { "c", "cpp" },
 			},
 		})
 
@@ -86,6 +87,14 @@ return {
 		local lspconfig = require("lspconfig")
 		lspconfig.gdscript.setup({})
 		lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+
+		lspconfig.clangd.setup({
+			cmd = {
+				"clangd",
+				"--background-index",
+				"--clang-tidy",
+			},
+		})
 
 		lsp.setup()
 	end,
