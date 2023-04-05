@@ -1,0 +1,57 @@
+#!/bin/bash
+cache_file="$HOME/.projectizer.cache.txt"
+
+add_path_to_cache(){
+  echo $1 >> $cache_file
+}
+
+if [ ! -f $cache_file ]; then
+  touch $cache_file 
+fi
+
+flag_git_ssh=false
+
+index=0
+for arg in ${@:2}; do
+  case $arg in
+    '-ssh') 
+      flag_git_ssh=true
+      unset $@[$index]
+      let index-- 
+      ;;
+  esac
+  let index++
+done
+
+OPERATION=$1
+TARGET=$2
+
+if [ ! $# -eq 0 ]; then
+  case $OPERATION in
+    add)
+      if [ -z "$(cat $cache_file | fzf -e --select-1 --exit-0 --query=$(realpath $TARGET))" ]; then
+        # echo $(realpath $TARGET) >> $cache_file
+        add_path_to_cache $(realpath $TARGET)
+      fi
+      ;;
+    clone) 
+      if [ $flag_git_ssh = true ]; then
+        git clone "git@github.com:${target}.git"
+      else
+        git clone "https://github.com/${target}.git"
+      fi
+      add_path_to_cache $PWD/$(echo $TARGET | cut -d'/' -f2)
+      # echo $PWD/$(echo $TARGET | cut -d'/' -f2) >> $cache_file
+      ;;
+    *) ;;
+  esac
+else
+  result=$(cat $cache_file | fzf)
+  if [ ! -z $result ]; then
+    if [ -z $EDITOR_PIPE ]; then
+      $EDITOR $result
+    else
+      $EDITOR_PIPE $result
+    fi
+  fi
+fi
