@@ -20,6 +20,7 @@ return {
 			},
 			{ "williamboman/mason-lspconfig.nvim" },
 			{ "hrsh7th/cmp-nvim-lsp" },
+			{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 		},
 		config = function()
 			local lsp = require("lsp-zero")
@@ -78,7 +79,10 @@ return {
 						"typescriptreact",
 						"html",
 						"css",
+						"scss",
+						"sass",
 						"lua",
+						"sh",
 					},
 					["rust_analyzer"] = { "rust" },
 					["clangd"] = { "c", "cpp" },
