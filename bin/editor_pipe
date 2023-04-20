@@ -1,12 +1,12 @@
 #!/bin/bash
 if [ ! $# -eq 0 ]; then
-  FULL_PATH="$(realpath ${@:-1})"
+	FULL_PATH="$(realpath ${@:-1})"
 
-  WORK_PATH=$FULL_PATH
-  if [ -f $FULL_PATH ]; then
-    WORK_PATH=$(dirname $FULL_PATH)
-  fi
-  set -- "${@:1:$(($#-1))}"
+	WORK_PATH=$FULL_PATH
+	if [ -f $FULL_PATH ]; then
+		WORK_PATH=$(dirname $FULL_PATH)
+	fi
+	set -- "${@:1:$(($# - 1))}"
 
-  tmux new -A -D -s $(echo "$(basename $FULL_PATH)" | tr -dc '[:alnum:]') -c $WORK_PATH "$EDITOR $@ $FULL_PATH";
+	tmux new -A -D -s $(echo "$(basename $FULL_PATH)" | tr -dc '[:alnum:]') -c $WORK_PATH "$EDITOR $@ $FULL_PATH"
 fi

@@ -1,70 +1,69 @@
 #!/bin/bash
 CACHE_FILE="$HOME/.projectizer.cache.txt"
 if [ ! -f $CACHE_FILE ]; then
-  touch $CACHE_FILE 
+	touch $CACHE_FILE
 fi
 
-add_path_to_cache(){
-  echo $1 >> $CACHE_FILE
+add_path_to_cache() {
+	echo $1 >>$CACHE_FILE
 }
 
-handle_add_op(){
-  while getopts h OPTION
-  do
-    case ${OPTION} in
-      ?) echo "invalid param" ;;
-    esac
-  done
-  shift "$(( OPTIND - 1))"
+handle_add_op() {
+	while getopts h OPTION; do
+		case ${OPTION} in
+		?) echo "invalid param" ;;
+		esac
+	done
+	shift "$((OPTIND - 1))"
 
-  local FINALPATH=$(realpath $1)
-  if [ -z "$(cat $CACHE_FILE | fzf -e --select-1 --exit-0 --filter=$FINALPATH)" ] && [ -n $FINALPATH ]; then
-    add_path_to_cache $FINALPATH
-  fi
+	local FINALPATH=$(realpath $1)
+	if [ -z "$(cat $CACHE_FILE | fzf -e --select-1 --exit-0 --filter=$FINALPATH)" ] && [ -n $FINALPATH ]; then
+		add_path_to_cache $FINALPATH
+	fi
 }
 
-handle_clone_op(){
-  while getopts s OPTION
-  do
-    case ${OPTION} in
-      s) CLONE_SSH=true
-        ;;
-      ?) echo "invalid param" ;;
-    esac
-  done
-  shift "$(( OPTIND - 1))"
+handle_clone_op() {
+	while getopts s OPTION; do
+		case ${OPTION} in
+		s)
+			CLONE_SSH=true
+			;;
+		?) echo "invalid param" ;;
+		esac
+	done
+	shift "$((OPTIND - 1))"
 
-  if [ $CLONE_SSH = true ]; then
-    git clone "git@github.com:$1.git"
-  else
-    git clone "https://github.com/$1.git"
-  fi
-  handle_add_op $PWD/$(echo $1 | cut -d'/' -f2)
+	if [ $CLONE_SSH = true ]; then
+		git clone "git@github.com:$1.git"
+	else
+		git clone "https://github.com/$1.git"
+	fi
+	handle_add_op $PWD/$(echo $1 | cut -d'/' -f2)
 }
 
 if [ ! $# -eq 0 ]; then
-  OPERATION=$1
-  shift
-  case $OPERATION in
-    add)
-      handle_add_op $@
-      ;;
-    clone) 
-      handle_clone_op $@
-      ;;
-    clean)
-      rm -rf $CACHE_FILE
-      touch $CACHE_FILE
-      ;;
-    *) ;;
-  esac
+	OPERATION=$1
+	shift
+	case $OPERATION in
+	add)
+		handle_add_op $@
+		;;
+	clone)
+		handle_clone_op $@
+		;;
+	clean)
+		rm -rf $CACHE_FILE
+		touch $CACHE_FILE
+		;;
+	*) ;;
+	esac
 else
-  result=$(cat $CACHE_FILE | fzf)
-  if [ -n $result ]; then
-    if [ -z $EDITOR_PIPE ]; then
-      $EDITOR $result
-    else
-      $EDITOR_PIPE $result
-    fi
-  fi
+	result=$(cat $CACHE_FILE | fzf)
+	if [ -n $result ]; then
+		if [ -z $EDITOR_PIPE ]; then
+			$EDITOR $result
+		else
+			$EDITOR_PIPE $result
+		fi
+	fi
 fi
