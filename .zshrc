@@ -1,22 +1,17 @@
 DISABLE_AUTO_TITLE="true"
 
 export PATH="/home/gui/.local/bin:$PATH"
-export PATH="/home/gui/.config/emacs/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
-export TERM="screen-256color"
+export TERM="xterm-256color"
 
 ZSH_THEME="robbyrussell"
 
 plugins=(
 	git
-	zsh-autosuggestions
-	zsh-syntax-highlighting
-  copyfile
-  copypath
   ssh-agent
 )
 
-zstyle :omz:plugins:ssh-agent identities 25519_github 25519_skey 25519_gitlab
+zstyle :omz:plugins:ssh-agent identities 25519_github 25519_skey
 zstyle :omz:plugins:ssh-agent quiet yes
 
 source $ZSH/oh-my-zsh.sh
@@ -25,18 +20,16 @@ bindkey '^ ' autosuggest-accept
 bindkey '^H' backward-kill-word
 bindkey '5~' kill-word
 
-alias cd..="cd .."
-alias ..="cd .."
 alias c="clear"
-
-alias ll="exa -l -a --header --git --icons"
-alias l="exa -l --header --git --icons"
-alias ls="exa --grid --git --icons"
+alias ..="cd .."
+alias cd..="cd .."
+alias ...="cd ../.."
+alias 3.="cd ../../.."
+alias 4.="cd ../../../../"
+alias 5.="cd ../../../../../"
 
 alias cpfile="copyfile"
 alias cppath="copypath"
-
-alias lgit="lazygit"
 
 function v {
   if [ -n "$1" ]; then
@@ -79,6 +72,13 @@ function mgit_ssh {
   git config --global commit.gpgsign true
   git config --global tag.gpgsign true
 }
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+export EDITOR="nvim"
+export EDITOR_PIPE="editor_pipe"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
