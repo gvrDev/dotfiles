@@ -27,6 +27,8 @@ return {
 		cmp.setup({
 			completion = {
 				completeopt = "menu,menuone,noinsert",
+				throttle_time = 100,
+				source_timeout = 500,
 			},
 
 			snippet = {
@@ -41,18 +43,13 @@ return {
 			}),
 
 			sources = cmp.config.sources({
-				{ name = "nvim_lsp", max_item_count = 10, group_index = 1, keyword_length = 3 },
-				{ name = "luasnip", keyword_length = 2 },
-				{ name = "buffer", max_item_count = 1, keyword_length = 3 },
-				{ name = "path", max_item_count = 1 },
-				{ name = "nvim_lua" },
+				{ name = "nvim_lsp", keyword_length = 2, priority = 6 },
+				{ name = "luasnip", keyword_length = 2, priority = 5 },
+				{ name = "buffer", keyword_length = 4, priority = 4 },
+				{ name = "path", priority = 3 },
+				{ name = "nvim_lua", priority = 2 },
+				{ name = "nvim_lsp_signature_help", priority = 1 },
 			}),
-
-			performance = {
-				trigger_debounce_time = 500,
-				throttle = 550,
-				fetching_timeout = 80,
-			},
 		})
 	end,
 }
