@@ -28,8 +28,6 @@ return {
 			lsp.preset({
 				name = "recommended",
 				set_lsp_keymaps = false,
-				suggest_lsp_servers = false,
-				sign_icons = false,
 				manage_nvim_cmp = false,
 			})
 
@@ -83,6 +81,9 @@ return {
 						"sass",
 						"lua",
 						"sh",
+						"json",
+						"svelte",
+						"vue",
 					},
 					["rust_analyzer"] = { "rust" },
 					["clangd"] = { "c", "cpp" },
@@ -109,7 +110,6 @@ return {
 					"--clang-tidy",
 				},
 			})
-
 			lsp.setup()
 		end,
 	},

@@ -22,6 +22,7 @@ return {
 					"css",
 					"scss",
 					"sass",
+					"json",
 				},
 			}),
 			require("typescript.extensions.null-ls.code-actions"),
