@@ -1,0 +1,5 @@
+#!/bin/bash
+[ -n "$1" ] && file=$1
+[ -n "$2" ] && line=$2
+[ -n "$3" ] && column=$3
+nvim --server ~/.cache/nvim/godot.pipe --remote-send ":execute 'e $file' | call cursor($line,$column) <CR>"
