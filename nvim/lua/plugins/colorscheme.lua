@@ -12,4 +12,12 @@ return {
 		lazy = true,
 		name = "catppuccin",
 	},
+
+  {
+    "ellisonleao/gruvbox.nvim",
+    lazy = true,
+    opts = {
+      transparent_mode = true
+    }
+  }
 }
