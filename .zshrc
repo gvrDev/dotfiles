@@ -9,9 +9,11 @@ ZSH_THEME="robbyrussell"
 plugins=(
 	git
   ssh-agent
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
-zstyle :omz:plugins:ssh-agent identities 25519_github 25519_skey
+zstyle :omz:plugins:ssh-agent identities github skey
 zstyle :omz:plugins:ssh-agent quiet yes
 
 source $ZSH/oh-my-zsh.sh
