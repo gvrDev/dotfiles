@@ -87,6 +87,7 @@ return {
 					},
 					["rust_analyzer"] = { "rust" },
 					["clangd"] = { "c", "cpp" },
+					["omnisharp"] = { "cs" },
 				},
 			})
 
@@ -109,6 +110,12 @@ return {
 					"--background-index",
 					"--clang-tidy",
 				},
+			})
+
+			lspconfig.omnisharp.setup({
+				on_init = function(client)
+					client.server_capabilities.semanticTokensProvider = nil
+				end,
 			})
 			lsp.setup()
 		end,
