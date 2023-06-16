@@ -1,6 +1,6 @@
 DISABLE_AUTO_TITLE="true"
 
-export PATH="/home/gui/.local/bin:$PATH"
+export PATH="$HOME/.config/emacs/bin:/home/gui/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export TERM="xterm-256color"
 
