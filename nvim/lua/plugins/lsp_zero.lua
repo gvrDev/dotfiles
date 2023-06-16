@@ -31,6 +31,15 @@ return {
 				manage_nvim_cmp = false,
 			})
 
+			lsp.set_server_config({
+				on_init = function(client)
+					client.server_capabilities.textDocument.foldingRange = {
+						dynamicRegistration = false,
+						lineFoldingOnly = true,
+					}
+				end,
+			})
+
 			lsp.on_attach(function(client, bufnr)
 				local opts = { buffer = bufnr, remap = false }
 

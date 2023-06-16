@@ -23,6 +23,7 @@ return {
 					"scss",
 					"sass",
 					"json",
+					"vue",
 				},
 			}),
 			require("typescript.extensions.null-ls.code-actions"),

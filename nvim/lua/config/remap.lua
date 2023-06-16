@@ -7,11 +7,11 @@ keymap.set("n", "x", '"_x')
 keymap.set("n", "<C-d>", "<C-d>zz")
 keymap.set("n", "<C-u>", "<C-u>zz")
 
-keymap.set("n", "n", "nzzzv")
-keymap.set("n", "N", "Nzzzv")
+keymap.set("n", "N", "nzzzv")
+keymap.set("n", "n", "Nzzzv")
 
 --copy to system clipboard
-keymap.set("v", "<leader>y", [["+y]])
+keymap.set("v", "<leader>y", '"+y')
 keymap.set("n", "<leader>Y", [["+Y]])
 
 --replace all occurrences in file

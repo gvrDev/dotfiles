@@ -1,6 +1,5 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	event = "BufReadPre",
 	dependencies = {
 		{ "elgiano/nvim-treesitter-angular", branch = "topic/jsx-fix" },
 		{
@@ -17,7 +16,7 @@ return {
 	opts = {
 		highlight = {
 			enable = true,
-			additional_vim_regex_highlighting = false,
+			additional_vim_regex_highlighting = { "org" },
 		},
 		sync_install = false,
 		auto_install = true,
@@ -34,6 +33,7 @@ return {
 			"bash",
 			"svelte",
 			"markdown",
+			"org",
 		},
 		ignore_install = { "javascript" },
 	},
