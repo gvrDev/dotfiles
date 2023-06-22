@@ -3,4 +3,4 @@ function ColorizeNVIM(color)
 	vim.cmd.colorscheme(color)
 end
 
-ColorizeNVIM("gruvbox")
+ColorizeNVIM("industry")
