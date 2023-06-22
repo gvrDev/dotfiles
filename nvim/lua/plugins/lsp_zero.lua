@@ -73,6 +73,7 @@ return {
 				vim.keymap.set("i", "<C-h>", function()
 					vim.lsp.buf.signature_help()
 				end, opts)
+				ClearFoldHighlightColors()
 			end)
 
 			lsp.format_on_save({
@@ -112,6 +113,35 @@ return {
 			local lspconfig = require("lspconfig")
 			lspconfig.gdscript.setup({})
 			lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+
+			lspconfig.emmet_ls.setup({
+				filetypes = {
+					"astro",
+					"css",
+					"eruby",
+					"html",
+					"htmldjango",
+					"javascriptreact",
+					"less",
+					"pug",
+					"sass",
+					"scss",
+					"svelte",
+					"typescriptreact",
+				},
+			})
+			lspconfig.eslint.setup({
+				filetypes = {
+					"javascript",
+					"javascriptreact",
+					"javascript.jsx",
+					"typescript",
+					"typescriptreact",
+					"typescript.tsx",
+					"svelte",
+					"astro",
+				},
+			})
 
 			lspconfig.clangd.setup({
 				cmd = {

@@ -1,17 +1,82 @@
 return {
 	"nvim-telescope/telescope.nvim",
+	keys = {
+		{
+			"<leader>cs",
+			function()
+				require("telescope.builtin").colorscheme({ enable_preview = true })
+			end,
+			desc = "Colorscheme list",
+			mode = "n",
+		},
+		{
+			"<leader>ff",
+			function()
+				require("telescope.builtin").find_files({ no_ignore = false, hidden = true })
+			end,
+			desc = "Find files",
+			mode = "n",
+		},
+		{
+			"<leader>gs",
+			function()
+				require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
+			end,
+			desc = "Search using Grep",
+			mode = "n",
+		},
+		{
+			"<leader>pg",
+			function()
+				require("telescope.builtin").live_grep()
+			end,
+			desc = "Live Grep",
+			mode = "n",
+		},
+		{
+			"<leader>\\",
+			function()
+				require("telescope.builtin").buffers()
+			end,
+			desc = "Show Buffers",
+			mode = "n",
+		},
+		{
+			"<leader>fd",
+			function()
+				require("telescope.builtin").diagnostics()
+			end,
+			desc = "Show diagnostics",
+			mode = "n",
+		},
+		{
+			"<leader>pf",
+			function()
+				require("telescope").extensions.file_browser.file_browser({
+					path = "%:p:h",
+					cwd = vim.fn.expand("%:p:h"),
+					respect_gitignore = false,
+					hidden = true,
+					grouped = true,
+					previewer = false,
+					initial_mode = "normal",
+					layout_config = { height = 40 },
+				})
+			end,
+			desc = "File browser",
+			mode = "n",
+		},
+	},
 	dependencies = {
 		{ "nvim-telescope/telescope-file-browser.nvim" },
-		{ "nvim-telescope/telescope-fzf-native.nvim", build="cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build" },
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+		},
 	},
 	config = function()
 		local actions = require("telescope.actions")
-		local builtin = require("telescope.builtin")
 		local telescope = require("telescope")
-
-		local function telescope_buffer_dir()
-			return vim.fn.expand("%:p:h")
-		end
 
 		local fb_actions = telescope.extensions.file_browser.actions
 
@@ -32,7 +97,6 @@ return {
 				},
 				file_browser = {
 					theme = "dropdown",
-					hijack_netrw = true,
 					grouped = true,
 					hide_parent_dir = true,
 					hidden = true,
@@ -51,39 +115,5 @@ return {
 
 		telescope.load_extension("file_browser")
 		telescope.load_extension("fzf")
-
-		vim.keymap.set("n", "<leader>cs", function()
-			builtin.colorscheme({ enable_preview = true })
-		end)
-		vim.keymap.set("n", "<leader>ff", function()
-			builtin.find_files({
-				no_ignore = false,
-				hidden = true,
-			})
-		end)
-		vim.keymap.set("n", "<leader>ps", function()
-			builtin.grep_string({ search = vim.fn.input("Grep > ") })
-		end)
-		vim.keymap.set("n", "<leader>pg", function()
-			builtin.live_grep()
-		end)
-		vim.keymap.set("n", "<leader>\\", function()
-			builtin.buffers()
-		end)
-		vim.keymap.set("n", "<leader>fd", function()
-			builtin.diagnostics()
-		end)
-		vim.keymap.set("n", "<leader>pf", function()
-			telescope.extensions.file_browser.file_browser({
-				path = "%:p:h",
-				cwd = telescope_buffer_dir(),
-				respect_gitignore = false,
-				hidden = true,
-				grouped = true,
-				previewer = false,
-				initial_mode = "normal",
-				layout_config = { height = 40 },
-			})
-		end, { noremap = true })
 	end,
 }
