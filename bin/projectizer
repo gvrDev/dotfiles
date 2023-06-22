@@ -62,7 +62,7 @@ handle_clean_op() {
 	touch $CACHE_FILE_RECURSIVE
 	echo "$HOME/dev/work" >>$CACHE_FILE_RECURSIVE
 	echo "$HOME/dev/personal" >>$CACHE_FILE_RECURSIVE
-	echo "$HOME/dotfiles/bin" >>$CACHE_FILE_RECURSIVE
+	echo "$HOME/dotfiles" >>$CACHE_FILE_RECURSIVE
 }
 
 ############################################################
