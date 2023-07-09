@@ -1,28 +1,13 @@
 return {
 	"nvim-telescope/telescope.nvim",
+	event = "VeryLazy",
 	keys = {
 		{
-			"<leader>cs",
-			function()
-				require("telescope.builtin").colorscheme({ enable_preview = true })
-			end,
-			desc = "Colorscheme list",
-			mode = "n",
-		},
-		{
-			"<leader>ff",
+			"<leader>pf",
 			function()
 				require("telescope.builtin").find_files({ no_ignore = false, hidden = true })
 			end,
 			desc = "Find files",
-			mode = "n",
-		},
-		{
-			"<leader>gs",
-			function()
-				require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
-			end,
-			desc = "Search using Grep",
 			mode = "n",
 		},
 		{
@@ -42,7 +27,7 @@ return {
 			mode = "n",
 		},
 		{
-			"<leader>fd",
+			"<leader>pd",
 			function()
 				require("telescope.builtin").diagnostics()
 			end,
@@ -50,7 +35,7 @@ return {
 			mode = "n",
 		},
 		{
-			"<leader>pf",
+			"<leader>.",
 			function()
 				require("telescope").extensions.file_browser.file_browser({
 					path = "%:p:h",

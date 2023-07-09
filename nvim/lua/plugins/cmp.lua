@@ -47,7 +47,7 @@ return {
 				{ name = "path", priority = 3 },
 				{ name = "nvim_lua", priority = 2 },
 				{ name = "nvim_lsp_signature_help", priority = 1 },
-				{ name = "orgmode", keyword_length = 1 },
+				{ name = "neorg", keyword_length = 1 },
 			}),
 		})
 	end,

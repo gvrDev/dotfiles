@@ -41,38 +41,36 @@ return {
 			})
 
 			lsp.on_attach(function(client, bufnr)
-				local opts = { buffer = bufnr, remap = false }
+				local nmap = function(keys, func, desc)
+					if desc then
+						desc = "LSP: " .. desc
+					end
 
-				vim.keymap.set("n", "gd", function()
-					vim.lsp.buf.definition()
-				end, opts)
-				vim.keymap.set("n", "K", function()
-					vim.lsp.buf.hover()
-				end, opts)
-				vim.keymap.set("n", "<leader>vws", function()
-					vim.lsp.buf.workspace_symbol()
-				end, opts)
-				vim.keymap.set("n", "<leader>vd", function()
-					vim.diagnostic.open_float()
-				end, opts)
-				vim.keymap.set("n", "[d", function()
-					vim.diagnostic.goto_next()
-				end, opts)
-				vim.keymap.set("n", "]d", function()
-					vim.diagnostic.goto_prev()
-				end, opts)
-				vim.keymap.set("n", "<leader>vca", function()
-					vim.lsp.buf.code_action()
-				end, opts)
-				vim.keymap.set("n", "<leader>vrr", function()
-					vim.lsp.buf.references()
-				end, opts)
-				vim.keymap.set("n", "<leader>vrn", function()
-					vim.lsp.buf.rename()
-				end, opts)
-				vim.keymap.set("i", "<C-h>", function()
-					vim.lsp.buf.signature_help()
-				end, opts)
+					vim.keymap.set("n", keys, function()
+						func()
+					end, { buffer = bufnr, desc = desc })
+				end
+				nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+				nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+
+				nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+				nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+				nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+				nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
+				nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+				nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+
+				-- See `:help K` for why this keymap
+				nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+				nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+
+				-- Lesser used LSP functionality
+				nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+				nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
+				nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
+
+				nmap("]d", vim.diagnostic.goto_next, "Next Diagnostic")
+				nmap("[d", vim.diagnostic.goto_prev, "Previous Diagnostic")
 				ClearFoldHighlightColors()
 			end)
 
@@ -98,6 +96,7 @@ return {
 					["rust_analyzer"] = { "rust" },
 					["clangd"] = { "c", "cpp" },
 					["omnisharp"] = { "cs" },
+					["gopls"] = { "go" },
 				},
 			})
 
@@ -106,12 +105,10 @@ return {
 				"tsserver",
 				"angularls",
 			})
-
-			--Manual Servers
 			lsp.skip_server_setup({ "tsserver" })
 
+			--Manual Servers
 			local lspconfig = require("lspconfig")
-			lspconfig.gdscript.setup({})
 			lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 
 			lspconfig.emmet_ls.setup({
@@ -156,6 +153,7 @@ return {
 					client.server_capabilities.semanticTokensProvider = nil
 				end,
 			})
+
 			lsp.setup()
 		end,
 	},

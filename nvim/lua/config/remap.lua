@@ -11,11 +11,8 @@ keymap.set("n", "N", "nzzzv")
 keymap.set("n", "n", "Nzzzv")
 
 --copy to system clipboard
-keymap.set("v", "<leader>y", '"+y')
-keymap.set("n", "<leader>Y", [["+Y]])
-
---replace all occurrences in file
-keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+keymap.set("v", "<leader>y", 'y+"')
+keymap.set("n", "<leader>Y", [[Y+"]])
 
 --move selection up and down
 keymap.set("v", "J", [[:m '>+1<CR>gv=gv]])
