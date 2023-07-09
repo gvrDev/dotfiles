@@ -1,6 +1,6 @@
 DISABLE_AUTO_TITLE="true"
 
-export PATH="$HOME/.config/emacs/bin:/home/gui/.local/bin:$PATH"
+export PATH="$HOME/.config/emacs/bin:$HOME/.local/bin:$HOME/dotfiles/bin:$HOME/go/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export TERM="xterm-256color"
 
@@ -80,7 +80,7 @@ alias la='ls -A'
 alias l='ls -CF'
 
 export EDITOR="nvim"
-export EDITOR_PIPE="editor_pipe"
+export EDITOR_PIPE="editor_pipe_zellij"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
