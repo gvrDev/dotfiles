@@ -1,12 +1,24 @@
 #!/bin/bash
-CACHE_FILE="$HOME/.projectizer.cache.txt"
-CACHE_FILE_RECURSIVE="$HOME/.projectizer.recursive.cache.txt"
-if [ ! -f $CACHE_FILE ]; then
-	touch $CACHE_FILE
-fi
-if [ ! -f $CACHE_FILE_RECURSIVE ]; then
-	touch $CACHE_FILE_RECURSIVE
-fi
+
+############################################################
+############################################################
+# Global vars                                              #
+############################################################
+############################################################
+CONFIG_PATH="$HOME/.config/projectizer"
+CACHE_FILE="$HOME/.config/projectizer/projectizer.cache.txt"
+CACHE_FILE_RECURSIVE="$HOME/.config/projectizer/projectizer.recursive.cache.txt"
+
+############################################################
+############################################################
+# functions                                                #
+############################################################
+############################################################
+fill_empty_recursive_cache() {
+	echo "$HOME/dev/work" >>$CACHE_FILE_RECURSIVE
+	echo "$HOME/dev/personal" >>$CACHE_FILE_RECURSIVE
+	echo "$HOME/dotfiles" >>$CACHE_FILE_RECURSIVE
+}
 
 add_path() {
 	if [[ (-z "$(<$2 | fzf -e --select-1 --exit-0 --filter=$2)") && (-n $2) ]]; then
@@ -14,13 +26,11 @@ add_path() {
 	fi
 }
 
-add_op_usage() {
-	echo "Usage: add [flags] <path>"
-	echo "flags:"
-	echo "-rd|--recursive-dynamic                                    place path in the recursive cache for dynamic fzf"
-	echo "-rs|--recursive-static <types_to_include>                  place subpaths respecting the types in the normal cache for fzf"
-	echo ""
-}
+############################################################
+############################################################
+# operations                                               #
+############################################################
+############################################################
 handle_add_op() {
 	path_to_add=$1
 	final_cache=$CACHE_FILE
@@ -48,7 +58,6 @@ handle_add_op() {
 			path_to_add=$1
 			shift
 			;;
-
 		esac
 	done
 
@@ -60,9 +69,28 @@ handle_clean_op() {
 	rm -rf $CACHE_FILE_RECURSIVE
 	touch $CACHE_FILE
 	touch $CACHE_FILE_RECURSIVE
-	echo "$HOME/dev/work" >>$CACHE_FILE_RECURSIVE
-	echo "$HOME/dev/personal" >>$CACHE_FILE_RECURSIVE
-	echo "$HOME/dotfiles" >>$CACHE_FILE_RECURSIVE
+	fill_empty_recursive_cache
+}
+
+############################################################
+############################################################
+# Help                                                     #
+############################################################
+############################################################
+main_usage() {
+	echo "Usage: projectizer <operation> [...]"
+	echo "operations:"
+	echo "add [flags] <path>                          places the path into a cache file"
+	echo "clean                                       resets the cache files"
+	echo ""
+}
+
+add_op_usage() {
+	echo "Usage: add [flags] <path>"
+	echo "flags:"
+	echo "-rd|--recursive-dynamic                                    place path in the recursive cache for dynamic fzf"
+	echo "-rs|--recursive-static <types_to_include>                  place subpaths respecting the types in the normal cache for fzf"
+	echo ""
 }
 
 ############################################################
@@ -70,14 +98,16 @@ handle_clean_op() {
 # Main program                                             #
 ############################################################
 ############################################################
-
-main_usage() {
-	echo "Usage: projectizer <operation> [...]"
-	echo "operations:"
-	echo "add [flags] <path>                          places the path into a cache file"
-	echo "clean [flags]                               resets the cache files"
-	echo ""
-}
+if [ ! -d $CONFIG_PATH ]; then
+	mkdir $CONFIG_PATH
+fi
+if [ ! -f $CACHE_FILE ]; then
+	touch $CACHE_FILE
+fi
+if [ ! -f $CACHE_FILE_RECURSIVE ]; then
+	touch $CACHE_FILE_RECURSIVE
+	fill_empty_recursive_cache
+fi
 
 if [ ! $# -eq 0 ]; then
 	case $1 in
