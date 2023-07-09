@@ -90,6 +90,7 @@ keys = [
     
     # Key(["alt"], "Tab", lazy.screen.toggle_group(), desc="Focus next window"),
     Key(["control"], "Tab", lazy.group.next_window()),
+    Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle maximize"),
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -135,7 +136,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="ubuntu-mono-nerd",
+    font="ubuntu",
     fontsize=14,
     padding=3,
 )
@@ -145,7 +146,7 @@ screens = [
     Screen(
         bottom=bar.Bar(
             [
-                widget.CurrentLayout(),
+                # widget.CurrentLayout(),
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
@@ -198,7 +199,7 @@ reconfigure_screens = True
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
-auto_minimize = True
+auto_minimize = False
 
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
@@ -216,5 +217,5 @@ dpi_scale = 1.0
 
 @hook.subscribe.startup_once
 def autostart():
-    subprocess.call([home + '/autostart/applications-autostart.sh'])
-    subprocess.call([home + '/autostart/xorg-autostart.sh'])
+    subprocess.call([home + '/dotfiles/autostart/applications-autostart.sh'])
+    subprocess.call([home + '/dotfiles/autostart/xorg-autostart.sh'])
