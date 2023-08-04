@@ -31,7 +31,7 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 
 mod = "mod4"
-terminal = "kitty"
+terminal = "wezterm"
 webBrowser = "vivaldi-stable"
 fileBrowser = "krusader"
 home = os.path.expanduser('~')
@@ -89,7 +89,7 @@ keys = [
 
     
     # Key(["alt"], "Tab", lazy.screen.toggle_group(), desc="Focus next window"),
-    Key(["control"], "Tab", lazy.group.next_window()),
+    # Key(["control"], "Tab", lazy.group.next_window()),
     Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle maximize"),
 ]
 
