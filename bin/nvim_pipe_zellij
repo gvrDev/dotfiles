@@ -1,3 +1,8 @@
 #!/bin/bash
 path=$(<"/tmp/zellij_editor_pipe.txt")
-nvim $path +"Dashboard"
+
+if [[ -f $path ]]; then
+	nvim --listen ~/.cache/nvim/general.pipe $path
+else
+	nvim --listen ~/.cache/nvim/general.pipe $path +"Dashboard"
+fi
