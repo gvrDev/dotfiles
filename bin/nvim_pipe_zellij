@@ -4,5 +4,5 @@ path=$(<"/tmp/zellij_editor_pipe.txt")
 if [[ -f $path ]]; then
 	nvim --listen ~/.cache/nvim/general.pipe $path
 else
-	nvim --listen ~/.cache/nvim/general.pipe $path +"Dashboard"
+	nvim --listen ~/.cache/nvim/general.pipe $path +"Telescope find_files"
 fi

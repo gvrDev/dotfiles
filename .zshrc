@@ -1,13 +1,12 @@
 DISABLE_AUTO_TITLE="true"
 
 export PATH="$HOME/.config/emacs/bin:$HOME/.local/bin:$HOME/dotfiles/bin:$HOME/go/bin:$PATH"
-export ZSH="$HOME/.oh-my-zsh"
 export TERM="xterm-256color"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
 plugins=(
-	git
   ssh-agent
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -22,29 +21,12 @@ bindkey '^ ' autosuggest-accept
 bindkey '^H' backward-kill-word
 bindkey '5~' kill-word
 
-alias c="clear"
 alias ..="cd .."
 alias cd..="cd .."
 alias ...="cd ../.."
 alias 3.="cd ../../.."
 alias 4.="cd ../../../../"
 alias 5.="cd ../../../../../"
-
-alias cpfile="copyfile"
-alias cppath="copypath"
-
-function v {
-  if [ -n "$1" ]; then
-    cd $1
-  fi
-  nvim $2 .
-}
-function vgodot {
-  if [ -n "$1" ]; then
-    cd $1
-  fi
-  nvim --listen ~/.cache/nvim/godot.pipe .
-}
 
 function mgit_setup {
   git remote add origin $1
@@ -63,11 +45,6 @@ function mgit_init {
   git push -u origin main
 }
 
-function mgit_user {
-  git config --global user.name $1
-  git config --global user.email $2
-}
-
 function mgit_ssh {
   git config --global gpg.format ssh
   git config --global user.signingKey "$*"
@@ -78,6 +55,10 @@ function mgit_ssh {
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+alias container_stop="sudo docker ps -aq | xargs sudo docker stop | xargs sudo docker rm"
+alias container_clean="sudo docker image ls -q | xargs -I {} sudo docker image rm -f {}"
+alias container_start="sudo docker compose up"
 
 export EDITOR="nvim"
 export EDITOR_PIPE="editor_pipe_zellij"

@@ -14,7 +14,8 @@ vim.g.loaded_vimballPlugin = 1
 vim.g.loaded_matchit = 1
 vim.g.loaded_matchparen = 1
 vim.g.loaded_2html_plugin = 1
-vim.g.loaded_logiPat = 1
+vim.g.loaded_logipat = 1
+vim.g.loaded_spellfile_plugin = 1
 vim.g.loaded_rrhelper = 1
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -95,9 +96,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 local keymap = vim.keymap
 keymap.set("n", "x", '"_x')
 
+keymap.set("n", "J", "mzJ`z")
 keymap.set("n", "<C-d>", "<C-d>zz")
 keymap.set("n", "<C-u>", "<C-u>zz")
-
 keymap.set("n", "N", "nzzzv")
 keymap.set("n", "n", "Nzzzv")
 

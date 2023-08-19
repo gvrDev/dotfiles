@@ -1,6 +1,4 @@
 return {
-	{ "tpope/vim-sleuth" },
-
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v2.x",
@@ -32,15 +30,6 @@ return {
 				name = "recommended",
 				set_lsp_keymaps = false,
 				manage_nvim_cmp = false,
-			})
-
-			lsp.set_server_config({
-				on_init = function(client)
-					client.server_capabilities.textDocument.foldingRange = {
-						dynamicRegistration = false,
-						lineFoldingOnly = true,
-					}
-				end,
 			})
 
 			lsp.on_attach(function(client, bufnr)
@@ -130,6 +119,10 @@ return {
 				end,
 			})
 
+			lspconfig.gdscript.setup({
+				cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
+			})
+
 			lsp.setup()
 		end,
 	},
@@ -169,11 +162,11 @@ return {
 
 	{
 		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
 		version = false,
 		dependencies = {
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-path" },
-			{ "hrsh7th/nvim-cmp" },
 			{ "hrsh7th/cmp-nvim-lua" },
 			{ "hrsh7th/cmp-cmdline" },
 
@@ -244,43 +237,43 @@ return {
 		end,
 	},
 
-	{
-		"rcarriga/nvim-dap-ui",
-		dependencies = {
-			{ "mfussenegger/nvim-dap", lazy = true },
-			{ "theHamsta/nvim-dap-virtual-text", lazy = true },
-			{
-				"jay-babu/mason-nvim-dap.nvim",
-				opts = {
-					automatic_setup = true,
-					handlers = {},
-				},
-			},
-
-			"mxsdev/nvim-dap-vscode-js",
-		},
-		config = function()
-			require("dapui").setup({})
-		end,
-		keys = {
-			{
-				"<leader>td",
-				"<cmd>lua require('dapui').toggle('sidebar')<cr>",
-				desc = "Toggle Dap ui",
-				mode = "n",
-			},
-			{
-				"<leader>dc",
-				"<cmd>DapContinue<cr>",
-				desc = "Dap Continue",
-				mode = "n",
-			},
-			{
-				"<leader>db",
-				"<cmd>DapToggleBreakpoint<cr>",
-				desc = "Dap Toggle Breakpoint",
-				mode = "n",
-			},
-		},
-	},
+	-- {
+	-- 	"rcarriga/nvim-dap-ui",
+	-- 	dependencies = {
+	-- 		{ "mfussenegger/nvim-dap", lazy = true },
+	-- 		{ "theHamsta/nvim-dap-virtual-text", lazy = true },
+	-- 		{
+	-- 			"jay-babu/mason-nvim-dap.nvim",
+	-- 			opts = {
+	-- 				automatic_setup = true,
+	-- 				handlers = {},
+	-- 			},
+	-- 		},
+	--
+	-- 		"mxsdev/nvim-dap-vscode-js",
+	-- 	},
+	-- 	config = function()
+	-- 		require("dapui").setup({})
+	-- 	end,
+	-- 	keys = {
+	-- 		{
+	-- 			"<leader>td",
+	-- 			"<cmd>lua require('dapui').toggle('sidebar')<cr>",
+	-- 			desc = "Toggle Dap ui",
+	-- 			mode = "n",
+	-- 		},
+	-- 		{
+	-- 			"<leader>dc",
+	-- 			"<cmd>DapContinue<cr>",
+	-- 			desc = "Dap Continue",
+	-- 			mode = "n",
+	-- 		},
+	-- 		{
+	-- 			"<leader>db",
+	-- 			"<cmd>DapToggleBreakpoint<cr>",
+	-- 			desc = "Dap Toggle Breakpoint",
+	-- 			mode = "n",
+	-- 		},
+	-- 	},
+	-- },
 }

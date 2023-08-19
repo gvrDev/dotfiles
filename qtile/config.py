@@ -32,8 +32,6 @@ from libqtile.lazy import lazy
 
 mod = "mod4"
 terminal = "wezterm"
-webBrowser = "vivaldi-stable"
-fileBrowser = "krusader"
 home = os.path.expanduser('~')
 
 keys = [
@@ -80,8 +78,6 @@ keys = [
     Key([mod, "shift"], "s", lazy.spawn("flameshot gui -c -s"), desc="Printscreen selected area"),
     Key([mod, "shift"], "p", lazy.spawn("flameshot gui -c"), desc="PrintScreen selected and edited area"),
     Key([mod], "d", lazy.spawn("rofi -show drun"), desc="Launch Rofi"),
-    Key([mod], "w", lazy.spawn(webBrowser), desc="Launch Web Browser"),
-    Key([mod], "e", lazy.spawn(fileBrowser), desc="Launch File Browser"),
 
     Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"), desc="Mute sound"),
     Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%"), desc="Decrease sound"),
@@ -90,10 +86,22 @@ keys = [
     
     # Key(["alt"], "Tab", lazy.screen.toggle_group(), desc="Focus next window"),
     # Key(["control"], "Tab", lazy.group.next_window()),
-    Key([mod], "m", lazy.window.toggle_maximize(), desc="Toggle maximize"),
+    Key([mod], "f", lazy.window.toggle_maximize(), desc="Toggle maximize"),
 ]
 
-groups = [Group(i) for i in "123456789"]
+groups = []
+group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+group_layouts = ["monadtall","monadtall","monadtall","monadtall","monadtall","monadtall","monadtall","monadtall","monadtall"]
+
+for i in range(len(group_names)):
+    groups.append(
+            Group(
+                name=group_names[i],
+                layout=group_layouts[i].lower(),
+                label=group_labels[i],
+                )
+            )
 
 for i in groups:
     keys.extend(
@@ -122,11 +130,12 @@ for i in groups:
 layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
     layout.Max(),
+    layout.Floating(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
+    layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -199,7 +208,7 @@ reconfigure_screens = True
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
-auto_minimize = False
+auto_minimize = True
 
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None

@@ -1,4 +1,6 @@
 return {
+	{ "tpope/vim-fugitive" },
+
 	{
 		"mbbill/undotree",
 		keys = {
@@ -26,9 +28,6 @@ return {
 
 	{
 		"ThePrimeagen/refactoring.nvim",
-		config = function()
-			require("refactoring").setup({})
-		end,
 		keys = {
 			{
 				"<leader>re",
@@ -68,60 +67,10 @@ return {
 			},
 		},
 	},
+	{ "ThePrimeagen/git-worktree.nvim" },
 
 	{
 		"nvim-telescope/telescope.nvim",
-		keys = {
-			{
-				"<leader>pf",
-				function()
-					require("telescope.builtin").find_files({ no_ignore = false, hidden = true })
-				end,
-				desc = "Find files",
-				mode = "n",
-			},
-			{
-				"<leader>pg",
-				function()
-					require("telescope.builtin").live_grep()
-				end,
-				desc = "Live Grep",
-				mode = "n",
-			},
-			{
-				"<leader>\\",
-				function()
-					require("telescope.builtin").buffers()
-				end,
-				desc = "Show Buffers",
-				mode = "n",
-			},
-			{
-				"<leader>pd",
-				function()
-					require("telescope.builtin").diagnostics()
-				end,
-				desc = "Show diagnostics",
-				mode = "n",
-			},
-			{
-				"<leader>.",
-				function()
-					require("telescope").extensions.file_browser.file_browser({
-						path = "%:p:h",
-						cwd = vim.fn.expand("%:p:h"),
-						respect_gitignore = false,
-						hidden = true,
-						grouped = true,
-						previewer = false,
-						initial_mode = "normal",
-						layout_config = { height = 40 },
-					})
-				end,
-				desc = "File browser",
-				mode = "n",
-			},
-		},
 		dependencies = {
 			{ "nvim-telescope/telescope-file-browser.nvim", lazy = true },
 			{
@@ -132,8 +81,9 @@ return {
 			{ "nvim-lua/plenary.nvim", lazy = true },
 		},
 		config = function()
-			local actions = require("telescope.actions")
 			local telescope = require("telescope")
+			local actions = require("telescope.actions")
+			local builtin = require("telescope.builtin")
 
 			local fb_actions = telescope.extensions.file_browser.actions
 
@@ -172,34 +122,57 @@ return {
 
 			telescope.load_extension("file_browser")
 			telescope.load_extension("fzf")
+			telescope.load_extension("git_worktree")
+
+			vim.keymap.set("n", "<leader>pf", function()
+				builtin.find_files({ no_ignore = false, hidden = true })
+			end, { desc = "Find Files" })
+			vim.keymap.set("n", "<leader>pg", function()
+				builtin.live_grep()
+			end, { desc = "Live Grep" })
+			vim.keymap.set("n", "<leader>\\", function()
+				builtin.buffers()
+			end, { desc = "Show Buffers" })
+			vim.keymap.set("n", "<leader>pd", function()
+				builtin.diagnostics()
+			end, { desc = "Show Diagnostics" })
+			vim.keymap.set("n", "<leader>.", function()
+				require("telescope").extensions.file_browser.file_browser({
+					path = "%:p:h",
+					cwd = vim.fn.expand("%:p:h"),
+					respect_gitignore = false,
+					hidden = true,
+					grouped = true,
+					previewer = false,
+					initial_mode = "normal",
+					layout_config = { height = 40 },
+				})
+			end, { desc = "File browser" })
+			vim.keymap.set("n", "<leader>gw", function()
+				require("telescope").extensions.git_worktree.git_worktrees()
+			end, { desc = "Git worktrees" })
+			vim.keymap.set("n", "<leader>gnw", function()
+				require("telescope").extensions.git_worktree.create_git_worktree()
+			end, { desc = "Git new worktree" })
 		end,
 	},
 
 	{
 		"nvimdev/guard.nvim",
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local ft = require("guard.filetype")
 
-			ft("jsx"):fmt("prettier")
-			ft("tsx"):fmt("prettier")
-			ft("typescript"):fmt("prettier")
-			ft("javascript"):fmt("prettier")
-			ft("javascriptreact"):fmt("prettier")
-			ft("typescriptreact"):fmt("prettier")
-			ft("vue"):fmt("prettier")
-			ft("svelte"):fmt("prettier")
-			ft("html"):fmt("prettier")
-			ft("json"):fmt("prettier")
-			ft("yaml"):fmt("prettier")
+			ft("jsx,tsx,javascript,typescript,javascriptreact,typescriptreact,vue,html,json,yaml"):fmt("prettierd")
+			ft("svelte,cs"):fmt("lsp")
 
 			ft("lua"):fmt("stylua")
 
-			ft("c"):fmt("clang-format"):lint("clang-tidy")
-			ft("cpp"):fmt("clang-format"):lint("clang-tidy")
+			ft("c,cpp"):fmt("clang-format"):lint("clang-tidy")
 
 			ft("rust"):fmt("rust-fmt")
 
-			ft("cs"):fmt("lsp")
+			ft("python"):fmt("black")
 
 			require("guard").setup({
 				fmt_on_save = true,
@@ -221,7 +194,9 @@ return {
 		"jackMort/ChatGPT.nvim",
 		event = "VeryLazy",
 		config = function()
-			require("chatgpt").setup()
+			require("chatgpt").setup({
+				api_key_cmd = "pass show api/tokens/openai/nvim",
+			})
 		end,
 		dependencies = {
 			"MunifTanjim/nui.nvim",

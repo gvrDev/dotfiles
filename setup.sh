@@ -18,3 +18,5 @@ git sparse-checkout add patched-fonts/JetBrainsMono
 
 echo "Installing fonts"
 ./install.sh JetBrainsMono
+cd ../..
+rm -rf temp-cache

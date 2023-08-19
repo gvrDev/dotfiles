@@ -8,6 +8,12 @@ return {
 	},
 
 	{
+		"windwp/nvim-ts-autotag",
+		event = "InsertEnter",
+		opts = {},
+	},
+
+	{
 		"numToStr/Comment.nvim",
 		keys = {
 			{
@@ -28,21 +34,15 @@ return {
 	},
 
 	{
-		"glepnir/dashboard-nvim",
-		dependencies = { { "nvim-tree/nvim-web-devicons" } },
-		config = function()
-			require("dashboard").setup({})
-		end,
-	},
-
-	{
 		"kevinhwang91/nvim-ufo",
 		dependencies = {
 			"kevinhwang91/promise-async",
 		},
-		config = function()
-			require("ufo").setup({ close_fold_kinds = { "imports", "comment" } })
-		end,
+		opts = {
+			provider_selector = function(bufnr, filetype, buftype)
+				return { "treesitter", "indent" }
+			end,
+		},
 		init = function()
 			vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 			vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
