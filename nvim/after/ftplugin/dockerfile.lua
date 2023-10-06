@@ -1,5 +1,5 @@
 vim.opt.expandtab = true
-vim.opt.smartindent = true
+vim.opt.smartindent = false
 vim.opt.autoindent = false
 vim.opt.cindent = false
 
