@@ -32,7 +32,7 @@ from libqtile.lazy import lazy
 
 mod = "mod4"
 terminal = "wezterm"
-home = os.path.expanduser('~')
+home = os.path.expanduser("~")
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -42,30 +42,39 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    # Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+    # Key(
+    #     [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
+    # ),
+    # Key(
+    #     [mod, "shift"],
+    #     "l",
+    #     lazy.layout.shuffle_right(),
+    #     desc="Move window to the right",
+    # ),
+    # Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
+    # Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
-    Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
-    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    # Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
+    # Key(
+    #     [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
+    # ),
+    # Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
+    # Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
+    # Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
+    # Key(
+    #     [mod, "shift"],
+    #     "Return",
+    #     lazy.layout.toggle_split(),
+    #     desc="Toggle between split and unsplit sides of stack",
+    # ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
@@ -73,35 +82,71 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-
-    Key([], "Print", lazy.spawn("flameshot screen -c"), desc="Printscreen entire screen"),
-    Key([mod, "shift"], "s", lazy.spawn("flameshot gui -c -s"), desc="Printscreen selected area"),
-    Key([mod, "shift"], "p", lazy.spawn("flameshot gui -c"), desc="PrintScreen selected and edited area"),
-    Key([mod], "d", lazy.spawn("rofi -show drun"), desc="Launch Rofi"),
-
-    Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"), desc="Mute sound"),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%"), desc="Decrease sound"),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn(home + "/dotfiles/scripts/volume_up.sh 100"), desc="Increase sound"),
-
-    
+    Key(
+        [], "Print", lazy.spawn("flameshot screen -c"), desc="Printscreen entire screen"
+    ),
+    Key(
+        [mod, "shift"],
+        "s",
+        lazy.spawn("flameshot gui -c -s"),
+        desc="Printscreen selected area",
+    ),
+    Key(
+        [mod, "shift"],
+        "p",
+        lazy.spawn("flameshot gui -c"),
+        desc="PrintScreen selected and edited area",
+    ),
+    Key([mod], "d", lazy.spawn("dmenu_run"), desc="Launch Rofi"),
+    # Key([mod], "d", lazy.spawn("rofi -show drun -monitor -1"), desc="Launch Rofi"),
+    Key(
+        [],
+        "XF86AudioMute",
+        lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"),
+        desc="Mute sound",
+    ),
+    Key(
+        [],
+        "XF86AudioLowerVolume",
+        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%"),
+        desc="Decrease sound",
+    ),
+    Key(
+        [],
+        "XF86AudioRaiseVolume",
+        lazy.spawn(home + "/dotfiles/scripts/volume_up.sh 100"),
+        desc="Increase sound",
+    ),
     # Key(["alt"], "Tab", lazy.screen.toggle_group(), desc="Focus next window"),
     # Key(["control"], "Tab", lazy.group.next_window()),
     Key([mod], "f", lazy.window.toggle_maximize(), desc="Toggle maximize"),
+    Key([mod], "period", lazy.next_screen(), desc="Next Monitor"),
+    Key([mod], "comma", lazy.prev_screen(), desc="Previous Monitor"),
 ]
 
 groups = []
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-group_layouts = ["monadtall","monadtall","monadtall","monadtall","monadtall","monadtall","monadtall","monadtall","monadtall"]
+group_layouts = [
+    "monadtall",
+    "monadtall",
+    "monadtall",
+    "monadtall",
+    "monadtall",
+    "monadtall",
+    "monadtall",
+    "monadtall",
+    "monadtall",
+]
 
 for i in range(len(group_names)):
     groups.append(
-            Group(
-                name=group_names[i],
-                layout=group_layouts[i].lower(),
-                label=group_labels[i],
-                )
-            )
+        Group(
+            name=group_names[i],
+            layout=group_layouts[i].lower(),
+            label=group_labels[i],
+        )
+    )
 
 for i in groups:
     keys.extend(
@@ -128,8 +173,8 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    layout.Max(),
+    # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    # layout.Max(),
     layout.Floating(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -176,12 +221,43 @@ screens = [
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
     ),
+    Screen(
+        bottom=bar.Bar(
+            [
+                # widget.CurrentLayout(),
+                widget.GroupBox(),
+                widget.Prompt(),
+                widget.WindowName(),
+                widget.Chord(
+                    chords_colors={
+                        "launch": ("#ff0000", "#ffffff"),
+                    },
+                    name_transform=lambda name: name.upper(),
+                ),
+                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
+                # widget.StatusNotifier(),
+                # widget.Systray(),
+                widget.Volume(),
+                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+            ],
+            24,
+            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+        ),
+    ),
 ]
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
@@ -194,12 +270,21 @@ floating_layout = layout.Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
+        Match(wm_class="confirm"),  # gitk
+        Match(wm_class="dialog"),  # gitk
+        Match(wm_class="download"),  # gitk
+        Match(wm_class="error"),  # gitk
+        Match(wm_class="file_progress"),  # gitk
+        Match(wm_class="notification"),  # gitk
+        Match(wm_class="splash"),  # gitk
+        Match(wm_class="toolbar"),  # gitk
         Match(wm_class="confirmreset"),  # gitk
         Match(wm_class="makebranch"),  # gitk
         Match(wm_class="maketag"),  # gitk
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
+        Match(title="lxpolkit"),  # GPG key password entry
     ]
 )
 auto_fullscreen = True
@@ -224,7 +309,8 @@ wl_input_rules = None
 wmname = "LG3D"
 dpi_scale = 1.0
 
+
 @hook.subscribe.startup_once
 def autostart():
-    subprocess.call([home + '/dotfiles/autostart/applications-autostart.sh'])
-    subprocess.call([home + '/dotfiles/autostart/xorg-autostart.sh'])
+    subprocess.call([home + "/dotfiles/autostart/applications-autostart.sh"])
+    subprocess.call([home + "/dotfiles/autostart/xorg-autostart.sh"])

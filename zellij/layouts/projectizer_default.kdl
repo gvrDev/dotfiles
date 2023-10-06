@@ -1,11 +1,10 @@
 layout {
     pane split_direction="horizontal" focus=true {
-        pane command="bash" close_on_exit=true size="80%" name="nvim" {
+        pane command="bash" close_on_exit=true size="80%" name="nvim" borderless=true {
             args "/home/gui/dotfiles/bin/nvim_pipe_zellij"
         }
         pane split_direction="vertical" size="20%" {
-            pane size="50%" name="server"
-            pane size="50%" name="extra"
+            pane name="bash"
         }
     }
 
