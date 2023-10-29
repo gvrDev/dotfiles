@@ -1,43 +1,53 @@
 local wezterm = require("wezterm")
 local config = {}
 
-config.colors = {
-	background = "#161616",
-	foreground = "#ffffff",
-	cursor_bg = "#ffffff",
-	cursor_border = "#ffffff",
-	cursor_fg = "#161616",
+-- config.colors = {
+-- 	background = "#161616",
+-- 	foreground = "#ffffff",
+-- 	cursor_bg = "#ffffff",
+-- 	cursor_border = "#ffffff",
+-- 	cursor_fg = "#161616",
+--
+-- 	ansi = {
+-- 		"#262626",
+-- 		"#ee5396",
+-- 		"#42be65",
+-- 		"#ffe97b",
+-- 		"#33b1ff",
+-- 		"#ff7eb6",
+-- 		"#3ddbd9",
+-- 		"#dde1e6",
+-- 	},
+-- 	brights = {
+-- 		"#393939",
+-- 		"#ee5396",
+-- 		"#42be65",
+-- 		"#ffe97b",
+-- 		"#33b1ff",
+-- 		"#ff7eb6",
+-- 		"#3ddbd9",
+-- 		"#ffffff",
+-- 	},
+-- }
 
-	ansi = {
-		"#262626",
-		"#ee5396",
-		"#42be65",
-		"#ffe97b",
-		"#33b1ff",
-		"#ff7eb6",
-		"#3ddbd9",
-		"#dde1e6",
-	},
-	brights = {
-		"#393939",
-		"#ee5396",
-		"#42be65",
-		"#ffe97b",
-		"#33b1ff",
-		"#ff7eb6",
-		"#3ddbd9",
-		"#ffffff",
-	},
-}
+config.color_scheme = "Catppuccin Mocha"
 
 config.font = wezterm.font({
 	family = "JetBrainsMono NerdFont",
+	weight = "Bold",
 })
 config.font_size = 14
 
 config.enable_tab_bar = false
 config.window_close_confirmation = "NeverPrompt"
 
--- config.default_prog = { "/usr/bin/zsh" }
+config.window_padding = {
+	left = 4,
+	right = 4,
+	top = 0,
+	bottom = 0,
+}
+
+config.default_prog = { "/usr/bin/fish" }
 
 return config

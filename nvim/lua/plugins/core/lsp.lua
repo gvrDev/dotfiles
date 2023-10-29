@@ -20,7 +20,8 @@ return {
 				end,
 			},
 			{ "williamboman/mason-lspconfig.nvim", lazy = true },
-			{ "simrat39/rust-tools.nvim", lazy = true },
+			-- { "simrat39/rust-tools.nvim", lazy = true },
+			{ "mrcjkb/rustaceanvim" },
 			{ "pmizio/typescript-tools.nvim", lazy = true },
 		},
 		config = function()
@@ -60,10 +61,11 @@ return {
 			local lspconfig = require("lspconfig")
 			lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 
-      lspconfig.taplo.setup({})
-      lspconfig.yamlls.setup({})
-      lspconfig.jsonls.setup({})
-      lspconfig.bashls.setup({})
+			lspconfig.taplo.setup({})
+			lspconfig.yamlls.setup({})
+			lspconfig.jsonls.setup({})
+			lspconfig.bashls.setup({})
+			lspconfig.pyright.setup({})
 
 			lspconfig.emmet_ls.setup({
 				filetypes = {
@@ -118,27 +120,27 @@ return {
 				.. "lldb/lib/liblldb"
 				.. (vim.loop.os_uname().sysname == "Linux" and ".so" or ".dylib")
 
-			require("rust-tools").setup({
-				dap = {
-					adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb, lidlldb),
-				},
-				server = {
-					on_attach = function(_, bufnr)
-						vim.keymap.set(
-							"n",
-							"<leader>lha",
-							require("rust-tools").hover_actions.hover_actions,
-							{ buffer = bufnr, desc = "[H]over [A]ction" }
-						)
-						vim.keymap.set(
-							"n",
-							"<leader>lca",
-							require("rust-tools").code_action_group.code_action_group,
-							{ buffer = bufnr, desc = "[C]ode [A]ction" }
-						)
-					end,
-				},
-			})
+			-- require("rust-tools").setup({
+			-- 	dap = {
+			-- 		adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb, lidlldb),
+			-- 	},
+			-- 	server = {
+			-- 		on_attach = function(_, bufnr)
+			-- 			vim.keymap.set(
+			-- 				"n",
+			-- 				"<leader>lha",
+			-- 				require("rust-tools").hover_actions.hover_actions,
+			-- 				{ buffer = bufnr, desc = "[H]over [A]ction" }
+			-- 			)
+			-- 			vim.keymap.set(
+			-- 				"n",
+			-- 				"<leader>lca",
+			-- 				require("rust-tools").code_action_group.code_action_group,
+			-- 				{ buffer = bufnr, desc = "[C]ode [A]ction" }
+			-- 			)
+			-- 		end,
+			-- 	},
+			-- })
 
 			require("typescript-tools").setup({
 				tsserver_file_preferences = {

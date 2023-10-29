@@ -1,3 +1,3 @@
 require("options")
 require("plugins")
-vim.cmd.colorscheme("oxocarbon")
+vim.cmd.colorscheme("catppuccin")

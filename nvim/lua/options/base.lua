@@ -55,6 +55,4 @@ vim.opt.isfname:append("@-@")
 vim.opt.colorcolumn = "0"
 vim.opt.termguicolors = true
 
-vim.opt.termguicolors = true
-
 vim.opt.cmdheight = 0

@@ -1,21 +1,12 @@
 layout {
-    pane split_direction="horizontal" focus=true {
-        pane command="bash" close_on_exit=true size="80%" name="nvim" borderless=true {
-            args "/home/gui/dotfiles/bin/nvim_pipe_zellij"
-        }
-        pane split_direction="vertical" size="20%" {
-            pane name="bash"
-        }
+    default_tab_template {
+        children
     }
 
-  swap_floating_layout name="large_float" {
-    floating_panes {
-      pane {
-        x "5%"
-        y "5%"
-        width "90%"
-        height "90%"
-      }
+    pane split_direction="horizontal" focus=true {
+        pane command="bash" close_on_exit=true size="90%" name="editor" {
+            args "/home/gui/dotfiles/bin/nvim_pipe_zellij"
+        }
+        pane command="fish" size="15%"
     }
-  }
 }

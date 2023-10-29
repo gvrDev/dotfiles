@@ -139,10 +139,6 @@ if [[ -d "$HOME/dotfiles/bin" ]]; then
     PATH="$HOME/dotfiles/bin:$PATH"
 fi
 
-if [[ -d "$HOME/go/bin" ]]; then
-    PATH="$HOME/go/bin:$PATH"
-fi
-
 export PATH
 
 export TERM="xterm-256color"

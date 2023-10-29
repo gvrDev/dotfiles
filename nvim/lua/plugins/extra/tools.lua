@@ -1,5 +1,4 @@
 return {
-	{ "tpope/vim-fugitive" },
 	{ "tpope/vim-dadbod" },
 	{ "kristijanhusak/vim-dadbod-ui" },
 	{ "kristijanhusak/vim-dadbod-completion" },
@@ -70,7 +69,6 @@ return {
 			},
 		},
 	},
-	{ "ThePrimeagen/git-worktree.nvim" },
 
 	{
 		"nvim-telescope/telescope.nvim",
@@ -106,7 +104,6 @@ return {
 			})
 
 			telescope.load_extension("fzf")
-			telescope.load_extension("git_worktree")
 
 			vim.keymap.set("n", "<leader>sf", function()
 				builtin.find_files({ no_ignore = false, hidden = true })
@@ -117,12 +114,6 @@ return {
 			vim.keymap.set("n", "<leader>\\", function()
 				builtin.buffers()
 			end, { desc = "Show Buffers" })
-			vim.keymap.set("n", "<leader>gw", function()
-				require("telescope").extensions.git_worktree.git_worktrees()
-			end, { desc = "Git worktrees" })
-			vim.keymap.set("n", "<leader>gnw", function()
-				require("telescope").extensions.git_worktree.create_git_worktree()
-			end, { desc = "Git new worktree" })
 		end,
 	},
 
@@ -135,10 +126,10 @@ return {
 		config = function()
 			local ft = require("guard.filetype")
 
-			ft("typescript,javascript,jsx,tsx,javascriptreact,typescriptreact,vue,json,yaml,html"):fmt("prettier")
+			ft("typescript,javascript,jsx,tsx,javascriptreact,typescriptreact,vue,html"):fmt("prettier")
 			ft("astro,svelte,cs,rust"):fmt("lsp")
 
-			-- ft("lua"):fmt("stylua")
+			ft("lua"):fmt("stylua")
 
 			ft("c,cpp"):fmt("lsp")
 
@@ -151,32 +142,38 @@ return {
 	},
 
 	{
-		"jackMort/ChatGPT.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("chatgpt").setup({
-				api_key_cmd = "pass show api/tokens/openai/nvim",
-			})
-		end,
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-		},
-	},
-
-	{ "wintermute-cell/gitignore.nvim" },
-
-	{
 		"m4xshen/hardtime.nvim",
 		opts = {
 			disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil" },
 		},
 	},
 
-	{ "stevearc/oil.nvim", opts = {
-		view_options = {
-			show_hidden = true,
+	{
+		"stevearc/oil.nvim",
+		opts = {
+			view_options = {
+				show_hidden = true,
+			},
 		},
-	} },
+		keys = {
+			{
+				"<leader>.",
+				"<CMD>Oil<CR>",
+				desc = "Open Oil",
+				mode = "n",
+			},
+		},
+	},
+
+	{
+		"lewis6991/gitsigns.nvim",
+		opts = {
+			add = { text = "│" },
+			change = { text = "│" },
+			delete = { text = "_" },
+			topdelete = { text = "‾" },
+			changedelete = { text = "~" },
+			untracked = { text = "┆" },
+		},
+	},
 }
