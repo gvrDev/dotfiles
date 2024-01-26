@@ -7,7 +7,7 @@ return {
 
 	{
 		"neovim/nvim-lspconfig",
-		cmd = "LspInfo",
+		cmd = { "LspInfo", "LspInstall", "LspStart" },
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			{ "hrsh7th/cmp-nvim-lsp", lazy = true },
@@ -20,14 +20,11 @@ return {
 				end,
 			},
 			{ "williamboman/mason-lspconfig.nvim", lazy = true },
-			-- { "simrat39/rust-tools.nvim", lazy = true },
-			{ "mrcjkb/rustaceanvim" },
 			{ "pmizio/typescript-tools.nvim", lazy = true },
+			{ "mrcjkb/rustaceanvim", version = "^3", ft = { "rust" } },
 		},
 		config = function()
 			local lsp = require("lsp-zero")
-			require("mason").setup({})
-			require("mason-lspconfig").setup({})
 
 			lsp.on_attach(function(client, bufnr)
 				local nmap = function(keys, func, desc)
@@ -58,116 +55,56 @@ return {
 			end)
 
 			--Manual Servers
-			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
-
-			lspconfig.taplo.setup({})
-			lspconfig.yamlls.setup({})
-			lspconfig.jsonls.setup({})
-			lspconfig.bashls.setup({})
-			lspconfig.pyright.setup({})
-
-			lspconfig.emmet_ls.setup({
-				filetypes = {
-					"astro",
-					"css",
-					"eruby",
+			require("mason").setup({})
+			require("mason-lspconfig").setup({
+				ensure_installed = {
+					"lua_ls",
+					"tsserver",
+					"angularls",
 					"html",
-					"htmldjango",
-					"javascriptreact",
-					"less",
-					"pug",
-					"sass",
-					"scss",
-					"svelte",
-					"typescriptreact",
-				},
-			})
-			lspconfig.eslint.setup({
-				filetypes = {
-					"javascript",
-					"javascriptreact",
-					"javascript.jsx",
-					"typescript",
-					"typescriptreact",
-					"typescript.tsx",
-					"svelte",
-					"astro",
-				},
-			})
-
-			lspconfig.clangd.setup({
-				cmd = {
+					"cssls",
+					"emmet_ls",
+					"tailwindcss",
+					"dockerls",
+					"taplo",
+					"yamlls",
+					"jsonls",
+					"bashls",
+					"pyright",
 					"clangd",
-					"--background-index",
-					"--clang-tidy",
+					"rust_analyzer@nightly",
+				},
+				handlers = {
+					lsp.default_setup,
+					lua_ls = function()
+						require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls())
+					end,
+					emmet_ls = function()
+						require("lspconfig").emmet_ls.setup({
+							filetypes = {
+								"astro",
+								"css",
+								"html",
+								"javascriptreact",
+								"less",
+								"sass",
+								"scss",
+								"svelte",
+								"typescriptreact",
+							},
+						})
+					end,
+					tsserver = function() end,
+					rust_analyzer = function() end,
 				},
 			})
-
-			lspconfig.omnisharp.setup({
-				on_init = function(client)
-					client.server_capabilities.semanticTokensProvider = nil
-				end,
-			})
-
-			lspconfig.gdscript.setup({
-				cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
-			})
-
-			local lldb_path = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
-			local codelldb = lldb_path .. "adapter/codelldb"
-			local lidlldb = lldb_path
-				.. "lldb/lib/liblldb"
-				.. (vim.loop.os_uname().sysname == "Linux" and ".so" or ".dylib")
-
-			-- require("rust-tools").setup({
-			-- 	dap = {
-			-- 		adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb, lidlldb),
-			-- 	},
-			-- 	server = {
-			-- 		on_attach = function(_, bufnr)
-			-- 			vim.keymap.set(
-			-- 				"n",
-			-- 				"<leader>lha",
-			-- 				require("rust-tools").hover_actions.hover_actions,
-			-- 				{ buffer = bufnr, desc = "[H]over [A]ction" }
-			-- 			)
-			-- 			vim.keymap.set(
-			-- 				"n",
-			-- 				"<leader>lca",
-			-- 				require("rust-tools").code_action_group.code_action_group,
-			-- 				{ buffer = bufnr, desc = "[C]ode [A]ction" }
-			-- 			)
-			-- 		end,
-			-- 	},
-			-- })
 
 			require("typescript-tools").setup({
-				tsserver_file_preferences = {
-					-- Inlay Hints
-					includeInlayParameterNameHints = "all",
-					includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-					includeInlayFunctionParameterTypeHints = true,
-					includeInlayVariableTypeHints = true,
-					includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-					includeInlayPropertyDeclarationTypeHints = true,
-					includeInlayFunctionLikeReturnTypeHints = true,
-					includeInlayEnumMemberValueHints = true,
-				},
 				settings = {
 					expose_as_code_action = { "fix_all", "add_missing_imports", "remove_unused" },
 				},
 				tsserver_path = "typescript-language-server",
 			})
-			-- lspconfig.tsserver.setup({})
-			lspconfig.astro.setup({})
-			lspconfig.tailwindcss.setup({})
-			lspconfig.angularls.setup({})
-			lspconfig.svelte.setup({})
-			lspconfig.zls.setup({})
-			lspconfig.html.setup({})
-			lspconfig.cssls.setup({})
-			lspconfig.ols.setup({})
 
 			lsp.setup()
 		end,

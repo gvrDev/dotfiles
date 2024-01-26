@@ -2,7 +2,7 @@
 path=$(<"/tmp/zellij_editor_pipe.txt")
 
 if [[ -f $path ]]; then
-	nvim --listen ~/.cache/nvim/general.pipe $path
+	nvim --listen ~/.cache/nvim/general.pipe .
 else
-	nvim --listen ~/.cache/nvim/general.pipe $path +"Telescope find_files"
+	nvim --listen ~/.cache/nvim/general.pipe . +"Telescope find_files"
 fi

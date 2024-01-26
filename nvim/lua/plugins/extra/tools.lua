@@ -1,7 +1,20 @@
 return {
-	{ "tpope/vim-dadbod" },
-	{ "kristijanhusak/vim-dadbod-ui" },
-	{ "kristijanhusak/vim-dadbod-completion" },
+	{
+		"kristijanhusak/vim-dadbod-ui",
+		dependencies = {
+			{ "tpope/vim-dadbod", lazy = true },
+			{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+		},
+		cmd = {
+			"DBUI",
+			"DBUIToggle",
+			"DBUIAddConnection",
+			"DBUIFindBuffer",
+		},
+		init = function()
+			vim.g.db_ui_use_nerd_fonts = 1
+		end,
+	},
 
 	{
 		"mbbill/undotree",
@@ -118,34 +131,55 @@ return {
 	},
 
 	{
-		"nvimdev/guard.nvim",
+		"stevearc/conform.nvim",
 		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			"nvimdev/guard-collection",
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				javascript = { { "prettierd", "prettier" } },
+				typescript = { { "prettierd", "prettier" } },
+				astro = { { "prettierd", "prettier" } },
+				svelte = { { "prettierd", "prettier" } },
+				jsx = { { "prettierd", "prettier" } },
+				tsx = { { "prettierd", "prettier" } },
+				javascriptreact = { { "prettierd", "prettier" } },
+				typescriptreact = { { "prettierd", "prettier" } },
+				vue = { { "prettierd", "prettier" } },
+				html = { { "prettierd", "prettier" } },
+			},
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_fallback = true,
+			},
 		},
-		config = function()
-			local ft = require("guard.filetype")
-
-			ft("typescript,javascript,jsx,tsx,javascriptreact,typescriptreact,vue,html"):fmt("prettier")
-			ft("astro,svelte,cs,rust"):fmt("lsp")
-
-			ft("lua"):fmt("stylua")
-
-			ft("c,cpp"):fmt("lsp")
-
-			ft("python"):fmt("black")
-
-			require("guard").setup({
-				fmt_on_save = true,
-			})
-		end,
 	},
 
 	{
-		"m4xshen/hardtime.nvim",
-		opts = {
-			disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil" },
-		},
+		"mfussenegger/nvim-lint",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			local lint = require("lint")
+
+			lint.linters_by_ft = {
+				javascript = { "eslint_d" },
+				typescript = { "eslint_d" },
+				astro = { "eslint_d" },
+				svelte = { "eslint_d" },
+				jsx = { "eslint_d" },
+				tsx = { "eslint_d" },
+				javascriptreact = { "eslint_d" },
+				typescriptreact = { "eslint_d" },
+			}
+
+			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+
+			vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+				group = lint_augroup,
+				callback = function()
+					lint.try_lint()
+				end,
+			})
+		end,
 	},
 
 	{
@@ -168,12 +202,45 @@ return {
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
-			add = { text = "│" },
-			change = { text = "│" },
-			delete = { text = "_" },
-			topdelete = { text = "‾" },
-			changedelete = { text = "~" },
-			untracked = { text = "┆" },
+			signcolumn = true,
 		},
+	},
+
+	{
+		"christoomey/vim-tmux-navigator",
+		config = function()
+			vim.keymap.set("n", "<M-h>", ":<C-U>TmuxNavigateLeft<cr>", { noremap = true, silent = true })
+			vim.keymap.set("n", "<M-l>", ":<C-U>TmuxNavigateRight<cr>", { noremap = true, silent = true })
+			vim.keymap.set("n", "<M-j>", ":<C-U>TmuxNavigateDown<cr>", { noremap = true, silent = true })
+			vim.keymap.set("n", "<M-k>", ":<C-U>TmuxNavigateUp<cr>", { noremap = true, silent = true })
+			vim.keymap.set("n", "<M-\\>", ":<C-U>TmuxNavigatePrevious<cr>", { noremap = true, silent = true })
+		end,
+	},
+
+	{
+		"nvim-neorg/neorg",
+		build = ":Neorg sync-parsers",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("neorg").setup({
+				load = {
+					["core.defaults"] = {}, -- Loads default behaviour
+					["core.concealer"] = {}, -- Adds pretty icons to your documents
+					["core.summary"] = {}, -- Adds pretty icons to your documents
+					["core.completion"] = {
+						config = {
+							engine = "nvim-cmp",
+						},
+					}, -- Adds pretty icons to your documents
+					["core.dirman"] = { -- Manages Neorg workspaces
+						config = {
+							workspaces = {
+								notes = "~/notes",
+							},
+						},
+					},
+				},
+			})
+		end,
 	},
 }

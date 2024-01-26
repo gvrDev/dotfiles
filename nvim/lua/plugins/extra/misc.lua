@@ -32,4 +32,17 @@ return {
 			},
 		},
 	},
+
+	{
+		"m4xshen/hardtime.nvim",
+		opts = {
+			disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil", "dbui" },
+		},
+	},
+
+	{
+		"ray-x/lsp_signature.nvim",
+		opts = {},
+		event = "VeryLazy",
+	},
 }

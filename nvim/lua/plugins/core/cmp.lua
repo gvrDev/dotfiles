@@ -7,6 +7,7 @@ return {
 			{ "hrsh7th/cmp-buffer", lazy = true },
 			{ "hrsh7th/cmp-path", lazy = true },
 			{ "hrsh7th/cmp-nvim-lua", lazy = true },
+			{ "hrsh7th/cmp-cmdline", lazy = true },
 
 			{
 				"L3MON4D3/LuaSnip",
@@ -53,6 +54,7 @@ return {
 			}
 
 			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
 			cmp.setup({
 				formatting = {
 					fields = { "abbr", "kind" },
@@ -76,9 +78,21 @@ return {
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
-					{ name = "nvim_lua" },
-					{ name = "nvim_lsp_signature_help" },
-				}, { name = "path" }, { name = "buffer" }),
+				}, { name = "buffer" }),
+			})
+
+			cmp.setup.cmdline({ "/", "?" }, {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = { { name = "buffer" } },
+			})
+
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }),
+			})
+
+			cmp.setup.filetype("sql", {
+				sources = cmp.config.sources({ { name = "vim-dadbod-completion" }, { name = "buffer" } }),
 			})
 		end,
 	},
