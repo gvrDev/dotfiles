@@ -33,11 +33,31 @@ return {
 		"ThePrimeagen/harpoon",
 		keys = {
 			{ "<leader>tha", "<cmd>lua require('harpoon.mark').add_file()<cr>", desc = "Add file to harpoon" },
-			{ "<leader>th", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Open harpoon quickmenu" },
-			{ "<leader>1", "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", desc = "Open first harpoon instance" },
-			{ "<leader>2", "<cmd>lua require('harpoon.ui').nav_file(2)<cr>", desc = "Open second harpoon instance" },
-			{ "<leader>3", "<cmd>lua require('harpoon.ui').nav_file(3)<cr>", desc = "Open third harpoon instance" },
-			{ "<leader>4", "<cmd>lua require('harpoon.ui').nav_file(4)<cr>", desc = "Open fourth harpoon instance" },
+			{
+				"<leader>th",
+				"<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>",
+				desc = "Open harpoon quickmenu",
+			},
+			{
+				"<leader>1",
+				"<cmd>lua require('harpoon.ui').nav_file(1)<cr>",
+				desc = "Open first harpoon instance",
+			},
+			{
+				"<leader>2",
+				"<cmd>lua require('harpoon.ui').nav_file(2)<cr>",
+				desc = "Open second harpoon instance",
+			},
+			{
+				"<leader>3",
+				"<cmd>lua require('harpoon.ui').nav_file(3)<cr>",
+				desc = "Open third harpoon instance",
+			},
+			{
+				"<leader>4",
+				"<cmd>lua require('harpoon.ui').nav_file(4)<cr>",
+				desc = "Open fourth harpoon instance",
+			},
 		},
 	},
 
@@ -201,9 +221,10 @@ return {
 
 	{
 		"lewis6991/gitsigns.nvim",
-		opts = {
-			signcolumn = true,
-		},
+		config = function()
+			require("gitsigns").setup({})
+			vim.keymap.set("n", "<leader>gp", "<CMD>Gitsigns preview_hunk<CR>", { desc = "gitsign preview hunk" })
+		end,
 	},
 
 	{
@@ -242,5 +263,9 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"stevearc/overseer.nvim",
+		opts = {},
 	},
 }

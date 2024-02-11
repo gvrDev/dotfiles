@@ -7,11 +7,9 @@ return {
 
 	{
 		"neovim/nvim-lspconfig",
-		cmd = { "LspInfo", "LspInstall", "LspStart" },
-		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			{ "hrsh7th/cmp-nvim-lsp", lazy = true },
-			{ "hrsh7th/cmp-nvim-lsp-signature-help", lazy = true },
+			-- { "hrsh7th/cmp-nvim-lsp-signature-help", lazy = true },
 			{
 				"williamboman/mason.nvim",
 				lazy = true,
@@ -76,6 +74,11 @@ return {
 				},
 				handlers = {
 					lsp.default_setup,
+					clangd = function()
+						require("lspconfig").clangd.setup({
+							cmd = { "/usr/bin/clangd" },
+						})
+					end,
 					lua_ls = function()
 						require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls())
 					end,

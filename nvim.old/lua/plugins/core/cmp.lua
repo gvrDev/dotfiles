@@ -11,6 +11,12 @@ return {
 
 			{
 				"L3MON4D3/LuaSnip",
+				build = function()
+					if vim.fn.has("win32") == 1 then
+						return
+					end
+					return "make install_jsregexp"
+				end,
 				dependencies = {
 					{
 						"rafamadriz/friendly-snippets",
@@ -78,6 +84,7 @@ return {
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
+					{ name = "path" },
 				}, { name = "buffer" }),
 			})
 
