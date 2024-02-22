@@ -7,3 +7,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 
 vim.api.nvim_set_hl(0, "CursorLine", { underline = false })
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "html" },
+  callback = function()
+    vim.b.autoformat = false
+  end,
+})

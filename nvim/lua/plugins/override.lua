@@ -1,12 +1,27 @@
 return {
   {
     "LazyVim/LazyVim",
+    dependencies = {
+      { "nyoom-engineering/oxocarbon.nvim", lazy = true },
+    },
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = "oxocarbon",
     },
   },
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      {
+        "mrcjkb/rustaceanvim",
+        version = "^4", -- Recommended
+        ft = { "rust" },
+      },
+      {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        opts = {},
+      },
+    },
     opts = {
       servers = {
         clangd = {
@@ -26,7 +41,7 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      "hrsh7th/cmp-cmdline",
+      { "hrsh7th/cmp-cmdline" },
     },
     opts = function(_, opts)
       local cmp = require("cmp")

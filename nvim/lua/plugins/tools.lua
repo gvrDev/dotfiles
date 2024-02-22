@@ -91,4 +91,36 @@ return {
       },
     },
   },
+
+  {
+    "David-Kunz/gen.nvim",
+    dependencies = {
+      { "akinsho/toggleterm.nvim", version = "*", config = true },
+    },
+    config = function()
+      require("gen").setup({ model = "deepseek-coder:6.7b", display_mode = "split", no_auto_close = true })
+
+      vim.keymap.set("n", "<leader>oc", "<CMD>Gen Chat<CR>", { desc = "Open Gen Chat" })
+      vim.keymap.set("n", "<leader>og", "<CMD>Gen<CR>", { desc = "Open Gen" })
+    end,
+  },
+
+  {
+    "EthanJWright/vs-tasks.nvim",
+    dependencies = {
+      "nvim-lua/popup.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("vstask").setup({})
+
+      vim.keymap.set(
+        "n",
+        "<leader>ot",
+        "<CMD>lua require('telescope').extensions.vstask.tasks()<CR>",
+        { desc = "Open vstask tasks" }
+      )
+    end,
+  },
 }
