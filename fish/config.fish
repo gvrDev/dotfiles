@@ -1,6 +1,9 @@
 if status is-interactive
     set -lx SHELL fish
     keychain --eval --agents ssh --quiet -Q github skey | source
+    if not set -q TMUX
+      tmux new -A -t homebase
+    end
 end
 
 fish_add_path ~/.go/bin

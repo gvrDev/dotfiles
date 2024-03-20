@@ -1,4 +1,0 @@
-{
-  "rust-analyzer": { "disable": true },
-  "tsserver": { "disable": true }
-}
