@@ -45,6 +45,7 @@ return {
 		config = function()
 			require("silicon").setup({
 				font = "JetBrainsMono Nerd Font=34",
+				to_clipboard = true,
 			})
 		end,
 	},

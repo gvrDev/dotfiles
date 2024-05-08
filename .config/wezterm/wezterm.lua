@@ -14,8 +14,7 @@ return {
 		left = 0,
 		right = 0,
 	},
-	-- window_background_image = "/home/gui/Pictures/bg-02.jpg",
-	-- window_background_opacity = 0,
+	max_fps = 240,
 
 	default_prog = { "fish" },
 }
