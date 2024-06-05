@@ -17,28 +17,6 @@ return {
 		},
 	},
 	{
-		"utilyre/barbecue.nvim",
-		name = "barbecue",
-		version = "*",
-		dependencies = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
-		},
-		opts = {},
-	},
-	{
-		"numToStr/Comment.nvim",
-		opts = {},
-		lazy = false,
-	},
-	{
-		"m4xshen/hardtime.nvim",
-		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-		opts = {
-			disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil", "dbui", "NeogitStatus" },
-		},
-	},
-	{
 		"michaelrommel/nvim-silicon",
 		lazy = true,
 		cmd = "Silicon",

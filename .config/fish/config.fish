@@ -4,21 +4,23 @@ if status is-interactive
     if not set -q TMUX
       tmux new -A -t homebase
     end
+
+    fzf --fish | source
+    zoxide init fish | source
+    starship init fish | source
 end
 
-fish_add_path ~/.go/bin
-fish_add_path ~/.bun/bin
 fish_add_path ~/.local/bin
-fish_add_path ~/.cargo/bin
+fish_add_path ~/scripts
 
-starship init fish | source
-set -gx VOLTA_HOME "$HOME/.volta"
-set -gx PATH "$VOLTA_HOME/bin" $PATH
 set -gx XDG_CURRENT_DESKTOP Sway
 
-# pnpm
-set -gx PNPM_HOME "/home/gui/.local/share/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
-end
-# pnpm end
+alias l="eza -la --icons=always"
+alias ls="eza -la --icons=always"
+alias v="nvim ."
+
+alias container_start="docker compose up"
+alias container_stop="docker ps -aq | xargs docker stop | xargs docker rm"
+alias container_clean="docker image ls -q | xargs -I {} docker image rm -f {}"
+set -gx VOLTA_HOME "$HOME/.volta"
+set -gx PATH "$VOLTA_HOME/bin" $PATH

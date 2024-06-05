@@ -2,6 +2,7 @@ return {
 	{
 		"stevearc/oil.nvim",
 		opts = {
+			columns = { "icon" },
 			view_options = {
 				show_hidden = true,
 			},
@@ -54,6 +55,24 @@ return {
 				vim.cmd.Neogit,
 				mode = "n",
 				desc = "Neogit",
+			},
+		},
+	},
+	{
+		"ThePrimeagen/git-worktree.nvim",
+		opts = {},
+		keys = {
+			{
+				"<leader>st",
+				"<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>",
+				mode = "n",
+				desc = "[N]ew work[T]ree",
+			},
+			{
+				"<leader>nt",
+				"<CMD>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>",
+				mode = "n",
+				desc = "[S]earch work[T]ree",
 			},
 		},
 	},
@@ -115,34 +134,10 @@ return {
 			},
 		},
 	},
+
 	{
-		"desdic/greyjoy.nvim",
-		keys = {
-			{
-				"<leader>ot",
-				vim.cmd.Greyjoy,
-				desc = "Open greyjoy",
-				mode = "n",
-			},
-		},
-		config = function()
-			local greyjoy = require("greyjoy")
-			greyjoy.setup({
-				output_results = "toggleterm",
-				last_first = true,
-			})
-			greyjoy.load_extension("generic")
-			greyjoy.load_extension("vscode_tasks")
-			greyjoy.load_extension("makefile")
-			greyjoy.load_extension("kitchen")
-			greyjoy.load_extension("cargo")
-			greyjoy.load_extension("docker_compose")
-		end,
-	},
-	{
-		"akinsho/toggleterm.nvim",
-		lazy = true,
-		version = "*",
-		opts = { direction = "float", start_in_insert = false, close_on_exit = true, persist_mode = false },
+		"tpope/vim-dadbod",
+		"kristijanhusak/vim-dadbod-completion",
+		"kristijanhusak/vim-dadbod-ui",
 	},
 }

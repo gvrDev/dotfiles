@@ -20,35 +20,57 @@ return {
 					map("<leader>lrn", vim.lsp.buf.rename, "[R]e[n]ame")
 					map("<leader>lca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 					map("K", vim.lsp.buf.hover, "Hover Documentation")
-
-					local client = vim.lsp.get_client_by_id(event.data.client_id)
-					if client and client.server_capabilities.documentHighlightProvider then
-						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-							buffer = event.buf,
-							callback = vim.lsp.buf.document_highlight,
-						})
-
-						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-							buffer = event.buf,
-							callback = vim.lsp.buf.clear_references,
-						})
-					end
 				end,
 			})
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 			local servers = {
+				eslint = {},
+				emmet_ls = {},
+				cssls = {},
+				html = {},
+				tailwindcss = {},
 				lua_ls = {
-					-- cmd = {...},
-					-- filetypes = { ...},
-					-- capabilities = {},
+					server_capabilities = {
+						semanticTokensProvider = nil,
+					},
+				},
+				tsserver = {
+					enabled = false,
+				},
+				vtsls = {
+					filetypes = {
+						"javascript",
+						"javascriptreact",
+						"javascript.jsx",
+						"typescript",
+						"typescriptreact",
+						"typescript.tsx",
+					},
 					settings = {
-						Lua = {
-							completion = {
-								callSnippet = "Replace",
+						complete_function_calls = true,
+						vtsls = {
+							enableMoveToFileCodeAction = true,
+							autoUseWorkspaceTsdk = true,
+							experimental = {
+								completion = {
+									enableServerSideFuzzyMatch = true,
+								},
 							},
-							-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-							-- diagnostics = { disable = { 'missing-fields' } },
+						},
+						typescript = {
+							updateImportsOnFileMove = { enabled = "always" },
+							suggest = {
+								completeFunctionCalls = true,
+							},
+							inlayHints = {
+								enumMemberValues = { enabled = true },
+								functionLikeReturnTypes = { enabled = true },
+								parameterNames = { enabled = "literals" },
+								parameterTypes = { enabled = true },
+								propertyDeclarationTypes = { enabled = true },
+								variableTypes = { enabled = false },
+							},
 						},
 					},
 				},
@@ -67,11 +89,16 @@ return {
 						if server_name == "tsserver" then
 							return
 						end
-						if server_name == "rust_analyzer" then
-							return
-						end
 						local server = servers[server_name] or {}
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+						if server_name == "vtsls" then
+							server.settings.javascript = vim.tbl_deep_extend(
+								"force",
+								{},
+								server.settings.typescript,
+								server.settings.javascript or {}
+							)
+						end
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
@@ -95,22 +122,12 @@ return {
 				jsx = { { "prettierd", "prettier" } },
 				tsx = { { "prettierd", "prettier" } },
 				html = { { "prettierd", "prettier" } },
+				json = { { "prettierd", "prettier" } },
+				yaml = { { "prettierd", "prettier" } },
+				css = { { "prettierd", "prettier" } },
+				less = { { "prettierd", "prettier" } },
+				scss = { { "prettierd", "prettier" } },
 			},
 		},
-	},
-	{
-		"p00f/clangd_extensions.nvim",
-		ft = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
-	},
-	{
-		"pmizio/typescript-tools.nvim",
-		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-		ft = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-		opts = {},
-	},
-	{
-		"mrcjkb/rustaceanvim",
-		version = "^4",
-		ft = { "rust" },
 	},
 }
