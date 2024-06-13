@@ -2,9 +2,16 @@ return {
 	{
 		"stevearc/oil.nvim",
 		opts = {
+			default_file_explorer = true,
+			delete_to_trash = true,
+			skip_confirm_for_simple_edits = true,
 			columns = { "icon" },
 			view_options = {
 				show_hidden = true,
+				natural_order = true,
+				is_always_hidden = function(name, _)
+					return name == ".." or name == ".git"
+				end,
 			},
 		},
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -18,18 +25,6 @@ return {
 		},
 	},
 	{
-		"lewis6991/gitsigns.nvim",
-		opts = {
-			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
-			},
-		},
-	},
-	{
 		"mbbill/undotree",
 		dependencies = "nvim-lua/plenary.nvim",
 		opts = {},
@@ -39,40 +34,6 @@ return {
 				vim.cmd.UndotreeToggle,
 				desc = "Open undo tree",
 				mode = "n",
-			},
-		},
-	},
-	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"sindrets/diffview.nvim", -- optional - Diff integration
-		},
-		config = true,
-		keys = {
-			{
-				"<leader>tg",
-				vim.cmd.Neogit,
-				mode = "n",
-				desc = "Neogit",
-			},
-		},
-	},
-	{
-		"ThePrimeagen/git-worktree.nvim",
-		opts = {},
-		keys = {
-			{
-				"<leader>st",
-				"<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>",
-				mode = "n",
-				desc = "[N]ew work[T]ree",
-			},
-			{
-				"<leader>nt",
-				"<CMD>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>",
-				mode = "n",
-				desc = "[S]earch work[T]ree",
 			},
 		},
 	},
@@ -133,11 +94,5 @@ return {
 				mode = "n",
 			},
 		},
-	},
-
-	{
-		"tpope/vim-dadbod",
-		"kristijanhusak/vim-dadbod-completion",
-		"kristijanhusak/vim-dadbod-ui",
 	},
 }
