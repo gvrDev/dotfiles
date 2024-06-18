@@ -1,0 +1,9 @@
+format = """$directory$character"""
+right_format = """$all"""
+add_newline = false
+
+[docker_context]
+format = 'via [🐋 $context](blue bold)'
+
+[git_branch]
+format =  '[$symbol$branch(:$remote_branch)]($style)'
