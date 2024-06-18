@@ -23,6 +23,7 @@ alias mkdir="mkdir -pv"
 
 alias dcs="docker ps -aq | xargs docker stop | xargs docker rm"
 alias dcc="docker image ls -q | xargs -I {} docker image rm -f {}"
+alias dcu="docker-compose up"
 
 set -gx VOLTA_HOME "$HOME/.volta"
 set -gx PATH "$VOLTA_HOME/bin" $PATH

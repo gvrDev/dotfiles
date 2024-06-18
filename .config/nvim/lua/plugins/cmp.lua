@@ -16,34 +16,37 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-cmdline",
 			"onsails/lspkind.nvim",
 		},
 		config = function()
 			local cmp = require("cmp")
-			local ls = require("luasnip")
+			local luasnip = require("luasnip")
 			local lspkind = require("lspkind")
-			lspkind.init({})
 
-			vim.keymap.set({ "i", "s" }, "<c-k>", function()
-				if ls.expand_or_jumpable() then
-					ls.expand_or_jump()
-				end
-			end, { silent = true })
-			vim.keymap.set({ "i", "s" }, "<c-j>", function()
-				if ls.jumpable(-1) then
-					ls.jump(-1)
-				end
-			end, { silent = true })
-
-			ls.config.setup({})
+			luasnip.config.setup({})
 			cmp.setup({
+				window = {
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
+				},
+				formatting = {
+					format = lspkind.cmp_format({
+						mode = "symbol_text",
+						maxwidth = 30,
+						ellipsis_char = "...",
+						show_labelDetails = true,
+						before = function(entry, vim_item)
+							return vim_item
+						end,
+					}),
+				},
+
 				snippet = {
 					expand = function(args)
-						ls.lsp_expand(args.body)
+						luasnip.lsp_expand(args.body)
 					end,
 				},
-				completion = { completeopt = "menu,menuone,noinsert" },
-
 				mapping = cmp.mapping.preset.insert({
 					["<C-n>"] = cmp.mapping.select_next_item(),
 					["<C-p>"] = cmp.mapping.select_prev_item(),
@@ -52,16 +55,34 @@ return {
 				}),
 				sources = {
 					{ name = "nvim_lsp" },
+					{ name = "luasnip" },
 					{ name = "path" },
 					{ name = "buffer" },
-					{ name = "luasnip" },
 				},
 			})
+
 			cmp.setup.filetype({ "sql" }, {
 				sources = {
 					{ name = "vim-dadbod-completion" },
 					{ name = "buffer" },
 				},
+			})
+
+			cmp.setup.cmdline({ "/", "?" }, {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "buffer" },
+				},
+			})
+
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = "path" },
+				}, {
+					{ name = "cmdline" },
+				}),
+				matching = { disallow_symbol_nonprefix_matching = false },
 			})
 		end,
 	},

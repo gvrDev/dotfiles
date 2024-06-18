@@ -56,26 +56,11 @@ return {
 		},
 	},
 	{
-		"folke/zen-mode.nvim",
-		dependencies = {
-			"preservim/vim-pencil",
-		},
+		"m4xshen/hardtime.nvim",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
 		opts = {
-			plugins = {
-				tmux = { enabled = true },
-				kitty = { enabled = true },
-			},
-		},
-		keys = {
-			{
-				"<leader>zz",
-				function()
-					require("zen-mode").toggle()
-					vim.cmd("TogglePencil")
-				end,
-				mode = "n",
-				desc = "Toggle zen mode",
-			},
+			disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil", "sql" },
 		},
 	},
+	{ "David-Kunz/gen.nvim", opts = { model = "llama3" } },
 }

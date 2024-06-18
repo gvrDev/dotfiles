@@ -1,9 +1,0 @@
-#!/bin/bash
-set -e
-
-if ! [ -x "$(command -v ansible)" ]; then
-  sudo dnf install ansible -y
-fi
-if ! [ -x "$(command -v stow)" ]; then
-  sudo dnf install stow -y
-fi
