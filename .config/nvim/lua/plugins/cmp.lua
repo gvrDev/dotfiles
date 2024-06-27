@@ -26,9 +26,12 @@ return {
 
 			luasnip.config.setup({})
 			cmp.setup({
+				view = {
+					entries = { name = "custom", selection_order = "near_cursor" },
+				},
 				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
+					-- completion = cmp.config.window.bordered(),
+					-- documentation = cmp.config.window.bordered(),
 				},
 				formatting = {
 					format = lspkind.cmp_format({
@@ -66,23 +69,6 @@ return {
 					{ name = "vim-dadbod-completion" },
 					{ name = "buffer" },
 				},
-			})
-
-			cmp.setup.cmdline({ "/", "?" }, {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = {
-					{ name = "buffer" },
-				},
-			})
-
-			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = cmp.config.sources({
-					{ name = "path" },
-				}, {
-					{ name = "cmdline" },
-				}),
-				matching = { disallow_symbol_nonprefix_matching = false },
 			})
 		end,
 	},

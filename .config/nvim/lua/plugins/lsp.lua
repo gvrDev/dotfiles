@@ -25,6 +25,10 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 			local servers = {
+				angularls = {},
+				clangd = {
+					cmd = { "/usr/bin/clangd" },
+				},
 				eslint = {},
 				emmet_ls = {},
 				cssls = {},
@@ -91,6 +95,9 @@ return {
 						end
 						local server = servers[server_name] or {}
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+						if server_name == "angularls" then
+							server.capabilities.rename_provider = false
+						end
 						if server_name == "vtsls" then
 							server.settings.javascript = vim.tbl_deep_extend(
 								"force",
