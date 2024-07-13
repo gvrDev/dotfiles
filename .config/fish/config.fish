@@ -11,19 +11,17 @@ if status is-interactive
     enable_transience
 end
 
+set --universal nvm_default_version lts
+
 fish_add_path ~/.local/bin
 fish_add_path ~/scripts
-
-set -gx XDG_CURRENT_DESKTOP Sway
 
 alias l="eza -la --icons=always"
 alias ls="eza -la --icons=always"
 alias v="nvim ."
 alias mkdir="mkdir -pv"
+alias update="sudo zypper refresh && sudo zypper dup --allow-vendor-change && flatpak update && sudo flatpak repair && sudo snap refresh"
 
 alias dcs="docker ps -aq | xargs docker stop | xargs docker rm"
 alias dcc="docker image ls -q | xargs -I {} docker image rm -f {}"
 alias dcu="docker-compose up"
-
-set -gx VOLTA_HOME "$HOME/.volta"
-set -gx PATH "$VOLTA_HOME/bin" $PATH
