@@ -18,4 +18,9 @@ return {
 	},
 	{ "mistricky/codesnap.nvim", build = "make" },
 	{ "echasnovski/mini.ai", version = false },
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
+	},
 }

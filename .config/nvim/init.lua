@@ -20,11 +20,13 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.backup = false
 
-vim.opt.updatetime = 250
+vim.opt.updatetime = 100
 vim.opt.timeoutlen = 300
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
+vim.opt.termguicolors = true
 
 vim.opt.inccommand = "split"
 
@@ -51,7 +53,12 @@ vim.keymap.set("n", "N", "nzzzv")
 vim.keymap.set("n", "n", "Nzzzv")
 
 vim.keymap.set("v", "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>y", [["+yy]])
+vim.keymap.set("n", "<leader>y", [["+y$]])
+vim.keymap.set("v", "<leader>d", [["_d]])
+vim.keymap.set("n", "x", [["_x]])
+vim.keymap.set("n", "<leader>p", [["_dP]])
+
+vim.keymap.set("i", "<c-a>", vim.lsp.buf.signature_help)
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -81,3 +88,5 @@ if gdproject then
 	io.close(gdproject)
 	vim.fn.serverstart("./godothost")
 end
+
+vim.cmd("colorscheme catppuccin")

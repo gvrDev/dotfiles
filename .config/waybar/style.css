@@ -7,7 +7,7 @@
 }
 
 window#waybar {
-  background-color: transparent;
+  background-color: #000;
 }
 
 window#waybar.hidden {

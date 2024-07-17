@@ -23,25 +23,23 @@ return {
 				end,
 			})
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+			-- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 			local servers = {
-				angularls = {},
+				angularls = {
+					server_capabilities = {
+						renameProvider = false,
+					},
+				},
 				clangd = {
 					cmd = { "/usr/bin/clangd" },
 				},
-				eslint = {},
-				emmet_ls = {},
-				cssls = {},
-				html = {},
-				tailwindcss = {},
+				biome = {},
 				lua_ls = {
 					server_capabilities = {
 						semanticTokensProvider = nil,
 					},
 				},
-				tsserver = {
-					enabled = false,
-				},
+				tsserver = {},
 				vtsls = {
 					filetypes = {
 						"javascript",
@@ -95,17 +93,6 @@ return {
 						end
 						local server = servers[server_name] or {}
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-						if server_name == "angularls" then
-							server.capabilities.rename_provider = false
-						end
-						if server_name == "vtsls" then
-							server.settings.javascript = vim.tbl_deep_extend(
-								"force",
-								{},
-								server.settings.typescript,
-								server.settings.javascript or {}
-							)
-						end
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
@@ -122,18 +109,17 @@ return {
 			},
 			formatters_by_ft = {
 				lua = { "stylua" },
-				javascript = { { "prettierd", "prettier" } },
-				typescript = { { "prettierd", "prettier" } },
-				javascriptreact = { { "prettierd", "prettier" } },
-				typescriptreact = { { "prettierd", "prettier" } },
-				jsx = { { "prettierd", "prettier" } },
-				tsx = { { "prettierd", "prettier" } },
-				html = { { "prettierd", "prettier" } },
-				json = { { "prettierd", "prettier" } },
-				yaml = { { "prettierd", "prettier" } },
-				css = { { "prettierd", "prettier" } },
-				less = { { "prettierd", "prettier" } },
-				scss = { { "prettierd", "prettier" } },
+				javascript = { { "biome" } },
+				typescript = { { "biome" } },
+				jsx = { { "biome" } },
+				tsx = { { "biome" } },
+				html = { { "biome" } },
+				css = { { "biome" } },
+				less = { { "biome" } },
+				scss = { { "biome" } },
+				json = { { "biome" } },
+				jsonc = { { "biome" } },
+				yaml = { { "biome" } },
 			},
 		},
 	},

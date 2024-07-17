@@ -1,7 +1,7 @@
 import = ["~/.config/alacritty/catppuccin-mocha.toml"]
 
 [env]
-TERM = "xterm-256color"
+TERM = "screen-256color"
 
 [window]
 decorations = 'None'
@@ -9,47 +9,20 @@ dynamic_padding = false
 opacity = 1.0
 
 [font]
-size = 13
-normal.family = "JetBrainsMono Nerd Font Mono"
-normal.style = "Bold"
-italic.family = "JetBrainsMono Nerd Font Mono"
-italic.style = "Bold Italic"
-bold.family = "JetBrainsMono Nerd Font Mono"
-bold.style = "ExtraBold"
-bold_italic.family = "JetBrainsMono Nerd Font Mono"
-bold_italic.style = "ExtraBold Italic"
+size = 12.5
+
+[font.normal]
+family = "Monaspace Neon"
+style = "Medium"
+[font.italic]
+family = "Monapasce Neon"
+style = "Bold Italic"
+[font.bold]
+family = "Monaspace Neon"
+style = "Bold"
+[font.bold_italic]
+family = "Monaspace Neon"
+style = "Bold Italic"
 
 [shell]
 program = "/usr/bin/fish"
-
-# [colors.primary]
-# background = "#161616"
-# foreground = "#ffffff"
-#
-# [colors.search.matches]
-# foreground = 'CellBackground'
-# background = '#ee5396'
-#
-# [colors.footer_bar]
-# background = '#262626'
-# foreground = '#ffffff'
-#
-# [colors.normal]
-# black = "#262626"
-# magenta = "#ff7eb6"
-# green = "#42be65"
-# yellow = "#ffe97b"
-# blue = "#33b1ff"
-# red = "#ee5396"
-# cyan = "#3ddbd9"
-# white = "#dde1e6"
-#
-# [colors.bright]
-# black = "#393939"
-# magenta = "#ff7eb6"
-# green = "#42be65"
-# yellow = "#ffe97b"
-# blue = "#33b1ff"
-# red = "#ee5396"
-# cyan = "#3ddbd9"
-# white = "#ffffff"
