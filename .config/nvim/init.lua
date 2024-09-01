@@ -60,6 +60,21 @@ vim.keymap.set("n", "<leader>p", [["_dP]])
 
 vim.keymap.set("i", "<c-a>", vim.lsp.buf.signature_help)
 
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
+	if vim.snippet.active({ direction = 1 }) then
+		return "<cmd>lua vim.snippet.jump(1)<cr>"
+	else
+		return "<Tab>"
+	end
+end, { expr = true })
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+	if vim.snippet.active({ direction = -1 }) then
+		return "<cmd>lua vim.snippet.jump(-1)<cr>"
+	else
+		return "<S-Tab>"
+	end
+end, { expr = true })
+
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -89,4 +104,4 @@ if gdproject then
 	vim.fn.serverstart("./godothost")
 end
 
-vim.cmd("colorscheme catppuccin")
+vim.cmd("colorscheme flow")
