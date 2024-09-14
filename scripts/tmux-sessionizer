@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd . ~/dotfiles/.config ~/dev/work ~/dev/personal -d 1 | fzf --ansi)
+    selected=$(fd . ~/dotfiles/.config ~/dev/work ~/dev/personal ~/vaults/work ~/vaults/personal -d 1 | fzf --ansi)
 fi
 
 if [[ -z $selected ]]; then

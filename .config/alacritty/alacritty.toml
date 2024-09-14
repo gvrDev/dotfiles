@@ -1,4 +1,4 @@
-import = ["~/.config/alacritty/flow.toml"]
+import = ["~/.config/alacritty/tokyonight_moon.toml"]
 
 [env]
 TERM = "screen-256color"

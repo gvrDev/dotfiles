@@ -1,107 +1,56 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
-vim.opt.relativenumber = true
-vim.opt.number = true
-vim.opt.guicursor = ""
-
-vim.opt.wrap = false
-vim.opt.scrolloff = 10
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.smartindent = true
-vim.opt.cmdheight = 0
-
-vim.opt.undofile = true
-vim.opt.swapfile = false
-vim.opt.backup = false
-
-vim.opt.updatetime = 100
-vim.opt.timeoutlen = 300
-
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
-vim.opt.termguicolors = true
-
-vim.opt.inccommand = "split"
-
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-
-vim.keymap.set("n", "U", vim.cmd.redo)
-
-vim.keymap.set("n", "<leader>|", "<CMD>vsplit<CR><C-w><C-l>", { desc = "Vertical Split " })
-vim.keymap.set("n", "<leader>-", "<CMD>split<CR><C-w><C-j>", { desc = "Horizontal Split " })
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-vim.keymap.set("n", "<leader>bd", vim.cmd.bdelete, { desc = "Move focus to the upper window" })
-
-vim.keymap.set("n", "H", "^")
-vim.keymap.set("n", "L", "g_")
-
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "N", "nzzzv")
-vim.keymap.set("n", "n", "Nzzzv")
-
-vim.keymap.set("v", "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>y", [["+y$]])
-vim.keymap.set("v", "<leader>d", [["_d]])
-vim.keymap.set("n", "x", [["_x]])
-vim.keymap.set("n", "<leader>p", [["_dP]])
-
-vim.keymap.set("i", "<c-a>", vim.lsp.buf.signature_help)
-
-vim.keymap.set({ "i", "s" }, "<Tab>", function()
-	if vim.snippet.active({ direction = 1 }) then
-		return "<cmd>lua vim.snippet.jump(1)<cr>"
-	else
-		return "<Tab>"
-	end
-end, { expr = true })
-vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-	if vim.snippet.active({ direction = -1 }) then
-		return "<cmd>lua vim.snippet.jump(-1)<cr>"
-	else
-		return "<S-Tab>"
-	end
-end, { expr = true })
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-})
-
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+if not vim.uv.fs_stat(lazypath) then
+    vim.fn.system {
+        'git',
+        'clone',
+        '--filter=blob:none',
+        'https://github.com/folke/lazy.nvim.git',
+        '--branch=stable', -- latest stable release
+        lazypath,
+    }
 end
-vim.opt.rtp:prepend(lazypath)
+vim.opt.rtp = vim.opt.rtp ^ lazypath
 
-require("lazy").setup({ import = "plugins" }, { change_detection = { notify = false } })
+require 'settings'
+require 'keymaps'
+require 'autocmds'
+require 'server'
 
-local gdproject = io.open(vim.fn.getcwd() .. "/project.godot", "r")
-if gdproject then
-	io.close(gdproject)
-	vim.fn.serverstart("./godothost")
-end
+require('lazy').setup {
+    spec = {
+        -- import/override with your plugins
+        { import = 'plugins' },
+    },
+    defaults = {
+        -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
+        -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
+        lazy = false,
+        -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
+        -- have outdated releases, which may break your Neovim install.
+        version = false, -- always use the latest git commit
+        -- version = "*", -- try installing the latest stable version for plugins that support semver
+    },
+    checker = {
+        enabled = false, -- check for plugin updates periodically
+        notify = false, -- notify on update
+    }, -- automatically check for plugin updates
+    change_detection = {
+        notify = false,
+    },
+    performance = {
+        rtp = {
+            -- disable some rtp plugins
+            disabled_plugins = {
+                'gzip',
+                'netrwPlugin',
+                'rplugin',
+                'tarPlugin',
+                'tohtml',
+                'tutor',
+                'zipPlugin',
+            },
+        },
+    },
+}
 
-vim.cmd("colorscheme flow")
+vim.cmd 'colorscheme tokyonight'

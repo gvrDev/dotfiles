@@ -25,8 +25,6 @@ vim.keymap.set('v', '<leader>d', [["_d]])
 vim.keymap.set('n', 'x', [["_x]])
 vim.keymap.set('n', '<leader>p', [["_dP]])
 
-vim.keymap.set('i', '<c-a>', vim.lsp.buf.signature_help)
-
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
 
