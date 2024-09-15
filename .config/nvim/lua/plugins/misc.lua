@@ -16,7 +16,7 @@ return {
             { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
         },
     },
-    { 'mistricky/codesnap.nvim', build = 'make' },
+    { 'mistricky/codesnap.nvim', build = 'make', cmd = { 'CodeSnap', 'CodeSnapASCII' } },
     { 'echasnovski/mini.ai', version = false },
     {
         'echasnovski/mini.bufremove',

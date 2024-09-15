@@ -36,6 +36,9 @@ return {
         config = function()
             require('octo').setup { enable_builtin = true }
         end,
+        cmd = {
+            'Octo',
+        },
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope.nvim',

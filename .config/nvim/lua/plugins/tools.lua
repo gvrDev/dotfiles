@@ -144,6 +144,7 @@ return {
         config = function()
             require('dbee').setup(--[[optional config]])
         end,
+        cmd = { 'Dbee' },
     },
     {
         'stevearc/overseer.nvim',

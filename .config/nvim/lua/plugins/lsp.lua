@@ -6,16 +6,6 @@ return {
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
             { 'j-hui/fidget.nvim', opts = {} },
-            {
-                'folke/lazydev.nvim',
-                ft = 'lua',
-                opts = {
-                    library = {
-                        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
-                    },
-                },
-            },
-            { 'Bilal2453/luvit-meta', lazy = true },
         },
         config = function()
             local capabilities = nil
