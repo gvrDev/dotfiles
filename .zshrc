@@ -7,7 +7,7 @@ source <(fzf --zsh)
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
-alias ~=cd 'cd ~'
+alias ~='cd ~'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -27,13 +27,13 @@ alias dcu="docker-compose up"
 export OPENAI_API_KEY=$(pass show api/key/openai)
 export ANTHROPIC_API_KEY=$(pass show api/key/anthropic)
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 if [ -z "$TMUX" ]; then
     tmux new -A -s homebase
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # bun completions
 [ -s "/home/gui/.bun/_bun" ] && source "/home/gui/.bun/_bun"
