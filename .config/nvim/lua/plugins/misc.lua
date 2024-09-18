@@ -32,4 +32,5 @@ return {
             },
         },
     },
+    { 'tpope/vim-sleuth' },
 }

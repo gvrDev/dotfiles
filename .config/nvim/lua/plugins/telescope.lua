@@ -18,6 +18,14 @@ return {
                 end,
             },
             { 'nvim-telescope/telescope-ui-select.nvim' },
+            {
+                'aaronhallaert/advanced-git-search.nvim',
+                dependencies = {
+                    'sindrets/diffview.nvim',
+                    'tpope/vim-fugitive',
+                    'tpope/vim-rhubarb',
+                },
+            },
 
             -- Useful for getting pretty icons, but requires a Nerd Font.
             -- { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
@@ -58,12 +66,34 @@ return {
                     ['ui-select'] = {
                         require('telescope.themes').get_dropdown(),
                     },
+                    advanced_git_search = {
+                        import = {
+                            -- Add imports to the top of the file keeping the cursor in place
+                            insert_at_top = true,
+                        },
+                        diff_plugin = 'diffview',
+                        git_flags = {},
+                        git_diff_flags = {},
+                        show_builtin_git_pickers = true,
+                        smart_open = {
+                            preview = { hide_on_startup = true },
+                            layout_config = {
+                                width = 0.65,
+                            },
+                            mappings = {
+                                i = {
+                                    ['<esc>'] = require('telescope.actions').close,
+                                },
+                            },
+                        },
+                    },
                 },
             }
 
             -- Enable Telescope extensions if they are installed
             pcall(require('telescope').load_extension, 'fzf')
             pcall(require('telescope').load_extension, 'ui-select')
+            pcall(require('telescope').load_extension, 'advanced_git_search')
 
             -- See `:help telescope.builtin`
             local builtin = require 'telescope.builtin'
@@ -75,7 +105,12 @@ return {
             vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
             vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
             vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-            vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+            vim.keymap.set(
+                'n',
+                '<leader>sl',
+                '<cmd>AdvancedGitSearch search_log_content_file<CR>',
+                { desc = '[S]earch Recent Files ("." for repeat)' }
+            )
             vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
             -- Slightly advanced example of overriding default behavior and theme
