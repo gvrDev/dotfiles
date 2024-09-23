@@ -22,15 +22,18 @@ return {
                 'aaronhallaert/advanced-git-search.nvim',
                 dependencies = {
                     'sindrets/diffview.nvim',
-                    'tpope/vim-fugitive',
-                    'tpope/vim-rhubarb',
                 },
+            },
+            {
+                'ThePrimeagen/git-worktree.nvim',
+                opts = {},
             },
 
             -- Useful for getting pretty icons, but requires a Nerd Font.
             -- { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
         },
         config = function()
+            local telescope = require 'telescope'
             -- Telescope is a fuzzy finder that comes with a lot of different things that
             -- it can fuzzy find! It's more than just a "file finder", it can search
             -- many different aspects of Neovim, your workspace, LSP, and more!
@@ -52,7 +55,7 @@ return {
 
             -- [[ Configure Telescope ]]
             -- See `:help telescope` and `:help telescope.setup()`
-            require('telescope').setup {
+            telescope.setup {
                 -- You can put your default mappings / updates / etc. in here
                 --  All the info you're looking for is in `:help telescope.setup()`
                 --
@@ -63,6 +66,7 @@ return {
                 -- },
                 -- pickers = {}
                 extensions = {
+                    git_worktree = {},
                     ['ui-select'] = {
                         require('telescope.themes').get_dropdown(),
                     },
@@ -91,9 +95,10 @@ return {
             }
 
             -- Enable Telescope extensions if they are installed
-            pcall(require('telescope').load_extension, 'fzf')
-            pcall(require('telescope').load_extension, 'ui-select')
-            pcall(require('telescope').load_extension, 'advanced_git_search')
+            telescope.load_extension 'fzf'
+            telescope.load_extension 'ui-select'
+            telescope.load_extension 'advanced_git_search'
+            telescope.load_extension 'git_worktree'
 
             -- See `:help telescope.builtin`
             local builtin = require 'telescope.builtin'
@@ -105,12 +110,6 @@ return {
             vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
             vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
             vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-            vim.keymap.set(
-                'n',
-                '<leader>sl',
-                '<cmd>AdvancedGitSearch search_log_content_file<CR>',
-                { desc = '[S]earch Recent Files ("." for repeat)' }
-            )
             vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
             -- Slightly advanced example of overriding default behavior and theme
@@ -135,6 +134,26 @@ return {
             vim.keymap.set('n', '<leader>sn', function()
                 builtin.find_files { cwd = vim.fn.stdpath 'config' }
             end, { desc = '[S]earch [N]eovim files' })
+
+            -- git
+            vim.keymap.set(
+                'n',
+                '<leader>gfl',
+                '<cmd>AdvancedGitSearch search_log_content_file<CR>',
+                { desc = '[G]it [F]ile [L]og' }
+            )
+            vim.keymap.set(
+                'n',
+                '<leader>gwl',
+                telescope.extensions.git_worktree.git_worktrees,
+                { desc = '[G]it [W]orktrees [L]ist' }
+            )
+            vim.keymap.set(
+                'n',
+                '<leader>gwn',
+                telescope.extensions.git_worktree.create_git_worktree,
+                { desc = '[G]it [W]orktrees [N]ew' }
+            )
         end,
     },
 }

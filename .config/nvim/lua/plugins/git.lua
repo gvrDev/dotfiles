@@ -28,10 +28,6 @@ return {
         },
     },
     {
-        'ThePrimeagen/git-worktree.nvim',
-        opts = {},
-    },
-    {
         'pwntester/octo.nvim',
         config = function()
             require('octo').setup { enable_builtin = true }

@@ -1,11 +1,11 @@
 PATH="$PATH:$HOME/.local/bin"
 PATH="$PATH:$HOME/scripts"
+PATH="$PATH:$HOME/development/flutter/bin"
 export PATH
 
-eval "$(keychain --agents ssh -q -Q github skey)"
-source <(fzf --zsh)
-eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
+if [ -z "$TMUX" ]; then
+    tmux new -A -s homebase
+fi
 
 alias ~='cd ~'
 alias ..='cd ..'
@@ -24,12 +24,14 @@ alias dcs="docker ps -aq | xargs docker stop | xargs docker rm"
 alias dcc="docker image ls -q | xargs -I {} docker image rm -f {}"
 alias dcu="docker-compose up"
 
+eval "$(keychain --eval --agents ssh -q -Q github skey)"
+
 export OPENAI_API_KEY=$(pass show api/key/openai)
 export ANTHROPIC_API_KEY=$(pass show api/key/anthropic)
 
-if [ -z "$TMUX" ]; then
-    tmux new -A -s homebase
-fi
+source <(fzf --zsh)
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
