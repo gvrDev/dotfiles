@@ -1,5 +1,4 @@
 return {
-    { 'echasnovski/mini.icons', version = false, opts = {} },
     {
         'NvChad/nvim-colorizer.lua',
         opts = {
@@ -20,9 +19,5 @@ return {
                 html = { mode = 'foreground' },
             },
         },
-    },
-    {
-        'stevearc/dressing.nvim',
-        opts = {},
     },
 }

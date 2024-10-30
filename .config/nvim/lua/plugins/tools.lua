@@ -1,28 +1,28 @@
 return {
-    {
-        'stevearc/oil.nvim',
-        lazy = false,
-        opts = {
-            delete_to_trash = true,
-            skip_confirm_for_simple_edits = true,
-            columns = { 'icon' },
-            view_options = {
-                show_hidden = true,
-                natural_order = true,
-                is_always_hidden = function(name, _)
-                    return name == '..' or name == '.git'
-                end,
-            },
-        },
-        keys = {
-            {
-                '<leader>.',
-                vim.cmd.Oil,
-                mode = 'n',
-                desc = 'Open Oil file manager',
-            },
-        },
-    },
+    -- {
+    --     'stevearc/oil.nvim',
+    --     lazy = false,
+    --     opts = {
+    --         delete_to_trash = true,
+    --         skip_confirm_for_simple_edits = true,
+    --         columns = { 'icon' },
+    --         view_options = {
+    --             show_hidden = true,
+    --             natural_order = true,
+    --             is_always_hidden = function(name, _)
+    --                 return name == '..' or name == '.git'
+    --             end,
+    --         },
+    --     },
+    --     keys = {
+    --         {
+    --             '<leader>.',
+    --             vim.cmd.Oil,
+    --             mode = 'n',
+    --             desc = 'Open Oil file manager',
+    --         },
+    --     },
+    -- },
     {
         'mbbill/undotree',
         dependencies = 'nvim-lua/plenary.nvim',
@@ -46,7 +46,7 @@ return {
             {
                 '<leader>ha',
                 function()
-                    require('harpoon'):list():append()
+                    require('harpoon'):list():add()
                 end,
                 desc = 'Add buffer to harpoon',
                 mode = 'n',
@@ -95,7 +95,7 @@ return {
     },
     {
         'folke/trouble.nvim',
-        opts = {}, -- for default options, refer to the configuration section for custom setup.
+        opts = {},
         cmd = 'Trouble',
         keys = {
             {
@@ -136,13 +136,10 @@ return {
             'MunifTanjim/nui.nvim',
         },
         build = function()
-            -- Install tries to automatically detect the install method.
-            -- if it fails, try calling it with one of these parameters:
-            --    "curl", "wget", "bitsadmin", "go"
             require('dbee').install()
         end,
         config = function()
-            require('dbee').setup(--[[optional config]])
+            require('dbee').setup()
         end,
         cmd = { 'Dbee' },
     },
@@ -155,8 +152,26 @@ return {
         lazy = false,
         dependencies = {
             'nvim-lua/plenary.nvim',
-            'stevearc/dressing.nvim', -- optional for vim.ui.select
+            'stevearc/dressing.nvim',
         },
         config = true,
+    },
+    {
+        'epwalsh/obsidian.nvim',
+        version = '*',
+        lazy = true,
+        ft = 'markdown',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+        },
+        opts = {
+            workspaces = {
+                {
+                    name = 'personal',
+                    path = '~/vaults/personal',
+                },
+            },
+            ui = { enable = false },
+        },
     },
 }

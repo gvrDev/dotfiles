@@ -1,7 +1,7 @@
-set --universal nvm_default_version lts
-
 fish_add_path ~/.local/bin
 fish_add_path ~/scripts
+fish_add_path ~/development/flutter/bin
+source ~/.asdf/asdf.fish
 
 alias l="eza -la --icons=always"
 alias ls="eza -la --icons=always"
@@ -24,4 +24,6 @@ if status is-interactive
     zoxide init fish | source
     starship init fish | source
     enable_transience
+    fish_vi_key_bindings
+    bind -M insert \cf accept-autosuggestion
 end

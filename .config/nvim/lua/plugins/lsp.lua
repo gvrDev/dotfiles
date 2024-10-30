@@ -25,6 +25,7 @@ return {
                 ts_ls = false,
                 emmet_ls = true,
                 html = true,
+                zls = true,
                 vtsls = {
                     filetypes = {
                         'javascript',

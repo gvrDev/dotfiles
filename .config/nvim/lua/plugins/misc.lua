@@ -16,21 +16,11 @@ return {
             { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
         },
     },
-    { 'mistricky/codesnap.nvim', build = 'make', cmd = { 'CodeSnap', 'CodeSnapASCII' } },
-    { 'echasnovski/mini.ai', version = false },
     {
-        'echasnovski/mini.bufremove',
-        version = '*',
-        opts = {},
-        keys = {
-            {
-                '<leader>bd',
-                function()
-                    require('mini.bufremove').delete(0, false)
-                end,
-                desc = 'Delete current buffer',
-            },
-        },
+        'mistricky/codesnap.nvim',
+        build = 'make',
+        cmd = { 'CodeSnap', 'CodeSnapASCII' },
+        opts = { has_breadcrumbs = true, has_line_number = true },
     },
     { 'tpope/vim-sleuth' },
 }

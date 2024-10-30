@@ -3,9 +3,9 @@ PATH="$PATH:$HOME/scripts"
 PATH="$PATH:$HOME/development/flutter/bin"
 export PATH
 
-if [ -z "$TMUX" ]; then
-    tmux new -A -s homebase
-fi
+# if [ -z "$TMUX" ]; then
+#     tmux new -A -s homebase
+# fi
 
 alias ~='cd ~'
 alias ..='cd ..'
@@ -26,16 +26,12 @@ alias dcu="docker-compose up"
 
 eval "$(keychain --eval --agents ssh -q -Q github skey)"
 
-export OPENAI_API_KEY=$(pass show api/key/openai)
-export ANTHROPIC_API_KEY=$(pass show api/key/anthropic)
+# export OPENAI_API_KEY=$(pass show api/key/openai)
+# export ANTHROPIC_API_KEY=$(pass show api/key/anthropic)
 
 source <(fzf --zsh)
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # bun completions
 [ -s "/home/gui/.bun/_bun" ] && source "/home/gui/.bun/_bun"
@@ -43,3 +39,5 @@ export NVM_DIR="$HOME/.nvm"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+bindkey -v
