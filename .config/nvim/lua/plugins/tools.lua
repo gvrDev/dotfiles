@@ -146,6 +146,13 @@ return {
     {
         'stevearc/overseer.nvim',
         opts = {},
+        keys = {
+            {
+                '<leader>or',
+                '<cmd>OverseerLoadBundle<cr>',
+                desc = 'Overseer Load Bundle',
+            },
+        },
     },
     {
         'akinsho/flutter-tools.nvim',

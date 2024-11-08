@@ -26,6 +26,7 @@ return {
                 emmet_ls = true,
                 html = true,
                 zls = true,
+                omnisharp = true,
                 vtsls = {
                     filetypes = {
                         'javascript',
@@ -96,8 +97,11 @@ return {
             vim.list_extend(ensure_installed, servers_to_install)
             require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-            if pcall(require, 'cmp_nvim_lsp') then
-                capabilities = require('cmp_nvim_lsp').default_capabilities()
+            -- if pcall(require, 'cmp_nvim_lsp') then
+            --     capabilities = require('cmp_nvim_lsp').default_capabilities()
+            -- end
+            if pcall(require, 'blink.cmp') then
+                capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
             end
             require('mason-lspconfig').setup {
                 handlers = {

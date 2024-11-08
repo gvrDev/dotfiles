@@ -23,4 +23,5 @@ return {
         opts = { has_breadcrumbs = true, has_line_number = true },
     },
     { 'tpope/vim-sleuth' },
+    { 'ThePrimeagen/vim-be-good' },
 }
