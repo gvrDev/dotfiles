@@ -13,6 +13,8 @@ alias dcs="docker ps -aq | xargs docker stop | xargs docker rm"
 alias dcc="docker image ls -q | xargs -I {} docker image rm -f {}"
 alias dcu="docker-compose up"
 
+set -Ux ANDROID_HOME ~/Android/Sdk
+
 if status is-interactive
     set -lx SHELL fish
     keychain --eval --agents ssh -q -Q github skey | source

@@ -13,12 +13,6 @@ return {
             },
             { 'nvim-telescope/telescope-ui-select.nvim' },
             {
-                'aaronhallaert/advanced-git-search.nvim',
-                dependencies = {
-                    'sindrets/diffview.nvim',
-                },
-            },
-            {
                 'ThePrimeagen/git-worktree.nvim',
                 opts = {},
             },
@@ -57,7 +51,6 @@ return {
             -- Enable Telescope extensions if they are installed
             telescope.load_extension 'fzf'
             telescope.load_extension 'ui-select'
-            telescope.load_extension 'advanced_git_search'
             telescope.load_extension 'git_worktree'
 
             -- See `:help telescope.builtin`
@@ -96,12 +89,6 @@ return {
             end, { desc = '[S]earch [N]eovim files' })
 
             -- git
-            vim.keymap.set(
-                'n',
-                '<leader>gfl',
-                '<cmd>AdvancedGitSearch search_log_content_file<CR>',
-                { desc = '[G]it [F]ile [L]og' }
-            )
             vim.keymap.set(
                 'n',
                 '<leader>gwl',

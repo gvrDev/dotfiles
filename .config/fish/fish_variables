@@ -1,7 +1,8 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export SSH_AGENT_PID:3383
-SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXXiWKBxj/agent\x2e3102
+SETUVAR --export ANDROID_HOME:/home/gui/Android/Sdk
+SETUVAR --export SSH_AGENT_PID:3341
+SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXX8UrqGI/agent\x2e3075
 SETUVAR __fish_initialized:3400
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
