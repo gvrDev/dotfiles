@@ -53,7 +53,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec wezterm
 
 # kill focused window
 bindsym $mod+q kill
@@ -209,3 +209,11 @@ for_window[instance="Godot_Engine"] floating enable
 
 exec --no-startup-id xsetroot -solid "#111"
 exec --no-startup-id blueman-applet
+
+# client.focused #ffc0cb #285577 #ffffff #2e9ef4 #285577
+client.focused #333333 #00aa00 #ffffff #2e9ef4 #ffc0cb
+client.focused_inactive #333333 #555500 #dddddd #484e50 #5f676a
+client.unfocused #333333 #444444 #bbbbbb #292d2e #222222
+client.urgent #880000 #444444 #ffffff #880000 #900000
+client.placeholder #000000 #444444 #ffffff #000000 #0c0c0c
+client.background #ffffff

@@ -2,8 +2,8 @@ local wezterm = require("wezterm")
 
 return {
 	color_scheme = "Catppuccin Mocha",
-	font = wezterm.font("JetBrainsMono NerdFont", { weight = "Bold", stretch = "Expanded" }),
-	font_size = 11,
+	font = wezterm.font("Monaspace Neon Medium"),
+	font_size = 12.5,
 	line_height = 1.5,
 
 	enable_tab_bar = false,

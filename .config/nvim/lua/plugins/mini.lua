@@ -12,18 +12,9 @@ return {
                 mode = 'n',
                 desc = 'Open mini files',
             },
-            {
-                '<leader>bd',
-                function()
-                    require('mini.bufremove').delete()
-                end,
-                mode = 'n',
-                desc = 'bufremove',
-            },
         },
         config = function()
             require('mini.ai').setup()
-            require('mini.bufremove').setup()
             require('mini.surround').setup {
                 mappings = {
                     add = 'ma',
