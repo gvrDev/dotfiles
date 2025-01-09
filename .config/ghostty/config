@@ -4,7 +4,7 @@ confirm-close-surface = false
 
 font-family = Monaspace Neon Medium
 font-size = 12.5
-adjust-cell-height = 12
+adjust-cell-height = 14
 
 theme = tokyonight_moon
 cursor-style = block
