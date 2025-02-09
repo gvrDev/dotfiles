@@ -36,15 +36,13 @@ return {
                         'typescriptreact',
                         'typescript.tsx',
                     },
-                    server_capabilities = {
-                        documentFormattingProvider = false,
-                    },
                     settings = {
                         complete_function_calls = true,
                         vtsls = {
                             enableMoveToFileCodeAction = true,
                             autoUseWorkspaceTsdk = true,
                             experimental = {
+                                maxInlayHintLength = 30,
                                 completion = {
                                     enableServerSideFuzzyMatch = true,
                                 },
@@ -100,9 +98,6 @@ return {
             -- if pcall(require, 'cmp_nvim_lsp') then
             --     capabilities = require('cmp_nvim_lsp').default_capabilities()
             -- end
-            if pcall(require, 'blink.cmp') then
-                capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
-            end
             require('mason-lspconfig').setup {
                 handlers = {
                     function(server_name)
@@ -181,8 +176,8 @@ return {
                 tsx = { 'biome' },
                 json = { 'biome' },
                 jsonc = { 'biome' },
+                css = { 'biome' },
                 html = { 'prettierd', 'prettier', stop_after_first = true },
-                css = { 'prettierd', 'prettier', stop_after_first = true },
                 less = { 'prettierd', 'prettier', stop_after_first = true },
                 scss = { 'prettierd', 'prettier', stop_after_first = true },
                 yaml = { 'prettierd', 'prettier', stop_after_first = true },

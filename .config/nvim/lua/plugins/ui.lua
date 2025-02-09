@@ -1,22 +1,20 @@
 return {
     {
-        'NvChad/nvim-colorizer.lua',
+        'catgoose/nvim-colorizer.lua',
+        event = 'BufReadPre',
         opts = {
             user_default_options = {
                 tailwind = true,
+                css = true,
             },
             filetypes = {
+                'javascriptreact',
+                'typescriptreact',
+                'css',
                 'scss',
                 'sass',
                 'less',
-                'css',
-                'javascript',
-                'javascriptreact',
-                'jsx',
-                'typescript',
-                'typescriptreact',
-                'tsx',
-                html = { mode = 'foreground' },
+                html = { mode = 'foreground', names = false },
             },
         },
     },
@@ -42,6 +40,14 @@ return {
             trailing_stiffness = 0.5,
             distance_stop_animating = 0.5,
             hide_target_hack = false,
+            cursor_color = '#d3cdc3',
+            cterm_cursor_colors = { 240, 245, 250, 255 },
+            cterm_bg = 235,
         },
+    },
+    {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        opts = {},
     },
 }

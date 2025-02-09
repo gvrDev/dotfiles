@@ -1,25 +1,31 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.opt.nu = true
-vim.opt.relativenumber = true
-vim.opt.guicursor = ''
+local opt = vim.opt
 
-vim.opt.wrap = false
-vim.opt.scrolloff = 8
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.smartindent = true
+opt.nu = true
+opt.relativenumber = true
+opt.guicursor = ''
 
-vim.opt.undofile = true
-vim.opt.swapfile = false
-vim.opt.backup = false
+opt.ruler = false
+opt.wrap = false
+opt.scrolloff = 8
+opt.tabstop = 2
+opt.softtabstop = 2
+opt.shiftround = true
+opt.shiftwidth = 2
+opt.expandtab = true
+opt.smartindent = true
 
-vim.opt.updatetime = 50
+opt.undofile = true
+opt.swapfile = false
+opt.backup = false
 
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+opt.updatetime = 50
 
-vim.opt.termguicolors = true
+opt.splitright = true
+opt.splitbelow = true
+
+opt.termguicolors = true
+opt.pumblend = 10
+opt.pumheight = 10

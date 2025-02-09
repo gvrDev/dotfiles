@@ -6,9 +6,14 @@ font-family = Monaspace Neon Medium
 font-size = 12.5
 adjust-cell-height = 14
 
-theme = tokyonight_moon
 cursor-style = block
 cursor-style-blink = false
+cursor-style-blink = false
 
-command = fish
-shell-integration = fish
+shell-integration = zsh
+shell-integration-features = no-cursor
+
+window-vsync = true
+
+command = zsh
+theme = rose-pine

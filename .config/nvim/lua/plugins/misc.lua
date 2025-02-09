@@ -16,13 +16,6 @@ return {
             { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
         },
     },
-    {
-        'mistricky/codesnap.nvim',
-        build = 'make',
-        cmd = { 'CodeSnap', 'CodeSnapASCII' },
-        opts = { has_breadcrumbs = true, has_line_number = true },
-    },
-    { 'tpope/vim-sleuth' },
     { 'ThePrimeagen/vim-be-good' },
-    { 'meznaric/key-analyzer.nvim', opts = {} },
+    { 'tpope/vim-sleuth' },
 }

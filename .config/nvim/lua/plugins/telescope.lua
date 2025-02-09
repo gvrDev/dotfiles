@@ -22,35 +22,11 @@ return {
             telescope.setup {
                 extensions = {
                     git_worktree = {},
-                    ['ui-select'] = {
-                        require('telescope.themes').get_dropdown(),
-                    },
-                    advanced_git_search = {
-                        import = {
-                            insert_at_top = true,
-                        },
-                        diff_plugin = 'diffview',
-                        git_flags = {},
-                        git_diff_flags = {},
-                        show_builtin_git_pickers = true,
-                        smart_open = {
-                            preview = { hide_on_startup = true },
-                            layout_config = {
-                                width = 0.65,
-                            },
-                            mappings = {
-                                i = {
-                                    ['<esc>'] = require('telescope.actions').close,
-                                },
-                            },
-                        },
-                    },
                 },
             }
 
             -- Enable Telescope extensions if they are installed
             telescope.load_extension 'fzf'
-            telescope.load_extension 'ui-select'
             telescope.load_extension 'git_worktree'
 
             -- See `:help telescope.builtin`
@@ -65,15 +41,6 @@ return {
             vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
             vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
-            -- Slightly advanced example of overriding default behavior and theme
-            vim.keymap.set('n', '<leader>/', function()
-                -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-                builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-                    winblend = 10,
-                    previewer = false,
-                })
-            end, { desc = '[/] Fuzzily search in current buffer' })
-
             -- It's also possible to pass additional configuration options.
             --  See `:help telescope.builtin.live_grep()` for information about particular keys
             vim.keymap.set('n', '<leader>s/', function()
@@ -82,11 +49,6 @@ return {
                     prompt_title = 'Live Grep in Open Files',
                 }
             end, { desc = '[S]earch [/] in Open Files' })
-
-            -- Shortcut for searching your Neovim configuration files
-            vim.keymap.set('n', '<leader>sn', function()
-                builtin.find_files { cwd = vim.fn.stdpath 'config' }
-            end, { desc = '[S]earch [N]eovim files' })
 
             -- git
             vim.keymap.set(

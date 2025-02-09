@@ -1,28 +1,4 @@
 return {
-    -- {
-    --     'stevearc/oil.nvim',
-    --     lazy = false,
-    --     opts = {
-    --         delete_to_trash = true,
-    --         skip_confirm_for_simple_edits = true,
-    --         columns = { 'icon' },
-    --         view_options = {
-    --             show_hidden = true,
-    --             natural_order = true,
-    --             is_always_hidden = function(name, _)
-    --                 return name == '..' or name == '.git'
-    --             end,
-    --         },
-    --     },
-    --     keys = {
-    --         {
-    --             '<leader>.',
-    --             vim.cmd.Oil,
-    --             mode = 'n',
-    --             desc = 'Open Oil file manager',
-    --         },
-    --     },
-    -- },
     {
         'mbbill/undotree',
         dependencies = 'nvim-lua/plenary.nvim',
@@ -94,91 +70,26 @@ return {
         },
     },
     {
-        'folke/trouble.nvim',
-        opts = {},
-        cmd = 'Trouble',
-        keys = {
-            {
-                '<leader>xx',
-                '<cmd>Trouble diagnostics toggle<cr>',
-                desc = 'Diagnostics (Trouble)',
-            },
-            {
-                '<leader>xX',
-                '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
-                desc = 'Buffer Diagnostics (Trouble)',
-            },
-            {
-                '<leader>cs',
-                '<cmd>Trouble symbols toggle focus=false<cr>',
-                desc = 'Symbols (Trouble)',
-            },
-            {
-                '<leader>cl',
-                '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
-                desc = 'LSP Definitions / references / ... (Trouble)',
-            },
-            {
-                '<leader>xL',
-                '<cmd>Trouble loclist toggle<cr>',
-                desc = 'Location List (Trouble)',
-            },
-            {
-                '<leader>xQ',
-                '<cmd>Trouble qflist toggle<cr>',
-                desc = 'Quickfix List (Trouble)',
-            },
-        },
-    },
-    {
-        'kndndrj/nvim-dbee',
-        dependencies = {
-            'MunifTanjim/nui.nvim',
-        },
-        build = function()
-            require('dbee').install()
-        end,
-        config = function()
-            require('dbee').setup()
-        end,
-        cmd = { 'Dbee' },
-    },
-    {
-        'stevearc/overseer.nvim',
-        opts = {},
-        keys = {
-            {
-                '<leader>or',
-                '<cmd>OverseerLoadBundle<cr>',
-                desc = 'Overseer Load Bundle',
-            },
-        },
-    },
-    {
-        'akinsho/flutter-tools.nvim',
-        lazy = false,
+        'ThePrimeagen/refactoring.nvim',
         dependencies = {
             'nvim-lua/plenary.nvim',
-            'stevearc/dressing.nvim',
+            'nvim-treesitter/nvim-treesitter',
         },
-        config = true,
+        keys = {
+            {
+                '<leader>r',
+                function()
+                    require('refactoring').select_refactor()
+                end,
+                mode = 'v',
+                noremap = true,
+                silent = true,
+                expr = false,
+            },
+        },
     },
     {
-        'epwalsh/obsidian.nvim',
-        version = '*',
-        lazy = true,
-        ft = 'markdown',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-        },
-        opts = {
-            workspaces = {
-                {
-                    name = 'personal',
-                    path = '~/vaults/personal',
-                },
-            },
-            ui = { enable = false },
-        },
+        'MagicDuck/grug-far.nvim',
+        opts = true,
     },
 }
