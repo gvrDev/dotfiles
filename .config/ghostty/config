@@ -10,10 +10,11 @@ cursor-style = block
 cursor-style-blink = false
 cursor-style-blink = false
 
-shell-integration = zsh
+shell-integration = fish
 shell-integration-features = no-cursor
 
 window-vsync = true
 
-command = zsh
+command = fish
 theme = rose-pine
+window-padding-balance = true

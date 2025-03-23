@@ -27,6 +27,10 @@ alias dcs="docker ps -aq | xargs docker stop"
 alias dcc="docker image ls -q | xargs -I {} docker image rm -f {}"
 alias dcu="docker-compose up"
 
+function awscon {
+    aws ssm start-session --profile $1 --region us-east-2 --target i-0fc1f597df1c2e738 --document-name AWS-StartPortForwardingSessionToRemoteHost --parameters '{"host":["slingui-production-cluster.cluster-cr16acmartkt.us-east-2.docdb.amazonaws.com"],"portNumber":["27017"], "localPortNumber":["27018"]}'
+}
+
 alias gfa="git fetch --all && git pull"
 
 source <(fzf --zsh)
@@ -38,3 +42,10 @@ eval "$(starship init zsh)"
 fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
 # initialise completions with ZSH's compinit
 autoload -Uz compinit && compinit
+
+# bun completions
+[ -s "/home/gui/.bun/_bun" ] && source "/home/gui/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

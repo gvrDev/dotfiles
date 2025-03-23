@@ -29,3 +29,5 @@ opt.splitbelow = true
 opt.termguicolors = true
 opt.pumblend = 10
 opt.pumheight = 10
+
+vim.g.have_nerd_font = true

@@ -9,9 +9,6 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-exec --no-startup-id xrandr --output DP-0 --primary --mode 1920x1080 --rate 240.00
-exec --no-startup-id xrandr --output DP-2 mode 1920x1080 --rate 60.00
-
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -159,8 +156,6 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -196,7 +191,7 @@ bindsym Print exec flameshot gui -c
 # finds out, if available)
 bar {
         position top
-        status_command i3status -c ~/.config/i3/i3status.conf
+        status_command i3status -c ~/.config/i3/i3status.conf output DP-0
 }
 
 for_window [class="^.*"] border pixel 5
@@ -209,10 +204,11 @@ for_window[instance="Godot_Engine"] floating enable
 
 exec --no-startup-id xsetroot -solid "#111"
 exec --no-startup-id blueman-applet
+exec --no-startup-id redshift -P -O 3000
 
 # client.focused #ffc0cb #285577 #ffffff #2e9ef4 #285577
 client.focused #333333 #00aa00 #ffffff #2e9ef4 #ffc0cb
-client.focused_inactive #333333 #555500 #dddddd #484e50 #5f676a
+# client.focused_inactive #333333 #555500 #dddddd #484e50 #5f676a
 client.unfocused #333333 #444444 #bbbbbb #292d2e #222222
 client.urgent #880000 #444444 #ffffff #880000 #900000
 client.placeholder #000000 #444444 #ffffff #000000 #0c0c0c
