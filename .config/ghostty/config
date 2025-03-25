@@ -3,7 +3,7 @@ window-decoration = false
 confirm-close-surface = false
 
 font-family = Monaspace Neon Medium
-font-size = 12.5
+font-size = 13.5
 adjust-cell-height = 14
 
 cursor-style = block
@@ -15,6 +15,7 @@ shell-integration-features = no-cursor
 
 window-vsync = true
 
-command = fish
+command = /opt/homebrew/bin/fish
 theme = rose-pine
 window-padding-balance = true
+macos-option-as-alt = true

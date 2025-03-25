@@ -10,7 +10,6 @@ if not vim.uv.fs_stat(lazypath) then
     }
 end
 vim.opt.rtp = vim.opt.rtp ^ lazypath
-print('vim data: ' .. vim.fn.stdpath 'data')
 
 require 'settings'
 require 'keymaps'

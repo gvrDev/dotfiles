@@ -1,8 +1,8 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export ANDROID_HOME:/home/gui/Android/Sdk
-SETUVAR --export SSH_AGENT_PID:1669
-SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXX2ERMUd/agent\x2e1668
+SETUVAR --export ANDROID_HOME:/Users/gui/Library/Android/sdk
+SETUVAR --export SSH_AGENT_PID:1335
+SETUVAR --export SSH_AUTH_SOCK:/var/folders/x4/v6brbyb53bv25rwr6ljqgtl00000gn/T//ssh\x2dby8dWA36J9vG/agent\x2e1327
 SETUVAR __fish_initialized:3800
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
@@ -33,4 +33,4 @@ SETUVAR fish_pager_color_description:B3A06D\x1eyellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/home/gui/Android/Sdk/platform\x2dtools\x1e/home/gui/scripts\x1e/home/gui/\x2ego/bin\x1e/home/gui/\x2ecargo/bin\x1e/home/gui/\x2elocal/bin\x1e/home/gui/\x2ebun/bin\x1e/home/gui/go/bin
+SETUVAR fish_user_paths:/Users/gui/Library/Android/sdk/platform\x2dtools\x1e/opt/homebrew/lib/ruby/gems/3\x2e3\x2e0/bin\x1e/opt/homebrew/opt/ruby\x403\x2e3/bin\x1e/opt/homebrew/bin\x1e/Users/gui/scripts\x1e/home/gui/Android/Sdk/platform\x2dtools\x1e/home/gui/scripts\x1e/home/gui/\x2ego/bin\x1e/home/gui/\x2ecargo/bin\x1e/home/gui/\x2elocal/bin\x1e/home/gui/\x2ebun/bin\x1e/home/gui/go/bin

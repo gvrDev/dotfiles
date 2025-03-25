@@ -1,6 +1,19 @@
 fish_add_path ~/.local/bin
 fish_add_path ~/scripts
-fish_add_path ~/Android/Sdk/platform-tools
+
+if test (uname -s) = 'Darwin'
+    set -x JAVA_HOME (/usr/libexec/java_home -v 17)
+    set -x ANDROID_HOME $HOME/Library/Android/sdk
+
+    fish_add_path /opt/homebrew/bin
+    fish_add_path /opt/homebrew/opt/ruby@3.3/bin
+    fish_add_path /opt/homebrew/lib/ruby/gems/3.3.0/bin
+    fish_add_path $ANDROID_HOME/platform-tools
+else
+    fish_add_path ~/Android/Sdk/platform-tools
+
+    alias update="run0 sh -c 'pacman -Syu && flatpak update && flatpak repair'"
+end
 
 alias c="clear"
 alias l='ls -a'
@@ -8,7 +21,6 @@ alias ll='ls -la'
 
 alias v="nvim ."
 alias mkdir="mkdir -pv"
-alias update="run0 sh -c 'pacman -Syu && flatpak update && flatpak repair'"
 
 alias dcs="docker ps -aq | xargs docker stop"
 alias dcc="docker image ls -q | xargs -I {} docker image rm -f {}"
@@ -46,3 +58,9 @@ if not contains $_asdf_shims $PATH
     set -gx --prepend PATH $_asdf_shims
 end
 set --erase _asdf_shims
+set -gx VOLTA_HOME "$HOME/.volta"
+set -gx PATH "$VOLTA_HOME/bin" $PATH
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH

@@ -1,8 +1,13 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.g.have_nerd_font = true
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
 
 local opt = vim.opt
-
 opt.nu = true
 opt.relativenumber = true
 opt.guicursor = ''
@@ -27,7 +32,3 @@ opt.splitright = true
 opt.splitbelow = true
 
 opt.termguicolors = true
-opt.pumblend = 10
-opt.pumheight = 10
-
-vim.g.have_nerd_font = true
