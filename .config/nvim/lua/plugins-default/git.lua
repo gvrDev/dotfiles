@@ -16,7 +16,6 @@ return {
             { ']g', '<cmd>Gitsigns nav_hunk next<cr>', desc = 'next git hunk' },
             { '[g', '<cmd>Gitsigns nav_hunk prev<cr>', desc = 'prev git hunk' },
             { '<leader>ga', '<cmd>Gitsigns stage_hunk<cr>', desc = 'stage hunk' },
-            { '<leader>gu', '<cmd>Gitsigns reset_hunk<cr>', desc = 'unstage hunk' },
         },
         opts = {
             signs = {
