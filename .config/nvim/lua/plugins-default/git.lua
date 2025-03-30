@@ -1,7 +1,23 @@
 return {
-    { 'tpope/vim-fugitive' },
+    {
+        'tpope/vim-fugitive',
+        command = 'Git',
+        keys = {
+            { '<leader>gs', '<cmd>Git<cr>', desc = 'Git' },
+            { '<leader>gp', '<cmd>Git pull --rebase<cr>', desc = 'Git pull' },
+            { '<leader>gP', '<cmd>Git push<cr>', desc = 'Git push' },
+            { '<leader>gc', '<cmd>Git commit<cr>', desc = 'Git commit' },
+            { '<leader>gt', ':Git push -u origin ', desc = 'Git push set origin' },
+        },
+    },
     {
         'lewis6991/gitsigns.nvim',
+        keys = {
+            { ']g', '<cmd>Gitsigns nav_hunk next<cr>', desc = 'next git hunk' },
+            { '[g', '<cmd>Gitsigns nav_hunk prev<cr>', desc = 'prev git hunk' },
+            { '<leader>ga', '<cmd>Gitsigns stage_hunk<cr>', desc = 'stage hunk' },
+            { '<leader>gu', '<cmd>Gitsigns reset_hunk<cr>', desc = 'unstage hunk' },
+        },
         opts = {
             signs = {
                 add = { text = '▎' },
@@ -26,8 +42,6 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope.nvim',
-            -- OR 'ibhagwan/fzf-lua',
-            -- OR 'folke/snacks.nvim',
             'nvim-tree/nvim-web-devicons',
         },
         keys = {

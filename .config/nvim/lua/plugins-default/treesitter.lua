@@ -3,6 +3,9 @@ return {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         event = 'BufRead',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter-context',
+        },
         opts_extend = {
             'ensure_installed',
         },

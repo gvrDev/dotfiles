@@ -6,7 +6,6 @@ return {
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
             { 'j-hui/fidget.nvim', opts = {} },
-            { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
         },
         opts = function()
             local options = {
@@ -32,29 +31,14 @@ return {
                     end
 
                     local builtin = require 'telescope.builtin'
-                    map('<leader>lgd', builtin.lsp_definitions, '[G]oto [D]efinition')
-                    map('<leader>lgi', builtin.lsp_implementations, '[G]oto [I]mplementation')
-                    map('<c-a>', vim.lsp.buf.signature_help, 'signature_help', 'i')
+                    map('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
+                    map('K', vim.lsp.buf.hover, 'Hover Documentation')
+                    map('<c-h>', vim.lsp.buf.signature_help, 'signature_help', 'i')
                     map('<leader>lrn', vim.lsp.buf.rename, '[R]e[n]ame')
                     map('<leader>lca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-                    map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
-                    local function client_supports_method(client, method, bufnr)
-                        if vim.fn.has 'nvim-0.11' == 1 then
-                            return client:supports_method(method, bufnr)
-                        else
-                            return client.supports_method(method, { bufnr = bufnr })
-                        end
-                    end
                     local client = vim.lsp.get_client_by_id(event.data.client_id)
-                    if
-                        client
-                        and client_supports_method(
-                            client,
-                            vim.lsp.protocol.Methods.textDocument_documentHighlight,
-                            event.buf
-                        )
-                    then
+                    if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
                         vim.api.nvim_create_autocmd('LspDetach', {
                             group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
                             callback = function(event2)
@@ -63,20 +47,29 @@ return {
                             end,
                         })
                     end
+                    if client:supports_method('textDocument/foldingRange', event.buf) then
+                        local win = vim.api.nvim_get_current_win()
+                        vim.wo[win][0].foldmethod = 'expr'
+                        vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+                        vim.api.nvim_create_autocmd('LspDetach', {
+                            group = vim.api.nvim_create_augroup('kickstart-lsp-detach-2', { clear = true }),
+                            command = 'setl foldexpr<',
+                        })
+                    end
                 end,
             })
             vim.diagnostic.config {
                 severity_sort = true,
                 float = { 'rounded', source = 'if_many' },
                 underline = { severity = vim.diagnostic.severity.ERROR },
-                signs = vim.g.have_nerd_font and {
+                signs = {
                     text = {
                         [vim.diagnostic.severity.ERROR] = '󰅚 ',
                         [vim.diagnostic.severity.WARN] = '󰀪 ',
                         [vim.diagnostic.severity.INFO] = '󰋽 ',
                         [vim.diagnostic.severity.HINT] = '󰌶 ',
                     },
-                } or {},
+                },
                 virtual_text = {
                     source = 'if_many',
                     spacing = 2,
@@ -105,6 +98,7 @@ return {
                     function(server_name)
                         local server = opts.servers[server_name] or {}
                         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+                        server.capabilities = require('blink.cmp').get_lsp_capabilities(server.capabilities)
                         require('lspconfig')[server_name].setup(server)
                     end,
                 },

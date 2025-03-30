@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fd . ~/dotfiles/.config ~/dev/work ~/dev/personal -d 1 | fzf --ansi)
+    selected=$(fd . ~/dotfiles/.config ~/dotfiles/scripts ~/dev/work ~/dev/personal -d 1 | gum filter --limit 1 --no-sort --fuzzy --height 50)
 fi
 
 if [[ -z $selected ]]; then
@@ -14,12 +14,12 @@ selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux -u new-session -s $selected_name -c $selected
+    tmux -u new-session -s $selected_name -c $selected nvim $selected
     exit 0
 fi
 
 if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux -u new-session -ds $selected_name -c $selected
+    tmux -u new-session -ds $selected_name -c $selected nvim $selected
 fi
 
 tmux -u switch-client -t $selected_name
