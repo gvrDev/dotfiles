@@ -32,12 +32,7 @@ opt.splitbelow = true
 
 opt.termguicolors = true
 
+vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
 vim.o.foldenable = true
-vim.o.foldlevel = 99
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-vim.o.foldtext = ''
-vim.opt.foldcolumn = '0'
-vim.opt.fillchars:append { fold = ' ' }
-
-vim.opt.laststatus = 3

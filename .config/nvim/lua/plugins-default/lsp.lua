@@ -47,15 +47,6 @@ return {
                             end,
                         })
                     end
-                    if client:supports_method('textDocument/foldingRange', event.buf) then
-                        local win = vim.api.nvim_get_current_win()
-                        vim.wo[win][0].foldmethod = 'expr'
-                        vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-                        vim.api.nvim_create_autocmd('LspDetach', {
-                            group = vim.api.nvim_create_augroup('kickstart-lsp-detach-2', { clear = true }),
-                            command = 'setl foldexpr<',
-                        })
-                    end
                 end,
             })
             vim.diagnostic.config {
@@ -107,11 +98,26 @@ return {
     },
     {
         'stevearc/conform.nvim',
+        event = { 'BufWritePre' },
+        cmd = { 'ConformInfo' },
+        keys = {
+            {
+                -- Customize or remove this keymap to your liking
+                '<leader>f',
+                function()
+                    require('conform').format { async = true }
+                end,
+                mode = '',
+                desc = 'Format buffer',
+            },
+        },
         opts = {
             notify_on_error = false,
+            default_format_opts = {
+                lsp_format = 'fallback',
+            },
             format_on_save = {
                 timeout_ms = 500,
-                lsp_format = 'fallback',
             },
             formatters_by_ft = {
                 lua = { 'stylua' },
@@ -125,10 +131,15 @@ return {
                 jsonc = { 'biome' },
                 css = { 'biome' },
                 html = { 'prettierd', 'prettier', stop_after_first = true },
+                htmlangular = { 'prettierd', 'prettier', stop_after_first = true },
                 less = { 'prettierd', 'prettier', stop_after_first = true },
                 scss = { 'prettierd', 'prettier', stop_after_first = true },
                 yaml = { 'prettierd', 'prettier', stop_after_first = true },
             },
         },
+        init = function()
+            -- If you want the formatexpr, here is the place to set it
+            vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+        end,
     },
 }
