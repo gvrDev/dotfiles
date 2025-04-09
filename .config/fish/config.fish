@@ -1,5 +1,6 @@
 fish_add_path ~/.local/bin
 fish_add_path ~/scripts
+fish_add_path ~/go/bin
 
 if test (uname -s) = 'Darwin'
     set -x JAVA_HOME (/usr/libexec/java_home -v 17)
@@ -60,10 +61,12 @@ end
 set --erase _asdf_shims
 set -gx VOLTA_HOME "$HOME/.volta"
 set -gx PATH "$VOLTA_HOME/bin" $PATH
+# asdf end
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+# bun end
 
 # pnpm
 set -gx PNPM_HOME "$HOME/.local/share/pnpm"
