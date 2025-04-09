@@ -10,6 +10,8 @@ if test (uname -s) = 'Darwin'
     fish_add_path /opt/homebrew/opt/ruby@3.3/bin
     fish_add_path /opt/homebrew/lib/ruby/gems/3.3.0/bin
     fish_add_path $ANDROID_HOME/platform-tools
+
+    source "$HOME/.cargo/env.fish"
 else
     fish_add_path ~/Android/Sdk/platform-tools
 
