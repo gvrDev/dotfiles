@@ -33,6 +33,9 @@ return {
                 options = {
                     use_as_default_explorer = false,
                 },
+                mappings = {
+                    close = '<Esc>',
+                },
             }
             require('mini.icons').setup()
             require('mini.statusline').setup()
