@@ -1,0 +1,8 @@
+{
+	"foo": {
+		"prefix": "cloud",
+		"body": [
+			"https://slingui-whiteboard-worker.muddy-lake-26bb.workers.dev/uploads/"
+		]
+	}
+}
