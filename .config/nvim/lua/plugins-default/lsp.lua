@@ -38,12 +38,29 @@ return {
                     map('<leader>lca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
                     local client = vim.lsp.get_client_by_id(event.data.client_id)
-                    if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+                    if
+                        client
+                        and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
+                    then
+                        local highlight_augroup =
+                            vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+                        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                            buffer = event.buf,
+                            group = highlight_augroup,
+                            callback = vim.lsp.buf.document_highlight,
+                        })
+
+                        vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                            buffer = event.buf,
+                            group = highlight_augroup,
+                            callback = vim.lsp.buf.clear_references,
+                        })
+
                         vim.api.nvim_create_autocmd('LspDetach', {
                             group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
                             callback = function(event2)
                                 vim.lsp.buf.clear_references()
-                                -- vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+                                vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
                             end,
                         })
                     end
@@ -121,19 +138,19 @@ return {
             },
             formatters_by_ft = {
                 lua = { 'stylua' },
-                javascript = { 'prettierd', 'prettier', stop_after_first = true },
-                typescript = { 'prettierd', 'prettier', stop_after_first = true },
-                jsx = { 'prettierd', 'prettier', stop_after_first = true },
-                javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-                tsx = { 'prettierd', 'prettier', stop_after_first = true },
-                typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-                json = { 'prettierd', 'prettier', stop_after_first = true },
-                jsonc = { 'prettierd', 'prettier', stop_after_first = true },
-                css = { 'prettierd', 'prettier', stop_after_first = true },
-                html = { 'prettierd', 'prettier', stop_after_first = true },
-                htmlangular = { 'prettierd', 'prettier', stop_after_first = true },
+                javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+                typescript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+                jsx = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+                javascriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+                tsx = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+                typescriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+                json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+                jsonc = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+                css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
                 less = { 'prettierd', 'prettier', stop_after_first = true },
                 scss = { 'prettierd', 'prettier', stop_after_first = true },
+                html = { 'prettierd', 'prettier', stop_after_first = true },
+                htmlangular = { 'prettierd', 'prettier', stop_after_first = true },
                 yaml = { 'prettierd', 'prettier', stop_after_first = true },
             },
         },

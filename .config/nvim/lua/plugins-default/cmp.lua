@@ -15,12 +15,9 @@ return {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
             },
 
-            completion = {
-                documentation = {
-                    auto_show = false,
-                },
-            },
             fuzzy = { implementation = 'prefer_rust_with_warning' },
+
+            signature = { enabled = true },
         },
         opts_extend = { 'sources.default' },
     },

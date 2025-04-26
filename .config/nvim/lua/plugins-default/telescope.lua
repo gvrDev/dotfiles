@@ -2,6 +2,7 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
+        event = 'VimEnter',
         dependencies = {
             'nvim-lua/plenary.nvim',
             {
@@ -21,6 +22,9 @@ return {
             local telescope = require 'telescope'
             telescope.setup {
                 extensions = {
+                    ['ui-select'] = {
+                        require('telescope.themes').get_dropdown(),
+                    },
                     git_worktree = {},
                 },
             }
