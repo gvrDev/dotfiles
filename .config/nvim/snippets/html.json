@@ -1,0 +1,6 @@
+{
+  "translate": {
+    "prefix": "tr",
+    "body": ["{{ '${1:innerNavbar.title}' | translate }}"]
+  }
+}

@@ -9,26 +9,26 @@
     "modules-center": ["hyprland/window"],
     "modules-right": [ "pulseaudio", "bluetooth", "tray", "clock"],
     // Modules configuration
-    "hyprland/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "format": "{icon}",
-        "format-icons": {
-            "1": "<span color=\"#D8DEE9\">1</span>",
-            "2": "<span color=\"#88C0D0\">2</span>",
-            "3": "<span color=\"#A3BE8C\">3</span>",
-            "4": "<span color=\"#D8DEE9\">4</span>",
-            "5": "<span color=\"#D8DEE9\">5</span>",
-            "6": "<span color=\"#88C0D0\">6</span>",
-            "7": "<span color=\"#A3BE8C\">7</span>",
-            "8": "<span color=\"#D8DEE9\">8</span>",
-            "9": "<span color=\"#D8DEE9\">9</span>",
-            "urgent": "",
-            "selected": "",
-            "default": ""
-        }
-    },
-    "hyprland/window": {
+"hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{id}",
+    "format-icons": {
+        "1": "<span color=\"#ffffff\">1</span>",
+        "2": "<span color=\"#ffffff\">2</span>",
+        "3": "<span color=\"#ffffff\">3</span>",
+        "4": "<span color=\"#ffffff\">4</span>",
+        "5": "<span color=\"#ffffff\">5</span>",
+        "6": "<span color=\"#ffffff\">6</span>",
+        "7": "<span color=\"#ffffff\">7</span>",
+        "8": "<span color=\"#ffffff\">8</span>",
+        "9": "<span color=\"#ffffff\">9</span>",
+        "urgent": "",
+        "active": "<span color=\"#ffeb3b\">{id}</span>",
+        "default": "<span color=\"#ffffff\">{id}</span>"
+    }
+},
+"hyprland/window": {
       "separate-outputs": true,
       "format": "{}",
       "max-length": 50, 

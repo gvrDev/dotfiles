@@ -16,6 +16,8 @@ shell-integration-features = no-cursor
 window-vsync = true
 
 command = ~/scripts/get-fish-shell
-theme = rose-pine
+theme = catppuccin-mocha
 window-padding-balance = true
 macos-option-as-alt = true
+
+background-opacity=0.75

@@ -28,7 +28,6 @@ return {
                     documentFormattingProvider = false,
                 },
             }
-            opts.servers.biome = {}
             opts.servers.cssls = {}
             opts.servers.tailwindcss = {}
             opts.servers.emmet_ls = {}

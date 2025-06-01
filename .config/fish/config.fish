@@ -14,6 +14,7 @@ if test (uname -s) = 'Darwin'
     source "$HOME/.cargo/env.fish"
 else
     fish_add_path ~/Android/Sdk/platform-tools
+    set -x ANDROID_HOME $HOME/Android/Sdk
 
     alias update="run0 sh -c 'pacman -Syu && flatpak update && flatpak repair'"
 end
@@ -37,10 +38,10 @@ if status is-interactive
     set fish_cursor_insert block
     set fish_cursor_replace_one block 
     set fish_cursor_visual block
-    keychain --eval --agents ssh -q -Q github skey | source
-    if not set -q TMUX
-      tmux new -A -s homebase
-    end
+    keychain --eval -q ~/.ssh/github ~/.ssh/skey | source
+    # if not set -q TMUX
+    #   tmux new -A -s homebase
+    # end
 
     fzf --fish | source
     zoxide init fish | source

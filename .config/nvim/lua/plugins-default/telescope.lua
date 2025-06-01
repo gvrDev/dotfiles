@@ -6,14 +6,6 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim',
             {
-                'nvim-telescope/telescope-fzf-native.nvim',
-                build = 'make',
-                cond = function()
-                    return vim.fn.executable 'make' == 1
-                end,
-            },
-            { 'nvim-telescope/telescope-ui-select.nvim' },
-            {
                 'ThePrimeagen/git-worktree.nvim',
                 opts = {},
             },
@@ -22,24 +14,12 @@ return {
             local telescope = require 'telescope'
             telescope.setup {
                 extensions = {
-                    ['ui-select'] = {
-                        require('telescope.themes').get_dropdown(),
-                    },
                     git_worktree = {},
                 },
             }
 
             -- Enable Telescope extensions if they are installed
-            telescope.load_extension 'fzf'
             telescope.load_extension 'git_worktree'
-
-            -- See `:help telescope.builtin`
-            local builtin = require 'telescope.builtin'
-            vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-            vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-            vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-            vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-            vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
             -- git
             vim.keymap.set(

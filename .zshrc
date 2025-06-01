@@ -1,4 +1,5 @@
 PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/go/bin"
 PATH="$PATH:$HOME/scripts"
 PATH="$PATH:${ASDF_DATA_DIR:-$HOME/.asdf}/shims"
 export PATH
@@ -16,6 +17,8 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
+alias c="clear"
+
 alias l='ls -a'
 alias ll='ls -la'
 
@@ -25,7 +28,11 @@ alias update="sudo pacman -Syu && flatpak update && flatpak repair"
 
 alias dcs="docker ps -aq | xargs docker stop"
 alias dcc="docker image ls -q | xargs -I {} docker image rm -f {}"
-alias dcu="docker-compose up"
+alias dc="docker-compose"
+
+alias gfa="git fetch --all --prune"
+alias gc="git commit"
+alias gp="git pull"
 
 function awscon {
     aws ssm start-session --profile $1 --region us-east-2 --target i-0fc1f597df1c2e738 --document-name AWS-StartPortForwardingSessionToRemoteHost --parameters '{"host":["slingui-production-cluster.cluster-cr16acmartkt.us-east-2.docdb.amazonaws.com"],"portNumber":["27017"], "localPortNumber":["27018"]}'
