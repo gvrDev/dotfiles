@@ -1,0 +1,3 @@
+#!/bin/bash
+
+run0 sh -c 'paru && paccache -r && pacman -Rns $(pacman -Qdtq) && rm -rf ~/.cache/*'

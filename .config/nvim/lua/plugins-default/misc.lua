@@ -1,9 +1,3 @@
 return {
-    { 'tpope/vim-sleuth' },
-    {
-        'm4xshen/hardtime.nvim',
-        lazy = false,
-        dependencies = { 'MunifTanjim/nui.nvim' },
-        opts = {},
-    },
+    { 'NMAC427/guess-indent.nvim', lazy = false },
 }

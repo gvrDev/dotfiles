@@ -14,12 +14,12 @@ vim.opt.rtp = vim.opt.rtp ^ lazypath
 require 'settings'
 require 'keymaps'
 require 'autocmds'
+require 'lsp'
 require 'server'
 
 require('lazy').setup {
     spec = {
         { import = 'plugins-default' },
-        { import = 'plugins-override' },
     },
     install = {
         missing = false,

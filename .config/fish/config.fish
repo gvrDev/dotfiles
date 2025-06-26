@@ -1,4 +1,5 @@
 fish_add_path ~/.local/bin
+fish_add_path ~/.local/lib
 fish_add_path ~/scripts
 fish_add_path ~/go/bin
 
@@ -14,7 +15,9 @@ if test (uname -s) = 'Darwin'
     source "$HOME/.cargo/env.fish"
 else
     fish_add_path ~/Android/Sdk/platform-tools
+    fish_add_path ~/Android/Sdk/emulator
     set -x ANDROID_HOME $HOME/Android/Sdk
+    set -x npm_config_prefix "$HOME/.local"
 
     alias update="run0 sh -c 'pacman -Syu && flatpak update && flatpak repair'"
 end
@@ -29,6 +32,7 @@ alias mkdir="mkdir -pv"
 alias dcs="docker ps -aq | xargs docker stop"
 alias dcc="docker image ls -q | xargs -I {} docker image rm -f {}"
 alias dcu="docker-compose up"
+alias dcd="docker-compose down"
 
 alias gfa="git fetch --all && git pull"
 
