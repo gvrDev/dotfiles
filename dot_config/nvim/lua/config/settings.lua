@@ -1,0 +1,21 @@
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_matchparen = 1
+vim.opt.updatetime = 50
+vim.opt.redrawtime = 1500
+vim.opt.ttimeoutlen = 10
+
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.wrap = false
+vim.o.tabstop = 4
+vim.o.swapfile = false
+vim.o.undodir = vim.fn.expand("$HOME/.vim/undodir")
+vim.o.showmode = false
+vim.o.ruler = false
+vim.o.winborder = "rounded"
+vim.o.guicursor = ""
+vim.o.signcolumn = "no"
+vim.g.mapleader = " "
+vim.o.splitright = true
+vim.o.splitbelow = true
