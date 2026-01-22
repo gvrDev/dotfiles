@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [[ "$(uname)" == "Darwin" ]]; then
-	/opt/homebrew/bin/fish
-else
-	/bin/fish
-fi
