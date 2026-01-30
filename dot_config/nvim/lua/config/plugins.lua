@@ -4,6 +4,7 @@ vim.pack.add({
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/mason-org/mason-lspconfig.nvim",
+	{ src = "https://github.com/saghen/blink.cmp", version = "v1.8.0" },
 
 	"https://github.com/rebelot/kanagawa.nvim",
 	"https://github.com/stevearc/conform.nvim",
@@ -54,14 +55,35 @@ require("conform").setup({
 		yaml = { "prettierd", "prettier", stop_after_first = true },
 	},
 })
+require("blink.cmp").setup({
+	cmdline = { enabled = false },
+	completion = {
+		menu = {
+			draw = {
+				columns = {
+					{ "label", "label_description", gap = 1 },
+					{ "kind_icon", "kind" },
+				},
+			},
+		},
+	},
+	signature = {
+		enabled = true,
+		window = {
+			show_documentation = false,
+		},
+	},
+	keymap = {
+		preset = "default",
+		["<C-h>"] = { "show_signature", "hide_signature" },
+	},
+	fuzzy = { implementation = "prefer_rust_with_warning" },
+})
 require("mini.icons").setup()
 require("mini.ai").setup()
 require("mini.diff").setup()
 require("mini.hipatterns").setup()
 require("mini.indentscope").setup()
-require("mini.completion").setup({
-	delay = { completion = 80, info = 100, signature = 50 },
-})
 require("kanagawa").setup({
 	compile = true,
 	transparent = true,

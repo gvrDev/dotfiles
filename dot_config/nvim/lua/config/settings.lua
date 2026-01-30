@@ -19,4 +19,4 @@ vim.o.signcolumn = "no"
 vim.g.mapleader = " "
 vim.o.splitright = true
 vim.o.splitbelow = true
-vim.o.cmdheight = 0
+vim.o.cmdheight = 1
