@@ -163,7 +163,14 @@ vim.keymap.set("n", "<leader>gg", "<CMD>Git<CR>", { silent = true })
 vim.keymap.set("n", "<leader>gs", ":Git switch ")
 vim.keymap.set("n", "<leader>gc", "<CMD>Git commit<CR>", { silent = true })
 vim.keymap.set("n", "<leader>go", ":Git push -u origin ")
-vim.keymap.set("n", "<leader>gd", "<CMD>lua MiniDiff.toggle_overlay()<CR>", { silent = true })
+vim.keymap.set("n", "<leader>gd", function()
+	if vim.wo.diff then
+		vim.cmd("diffoff!")
+		vim.cmd("only")
+	else
+		vim.cmd("Gdiffsplit")
+	end
+end, { silent = true })
 vim.keymap.set("n", "<leader>gl", "<CMD>Git log<CR>", { silent = true })
 vim.keymap.set("n", "<leader>gi", "<CMD>lua Snacks.picker.gh_issue()<CR>", { silent = true })
 vim.keymap.set("n", "<leader>gI", "<CMD>lua Snacks.picker.gh_issue({ state = 'all' })<CR>", { silent = true })

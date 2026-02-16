@@ -1,4 +1,5 @@
-fish_add_path -g ~/.local/bin ~/.local/lib ~/scripts ~/go/bin ~/.config/emacs/bin /opt/nvim-linux-x86_64/bin ~/.cargo/bin /home/linuxbrew/.linuxbrew/bin
+fish_add_path -g ~/.local/bin ~/.local/lib ~/scripts ~/go/bin ~/.config/emacs/bin /opt/nvim-linux-x86_64/bin ~/.cargo/bin
+fish_add_path -a /home/linuxbrew/.linuxbrew/bin
 
 alias mkdir="mkdir -pv"
 alias m="make"

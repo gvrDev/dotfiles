@@ -4,10 +4,12 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.hl.on_yank()
 	end,
 })
-vim.api.nvim_create_autocmd("FileType", {
+vim.api.nvim_create_autocmd({ "FileType", "BufReadPost" }, {
 	group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
 	pattern = {
 		"fugitive",
+		"fugitive://*",
+		"diff",
 	},
 	callback = function(event)
 		vim.bo[event.buf].buflisted = false
