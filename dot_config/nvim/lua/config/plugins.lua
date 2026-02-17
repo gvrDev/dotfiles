@@ -5,8 +5,9 @@ vim.pack.add({
 	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/mason-org/mason-lspconfig.nvim",
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1.8.0" },
+	"https://github.com/nvim-telescope/telescope.nvim",
 
-	"https://github.com/rebelot/kanagawa.nvim",
+	"https://github.com/maxmx03/solarized.nvim",
 	"https://github.com/stevearc/conform.nvim",
 
 	"https://github.com/echasnovski/mini.nvim",
@@ -17,7 +18,6 @@ vim.pack.add({
 	"https://github.com/mbbill/undotree",
 	{ src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
 	"https://github.com/folke/snacks.nvim",
-	"https://github.com/sphamba/smear-cursor.nvim",
 	"https://github.com/stevearc/oil.nvim",
 })
 
@@ -84,57 +84,9 @@ require("mini.ai").setup()
 require("mini.diff").setup()
 require("mini.hipatterns").setup()
 require("mini.indentscope").setup()
-require("kanagawa").setup({
-	compile = true,
-	transparent = true,
-	colors = { theme = { all = { ui = { bg_gutter = "none" } } } },
-	overrides = function(colors)
-		local theme = colors.theme
-		local accent = "#FFA066" -- Your Surimi Orange accent
-		local makeDiagnosticColor = function(color)
-			local c = require("kanagawa.lib.color")
-			return { fg = color, bg = c(color):blend(theme.ui.bg, 0.95):to_hex() }
-		end
-		return {
-			NormalFloat = { bg = "none" },
-			FloatBorder = { bg = "none" },
-			FloatTitle = { bg = "none" },
-			NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-			LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-			MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-			DiagnosticVirtualTextHint = makeDiagnosticColor(theme.diag.hint),
-			DiagnosticVirtualTextInfo = makeDiagnosticColor(theme.diag.info),
-			DiagnosticVirtualTextWarn = makeDiagnosticColor(theme.diag.warning),
-			DiagnosticVirtualTextError = makeDiagnosticColor(theme.diag.error),
-			CursorLineNr = { fg = accent, bold = true },
-			PmenuSel = { bg = accent, fg = theme.ui.bg_m3 },
-			LineNr = { fg = theme.ui.fg_dim },
-			TelescopeBorder = { fg = accent, bg = "none" },
-			TelescopeTitle = { fg = accent, bold = true },
-		}
-	end,
-})
-require("snacks").setup({
-	input = { enabled = true },
-	statuscolumn = { enabled = true },
-	picker = { enabled = true },
-	gh = { enabled = true },
-})
+require("solarized").setup({ transparent = { enabled = true } })
 local harpoon = require("harpoon")
 harpoon:setup()
-require("smear_cursor").setup({
-	cursor_color = "#FFA066",
-
-	stiffness = 0.8, -- 0.6      [0, 1]
-	trailing_stiffness = 0.6, -- 0.45     [0, 1]
-	stiffness_insert_mode = 0.7, -- 0.5      [0, 1]
-	trailing_stiffness_insert_mode = 0.7, -- 0.5      [0, 1]
-	damping = 0.95, -- 0.85     [0, 1]
-	damping_insert_mode = 0.95, -- 0.9      [0, 1]
-	distance_stop_animating = 0.5, -- 0.1      > 0
-
-	gamma = 1.0,
-})
 require("oil").setup({
 	view_options = {
 		show_hidden = true,
@@ -146,17 +98,37 @@ require("oil").setup({
 		["l"] = { "actions.select", mode = "n" },
 	},
 })
-
-vim.keymap.set("n", "<leader>.", "<CMD>Oil<CR>", { silent = true })
-vim.keymap.set("n", "<leader><leader>", function()
-	Snacks.picker.buffers()
-end, { silent = true })
+local telescope = require("telescope")
+local actions = require("telescope.actions")
+local builtin = require("telescope.builtin")
+telescope.setup({
+	defaults = {
+		mappings = {
+			i = {
+				["<esc>"] = actions.close, -- close with ESC in insert mode
+			},
+		},
+	},
+})
 vim.keymap.set("n", "<leader>sf", function()
-	Snacks.picker.files({ hidden = true })
+	builtin.find_files({ hidden = true })
 end, { silent = true, desc = "Search Files" })
 vim.keymap.set("n", "<leader>sg", function()
-	Snacks.picker.grep({ hidden = true })
+	builtin.live_grep({
+		additional_args = function()
+			return { "--hidden" }
+		end,
+	})
 end, { silent = true, desc = "Search Grep" })
+vim.keymap.set("n", "<leader><leader>", function()
+	builtin.buffers({
+		show_all_buffers = true, -- show all open buffers
+		sort_lastused = true, -- sort by last used
+		ignore_current_buffer = false, -- optional: keep current buffer in list
+	})
+end, { silent = true, desc = "Pick Open Buffers" })
+
+vim.keymap.set("n", "<leader>.", "<CMD>Oil<CR>", { silent = true })
 vim.keymap.set("n", "<leader>u", "<CMD>UndotreeToggle<CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>gg", "<CMD>Git<CR>", { silent = true })
@@ -172,10 +144,6 @@ vim.keymap.set("n", "<leader>gd", function()
 	end
 end, { silent = true })
 vim.keymap.set("n", "<leader>gl", "<CMD>Git log<CR>", { silent = true })
-vim.keymap.set("n", "<leader>gi", "<CMD>lua Snacks.picker.gh_issue()<CR>", { silent = true })
-vim.keymap.set("n", "<leader>gI", "<CMD>lua Snacks.picker.gh_issue({ state = 'all' })<CR>", { silent = true })
-vim.keymap.set("n", "<leader>gp", "<CMD>lua Snacks.picker.gh_pr()<CR>", { silent = true })
-vim.keymap.set("n", "<leader>gP", "<CMD>lua Snacks.picker.gh_pr({ state = 'all' })<CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>bd", require("mini.bufremove").delete, { silent = true })
 

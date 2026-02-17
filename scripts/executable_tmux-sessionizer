@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(fdfind . ~/.local/share/chezmoi ~/dev/work ~/dev/personal -d 1 | fzf)
+    selected=$(fd . ~/.local/share/chezmoi ~/dev/work ~/dev/personal -d 1 | fzf)
 fi
 
 if [[ -z $selected ]]; then
