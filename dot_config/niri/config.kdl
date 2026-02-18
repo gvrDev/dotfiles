@@ -12,7 +12,6 @@ input {
         accel-profile "flat"
     }
     focus-follows-mouse
-    workspace-auto-back-and-forth
 }
 
 output "DP-3" {
@@ -27,13 +26,23 @@ layout {
     }
 
     focus-ring {
-        width 3
-        active-color "#7E9CD8"   // crystal blue
-        inactive-color "#2A2A37" // subtle surface tone
+        width 4
+        active-color "#268bd2"
+        inactive-color "#073642"
     }
 
-    background-color "#1F1F28"   // sumi ink
+    background-color "#002b36"
 }
+
+workspace "1"
+workspace "2"
+workspace "3"
+workspace "4"
+workspace "5"
+workspace "6"
+workspace "7"
+workspace "8"
+workspace "9"
 
 spawn-sh-at-startup "/usr/lib/polkit-kde-authentication-agent-1 &" // Polkit
 spawn-sh-at-startup "qs -c noctalia-shell"
@@ -62,7 +71,11 @@ window-rule {
 }
 
 binds {
-	Mod+B { spawn "zen-browser"; }
+    Mod+B { spawn-sh "chromium --profile-directory='Profile 1'"; }
+    Mod+Shift+B { spawn-sh "chromium --profile-directory='Default'"; }
+    Mod+C { spawn-sh "chromium --profile-directory='Default' --app='https://app.slack.com/client/T04TW5V4274/C04TFKU3Q0P'"; }
+    Mod+M { spawn-sh "chromium --profile-directory='Profile 1' --app='https://music.youtube.com'"; }
+
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn-sh "ghostty"; }
     Mod+D hotkey-overlay-title="Open App Launcher: noctalia launcher" { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
@@ -137,11 +150,7 @@ binds {
     Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
 
-    Mod+M { maximize-window-to-edges; }
-
     Mod+Ctrl+F { expand-column-to-available-width; }
-
-    Mod+C { center-column; }
 
     Mod+Ctrl+C { center-visible-columns; }
 
