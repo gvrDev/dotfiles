@@ -3,8 +3,8 @@ quit-after-last-window-closed = true
 gtk-single-instance = true
 
 window-decoration = none
-window-padding-x = 10,10
-window-padding-y = 5,5
+window-padding-x = 14,14
+window-padding-y = 10,10
 
 shell-integration-features = no-cursor
 shell-integration = fish
@@ -12,9 +12,10 @@ shell-integration = fish
 font-family = "JetBrainsMono NFM"
 font-feature = "+calt, +liga, +clig"
 font-size = 13
-adjust-cell-height = 25%
+adjust-cell-height = 15%
 
 cursor-style = block
+cursor-blink = false
 
 theme = Builtin Solarized Dark
 custom-shader = shaders/cursor_warp.glsl

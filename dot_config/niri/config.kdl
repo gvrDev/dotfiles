@@ -46,6 +46,7 @@ workspace "9"
 
 spawn-sh-at-startup "/usr/lib/polkit-kde-authentication-agent-1 &" // Polkit
 spawn-sh-at-startup "qs -c noctalia-shell"
+spawn-sh-at-startup "kwalletd6"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
@@ -54,14 +55,41 @@ animations {
 }
 
 window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"chromium$"# title="^Picture-in-Picture$"
     open-floating true
 }
-
 window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-    match app-id=r#"^org\.gnome\.World\.Secrets$"#
-
+    match app-id=r#"steam$"#
+    exclude title="^Steam$"
+    open-floating true
+}
+window-rule {
+    match app-id=r#"^chromium$"#
+    open-maximized true
+}
+window-rule {
+    match app-id=r#"^com.mitchellh.ghostty$"#
+    open-maximized true
+    open-on-workspace "1"
+}
+window-rule {
+    match app-id=r#"steam$"#
+    open-on-workspace "4"
+}
+window-rule {
+    match app-id=r#"^chrome-app\.slack\.com"#
+    open-on-workspace "5"
+    open-maximized true
+}
+window-rule {
+    match app-id=r#"^chrome-music\.youtube\.com"#
+    open-on-workspace "6"
+    open-maximized true
+}
+window-rule {
+    match app-id=r#"^Bitwarden$"#
+    open-maximized true
+    open-on-workspace "8"
     block-out-from "screen-capture"
 }
 
@@ -75,6 +103,7 @@ binds {
     Mod+Shift+B { spawn-sh "chromium --profile-directory='Default'"; }
     Mod+C { spawn-sh "chromium --profile-directory='Default' --app='https://app.slack.com/client/T04TW5V4274/C04TFKU3Q0P'"; }
     Mod+M { spawn-sh "chromium --profile-directory='Profile 1' --app='https://music.youtube.com'"; }
+    Mod+Slash { spawn-sh "gtk-launch bitwarden.desktop"; }
 
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn-sh "ghostty"; }
