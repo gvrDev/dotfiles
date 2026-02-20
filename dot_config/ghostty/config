@@ -15,7 +15,6 @@ font-size = 13
 adjust-cell-height = 15%
 
 cursor-style = block
-cursor-blink = false
 
 theme = Builtin Solarized Dark
 custom-shader = shaders/cursor_warp.glsl
