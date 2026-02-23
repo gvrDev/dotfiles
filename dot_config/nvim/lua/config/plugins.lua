@@ -111,7 +111,10 @@ telescope.setup({
 	},
 })
 vim.keymap.set("n", "<leader>sf", function()
-	builtin.find_files({ hidden = true })
+	local ok = pcall(require("telescope.builtin").git_files, { show_untracked = true })
+	if not ok then
+		require("telescope.builtin").find_files({ hidden = true })
+	end
 end, { silent = true, desc = "Search Files" })
 vim.keymap.set("n", "<leader>sg", function()
 	builtin.live_grep({

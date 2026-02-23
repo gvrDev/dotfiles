@@ -11,6 +11,7 @@ vim.o.wrap = false
 vim.o.tabstop = 4
 vim.o.swapfile = false
 vim.o.undodir = vim.fn.expand("$HOME/.vim/undodir")
+vim.o.undofile = true
 vim.o.showmode = false
 vim.o.ruler = false
 vim.o.winborder = "rounded"
