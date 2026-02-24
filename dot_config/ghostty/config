@@ -11,7 +11,7 @@ shell-integration = fish
 
 font-family = "JetBrainsMono NFM"
 font-feature = "+calt, +liga, +clig"
-font-size = 14.5
+font-size = 13
 adjust-cell-height = 20%
 
 cursor-style = block

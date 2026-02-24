@@ -1,6 +1,10 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 vim.keymap.set("n", "|", "<cmd>vsplit<CR>", { silent = true })
 
 vim.keymap.set("n", "U", vim.cmd.redo, { silent = true })
+
 vim.keymap.set("n", "]d", function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end, { silent = true })
@@ -31,3 +35,5 @@ vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
 vim.keymap.set("n", ";;", ":!<UP>")
+
+vim.keymap.set("n", "J", "mzJ`z")

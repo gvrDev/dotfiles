@@ -1,11 +1,11 @@
 vim.pack.add({
 	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
-	"https://github.com/nvim-treesitter/nvim-treesitter",
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
 	"https://github.com/mason-org/mason.nvim",
 	"https://github.com/mason-org/mason-lspconfig.nvim",
-	{ src = "https://github.com/saghen/blink.cmp", version = "v1.8.0" },
-	"https://github.com/nvim-telescope/telescope.nvim",
+	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
+	"https://github.com/ibhagwan/fzf-lua",
 
 	"https://github.com/maxmx03/solarized.nvim",
 	"https://github.com/stevearc/conform.nvim",
@@ -17,7 +17,6 @@ vim.pack.add({
 
 	"https://github.com/mbbill/undotree",
 	{ src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
-	"https://github.com/folke/snacks.nvim",
 	"https://github.com/stevearc/oil.nvim",
 })
 
@@ -77,16 +76,18 @@ require("blink.cmp").setup({
 		preset = "default",
 		["<C-h>"] = { "show_signature", "hide_signature" },
 	},
-	fuzzy = { implementation = "prefer_rust_with_warning" },
+	fuzzy = { implementation = "prefer_rust", prebuilt_binaries = { download = true } },
 })
 require("mini.icons").setup()
 require("mini.ai").setup()
-require("mini.diff").setup()
 require("mini.hipatterns").setup()
 require("mini.indentscope").setup()
+require("mini.bufremove").setup()
+require("mini.surround").setup()
+require("mini.pairs").setup()
+require("mini.notify").setup()
 require("solarized").setup({ transparent = { enabled = true } })
-local harpoon = require("harpoon")
-harpoon:setup()
+require("harpoon"):setup()
 require("oil").setup({
 	view_options = {
 		show_hidden = true,
@@ -98,78 +99,4 @@ require("oil").setup({
 		["l"] = { "actions.select", mode = "n" },
 	},
 })
-local telescope = require("telescope")
-local actions = require("telescope.actions")
-local builtin = require("telescope.builtin")
-telescope.setup({
-	defaults = {
-		mappings = {
-			i = {
-				["<esc>"] = actions.close, -- close with ESC in insert mode
-			},
-		},
-	},
-})
-vim.keymap.set("n", "<leader>sf", function()
-	local ok = pcall(require("telescope.builtin").git_files, { show_untracked = true })
-	if not ok then
-		require("telescope.builtin").find_files({ hidden = true })
-	end
-end, { silent = true, desc = "Search Files" })
-vim.keymap.set("n", "<leader>sg", function()
-	builtin.live_grep({
-		additional_args = function()
-			return { "--hidden" }
-		end,
-	})
-end, { silent = true, desc = "Search Grep" })
-vim.keymap.set("n", "<leader><leader>", function()
-	builtin.buffers({
-		show_all_buffers = true, -- show all open buffers
-		sort_lastused = true, -- sort by last used
-		ignore_current_buffer = false, -- optional: keep current buffer in list
-	})
-end, { silent = true, desc = "Pick Open Buffers" })
-
-vim.keymap.set("n", "<leader>.", "<CMD>Oil<CR>", { silent = true })
-vim.keymap.set("n", "<leader>u", "<CMD>UndotreeToggle<CR>", { silent = true })
-
-vim.keymap.set("n", "<leader>gg", "<CMD>Git<CR>", { silent = true })
-vim.keymap.set("n", "<leader>gs", ":Git switch ")
-vim.keymap.set("n", "<leader>gc", "<CMD>Git commit<CR>", { silent = true })
-vim.keymap.set("n", "<leader>go", ":Git push -u origin ")
-vim.keymap.set("n", "<leader>gd", function()
-	if vim.wo.diff then
-		vim.cmd("diffoff!")
-		vim.cmd("only")
-	else
-		vim.cmd("Gdiffsplit")
-	end
-end, { silent = true })
-vim.keymap.set("n", "<leader>gl", "<CMD>Git log<CR>", { silent = true })
-
-vim.keymap.set("n", "<leader>bd", require("mini.bufremove").delete, { silent = true })
-
-vim.keymap.set("n", "<leader>hh", function()
-	harpoon.ui:toggle_quick_menu(harpoon:list())
-end)
-vim.keymap.set("n", "<leader>ha", function()
-	harpoon:list():add()
-end)
-vim.keymap.set("n", "<leader>1", function()
-	harpoon:list():select(1)
-end)
-vim.keymap.set("n", "<leader>2", function()
-	harpoon:list():select(2)
-end)
-vim.keymap.set("n", "<leader>3", function()
-	harpoon:list():select(3)
-end)
-vim.keymap.set("n", "<leader>4", function()
-	harpoon:list():select(4)
-end)
-
-vim.keymap.set("n", "<leader>rn", function()
-	return ":IncRename " .. vim.fn.expand("<cword>")
-end, { expr = true })
-vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+require("fzf-lua").setup()

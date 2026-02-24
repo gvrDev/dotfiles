@@ -70,6 +70,7 @@ require("mason-lspconfig").setup({
 		"taplo",
 		"zls",
 		"stylua",
+		"emmet_language_server",
 	},
 	automatic_enable = true,
 })
