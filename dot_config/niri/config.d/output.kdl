@@ -1,0 +1,7 @@
+output "DP-3" {
+    mode "1920x1080@239.964"
+    hot-corners {
+        off
+    }
+    variable-refresh-rate on-demand=true
+}

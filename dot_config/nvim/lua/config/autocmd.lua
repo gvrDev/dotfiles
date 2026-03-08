@@ -10,6 +10,8 @@ vim.api.nvim_create_autocmd({ "FileType", "BufReadPost" }, {
 		"fugitive",
 		"fugitive://*",
 		"diff",
+		"octo://*",
+		"nvim-pack://*",
 	},
 	callback = function(event)
 		vim.bo[event.buf].buflisted = false

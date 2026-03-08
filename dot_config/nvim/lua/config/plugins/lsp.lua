@@ -1,7 +1,3 @@
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { silent = true })
-vim.keymap.set("n", "<leader>lgd", vim.lsp.buf.definition, { silent = true })
-vim.keymap.set("n", "<leader>lca", vim.lsp.buf.code_action, { silent = true })
-
 local angularls_config = {
 	on_attach = function(client)
 		client.server_capabilities.renameProvider = false
@@ -74,6 +70,30 @@ require("mason-lspconfig").setup({
 	},
 	automatic_enable = true,
 })
+require("blink.cmp").setup({
+	cmdline = { enabled = false },
+	completion = {
+		menu = {
+			draw = {
+				columns = {
+					{ "label", "label_description", gap = 1 },
+					{ "kind_icon", "kind" },
+				},
+			},
+		},
+	},
+	signature = {
+		enabled = true,
+		window = {
+			show_documentation = false,
+		},
+	},
+	keymap = {
+		preset = "default",
+		["<C-h>"] = { "show_signature", "hide_signature" },
+	},
+	fuzzy = { implementation = "prefer_rust", prebuilt_binaries = { download = true } },
+})
 
 vim.diagnostic.config({
 	severity_sort = true,
@@ -101,3 +121,7 @@ vim.diagnostic.config({
 		end,
 	},
 })
+
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { silent = true })
+vim.keymap.set("n", "<leader>lgd", vim.lsp.buf.definition, { silent = true })
+vim.keymap.set("n", "<leader>lca", vim.lsp.buf.code_action, { silent = true })
