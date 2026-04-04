@@ -1,0 +1,50 @@
+#:schema https://github.com/joshmedeski/sesh/raw/main/sesh.schema.json
+blacklist = ["scratch"]
+sort_order = ["config"]
+cache = true
+
+[[window]]
+name = "opencode"
+startup_script = "opencode"
+
+[[window]]
+name = "shell"
+startup_script = "eza --all --git --icons --color=always -l"
+
+[[window]]
+name = "gh"
+startup_script = "gh dash"
+
+[[session]]
+name = "dotfiles"
+path = "~/.local/share/chezmoi"
+startup_command = "nvim -c 'FzfLua files'"
+preview_command = "eza --all --git --icons --color=always {}"
+
+[[session]]
+name = "client-side"
+startup_command = "nvim -c 'FzfLua files'"
+preview_command = "eza --all --git --icons --color=always {}"
+path = "~/dev/work/slingui-client-side"
+windows = ["shell", "opencode", "gh"]
+
+[[session]]
+name = "server-side"
+startup_command = "nvim -c 'FzfLua files'"
+preview_command = "eza --all --git --icons --color=always {}"
+path = "~/dev/work/slingui-server-side"
+windows = ["shell", "opencode", "gh"]
+
+[[session]]
+name = "slingui-monorepo"
+startup_command = "nvim -c 'FzfLua files'"
+preview_command = "eza --all --git --icons --color=always {}"
+path = "~/dev/work/slingui-monorepo"
+windows = ["shell", "opencode", "gh"]
+
+[[session]]
+name = "tryna-monorepo"
+startup_command = "nvim -c 'FzfLua files'"
+preview_command = "eza --all --git --icons --color=always {}"
+path = "~/dev/work/tryna-monorepo"
+windows = ["shell", "opencode", "gh"]

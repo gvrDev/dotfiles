@@ -12,12 +12,15 @@ alias dcd="docker compose down"
 if status is-interactive
    set -gx SHELL fish
    set -gx EDITOR nvim
+   set -g fish_key_bindings fish_vi_key_bindings
    set fish_cursor_default block
    set fish_cursor_insert block
    set fish_cursor_replace_one block 
    set fish_cursor_visual block
-   keychain --eval -q -Q ~/.ssh/github ~/.ssh/skey ~/.ssh/codeberg | source
 
-   fish_vi_key_bindings
+   if not set -q SSH_AUTH_SOCK; or not test -S "$SSH_AUTH_SOCK"
+      keychain --eval -q -Q ~/.ssh/github ~/.ssh/skey ~/.ssh/codeberg | source
+   end
+
    bind -M insert \cf accept-autosuggestion
 end

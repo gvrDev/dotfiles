@@ -67,37 +67,14 @@ require("mason-lspconfig").setup({
 		"zls",
 		"stylua",
 		"emmet_language_server",
+		"markdown_oxide",
 	},
 	automatic_enable = true,
-})
-require("blink.cmp").setup({
-	cmdline = { enabled = false },
-	completion = {
-		menu = {
-			draw = {
-				columns = {
-					{ "label", "label_description", gap = 1 },
-					{ "kind_icon", "kind" },
-				},
-			},
-		},
-	},
-	signature = {
-		enabled = true,
-		window = {
-			show_documentation = false,
-		},
-	},
-	keymap = {
-		preset = "default",
-		["<C-h>"] = { "show_signature", "hide_signature" },
-	},
-	fuzzy = { implementation = "prefer_rust", prebuilt_binaries = { download = true } },
 })
 
 vim.diagnostic.config({
 	severity_sort = true,
-	float = { "rounded", source = "if_many" },
+	float = { border = "rounded", source = "if_many" },
 	underline = { severity = vim.diagnostic.severity.ERROR },
 	signs = {
 		text = {
@@ -122,6 +99,7 @@ vim.diagnostic.config({
 	},
 })
 
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { silent = true })
-vim.keymap.set("n", "<leader>lgd", vim.lsp.buf.definition, { silent = true })
-vim.keymap.set("n", "<leader>lca", vim.lsp.buf.code_action, { silent = true })
+vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, { silent = true, desc = "LSP: Format buffer" })
+vim.keymap.set("n", "<leader>lgd", vim.lsp.buf.definition, { silent = true, desc = "LSP: Go to definition" })
+vim.keymap.set("n", "<leader>lca", vim.lsp.buf.code_action, { silent = true, desc = "LSP: Run code action" })
+vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, { silent = true, desc = "LSP: Show signature help" })

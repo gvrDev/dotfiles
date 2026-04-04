@@ -4,7 +4,7 @@ vim.g.loaded_matchparen = 1
 vim.o.encoding = "UTF-8"
 
 vim.opt.updatetime = 50
-vim.o.lazyredraw = true
+vim.o.lazyredraw = false
 vim.opt.redrawtime = 10000
 vim.opt.timeoutlen = 300
 vim.opt.ttimeoutlen = 0
@@ -45,3 +45,9 @@ vim.o.autowrite = false
 
 vim.o.hidden = true
 vim.o.modifiable = true
+
+vim.opt.termguicolors = true
+
+vim.o.autocomplete = true
+vim.o.completeopt = "fuzzy,menu,menuone,popup,noinsert"
+vim.o.complete = "o"
