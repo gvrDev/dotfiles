@@ -1,0 +1,8 @@
+include "config.d/input.kdl"
+include "config.d/output.kdl"
+include "config.d/layout.kdl"
+include "config.d/workspaces.kdl"
+include "config.d/startup.kdl"
+include "config.d/misc.kdl"
+include "config.d/window-rules.kdl"
+include "config.d/binds.kdl"

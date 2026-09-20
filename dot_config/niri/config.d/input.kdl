@@ -1,0 +1,17 @@
+input {
+    mod-key "Super"
+
+    keyboard {
+        xkb {
+            layout "us"
+            options "caps:escape,compose:ralt"
+        }
+        numlock
+	  repeat-delay 220
+	  repeat-rate 45
+    }
+    mouse {
+        accel-profile "flat"
+    }
+    focus-follows-mouse
+}
