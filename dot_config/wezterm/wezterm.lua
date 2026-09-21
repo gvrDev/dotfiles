@@ -4,7 +4,7 @@ local sessionizer = require("sessionizer")
 local config = wezterm.config_builder()
 
 config.font_size = 13
-config.font = wezterm.font("JetBrainsMono NFM")
+config.font = wezterm.font("Fira Code")
 config.default_prog = { "fish", "-l" }
 config.color_scheme = "Tokyo Night"
 config.max_fps = 999
