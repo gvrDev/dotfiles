@@ -45,7 +45,7 @@ vim.lsp.enable {
   'jsonls',
   'lua_ls',
   'taplo',
-  'vtsls',
+  'tsc',
   'yamlls',
   'ols',
 }

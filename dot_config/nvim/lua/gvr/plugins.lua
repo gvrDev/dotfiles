@@ -102,6 +102,7 @@ local ensure_installed = {
   'yaml-language-server',
 
   'stylua',
+  'tsc',
 }
 local registry = require 'mason-registry'
 registry.refresh(function()
