@@ -1,6 +1,6 @@
 binds {
     Mod+B { spawn "flatpak" "run" "com.brave.Browser"; }
-    Mod+Shift+B { spawn "chromium"; }
+    Mod+Shift+B { spawn "chromium-browser"; }
     Mod+Shift+C { spawn "flatpak" "run" "com.discordapp.Discord"; }
     Mod+Slash { spawn "flatpak" "run" "com.bitwarden.desktop"; }
 
