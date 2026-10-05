@@ -9,12 +9,12 @@ animations {
 }
 
 environment {
-    XCURSOR_THEME "Bibata-Modern-Classic"
+    XCURSOR_THEME "phinger-cursors-light"
     XCURSOR_SIZE "18"
     ELECTRON_OZONE_PLATFORM_HINT "auto"
 }
 
 cursor {
-    xcursor-theme "Bibata-Modern-Classic"
+    xcursor-theme "phinger-cursors-light"
     xcursor-size 18
 }
