@@ -1,39 +1,19 @@
-# .zshrc - Modern Zsh configuration with Antidote
+# .zshrc - Clean, high-performance Zsh configuration
 
 # Fallback to systemd user SSH agent socket if available
 if [[ -z "$SSH_AUTH_SOCK" && -S "${XDG_RUNTIME_DIR}/ssh-agent.socket" ]]; then
   export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 fi
 
-# ------------------------------------------------------------------------------
-# Early Guard: Non-interactive short-circuit
-# ------------------------------------------------------------------------------
-# Subshells, git hooks, and background commands exit immediately with 0ms overhead
+# Early Guard: Non-interactive short-circuit (0ms overhead for subshells/scripts)
 [[ -o interactive ]] || return 0
 
-# Shared shell cache directory for fast startup (eliminates binary forks)
-_zcache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
-_zcomp_dir="$_zcache/completions"
-[[ -d "$_zcomp_dir" ]] || mkdir -p "$_zcomp_dir"
-
-# Add cached completions to fpath before compinit runs
-fpath=("$_zcomp_dir" $fpath)
-
-# Background async generation of CLI tool completions (zero startup blocking)
-if (( $+commands[chezmoi] )) && [[ ! -s "$_zcomp_dir/_chezmoi" ]]; then
-  chezmoi completion zsh >| "$_zcomp_dir/_chezmoi" 2>/dev/null &!
-fi
-if (( $+commands[just] )) && [[ ! -s "$_zcomp_dir/_just" ]]; then
-  just --completions zsh >| "$_zcomp_dir/_just" 2>/dev/null &!
-fi
-
 # ------------------------------------------------------------------------------
-# Environment & PATH
+# 1. Environment & PATH
 # ------------------------------------------------------------------------------
 export EDITOR="nvim"
 export VISUAL="nvim"
 
-# Unique PATH entries (shims first for fastest direct command resolution)
 typeset -U path PATH
 path=(
   "$HOME/.local/bin"
@@ -49,239 +29,86 @@ path=(
 )
 export PATH
 
+# Completion search paths
+fpath=(
+  "$HOME/.local/share/zsh/site-functions"
+  "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
+  $fpath
+)
+
 # ------------------------------------------------------------------------------
-# History Configuration
+# 2. History Settings
 # ------------------------------------------------------------------------------
 HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 [[ -d "${HISTFILE:h}" ]] || mkdir -p "${HISTFILE:h}"
 HISTSIZE=50000
 SAVEHIST=50000
 
-setopt EXTENDED_HISTORY          # Record timestamp and duration
-setopt SHARE_HISTORY             # Share history across sessions
-setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming
-setopt HIST_IGNORE_DUPS          # Do not record immediate duplicate
-setopt HIST_IGNORE_ALL_DUPS      # Delete old duplicate if new is entered
-setopt HIST_FIND_NO_DUPS         # Do not display duplicates when searching
-setopt HIST_IGNORE_SPACE         # Ignore commands starting with space
-setopt HIST_SAVE_NO_DUPS         # Do not save duplicates to disk
-setopt HIST_VERIFY               # Show expanded command before executing
+setopt EXTENDED_HISTORY SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_SAVE_NO_DUPS
 
 # ------------------------------------------------------------------------------
-# Colors & Appearance
+# 3. Tool Integrations (Cached scripts)
 # ------------------------------------------------------------------------------
-export CLICOLOR=1
+_zcache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+[[ -r "$_zcache/atuin.zsh" ]]  && source "$_zcache/atuin.zsh"
+[[ -r "$_zcache/zoxide.zsh" ]] && source "$_zcache/zoxide.zsh"
+[[ -r "$_zcache/fzf.zsh" ]]    && source "$_zcache/fzf.zsh"
 
-# Setup LS_COLORS (cached to eliminate dircolors fork overhead)
-if (( $+commands[dircolors] )); then
-  if [[ ! -s "$_zcache/dircolors.zsh" || "$HOME/.dircolors" -nt "$_zcache/dircolors.zsh" ]]; then
-    dircolors -b >| "$_zcache/dircolors.zsh" 2>/dev/null
-  fi
-  [[ -r "$_zcache/dircolors.zsh" ]] && source "$_zcache/dircolors.zsh"
-fi
-
-# Colored man pages via less
-export LESS_TERMCAP_mb=$'\e[1;31m'      # Blink: Red
-export LESS_TERMCAP_md=$'\e[1;36m'      # Bold: Cyan
-export LESS_TERMCAP_me=$'\e[0m'         # Reset
-export LESS_TERMCAP_so=$'\e[01;33m'     # Standout: Yellow
-export LESS_TERMCAP_se=$'\e[0m'         # Reset
-export LESS_TERMCAP_us=$'\e[1;4;32m'    # Underline: Green
-export LESS_TERMCAP_ue=$'\e[0m'         # Reset
-
-# ------------------------------------------------------------------------------
-# Modern Completion Configuration
-# ------------------------------------------------------------------------------
-setopt COMPLETE_IN_WORD          # Complete from both ends of word
-setopt ALWAYS_TO_END             # Move cursor to end of word after completion
-setopt PATH_DIRS                 # Perform path search even on command with slash
-setopt AUTO_MENU                 # Show completion menu on successive tab press
-setopt AUTO_LIST                 # Automatically list choices on ambiguous completion
-setopt AUTO_PARAM_SLASH          # Append trailing slash to completed directories
-
-# zstyle settings
-zstyle ':completion:*' menu no
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':completion:*:git-checkout:*' sort false
-zstyle ':completion:*' rehash true   # Automatically recognize newly installed binaries
-
-# fzf-tab styling & preview integrations
-zstyle ':fzf-tab:*' switch-group '<' '>'
-zstyle ':fzf-tab:*' fzf-command fzf
-zstyle ':fzf-tab:*' fzf-pad 4
-
-# Directory previews with eza / ls
-zstyle ':fzf-tab:complete:cd:*' fzf-preview \
-  'if (( $+commands[eza] )); then eza -1 --color=always --icons=always $realpath; else ls -1 --color=always $realpath; fi'
-
-# Environment variables and parameters
-zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-preview \
-  'echo ${(P)word}'
-
-# Git branch / checkout preview (commit log graph)
-zstyle ':fzf-tab:complete:git-(checkout|switch):*' fzf-preview \
-  'git log --color=always --oneline --graph --date=short -20 $word 2>/dev/null'
-
-# Git diff / add / restore preview
-zstyle ':fzf-tab:complete:git-(diff|add|restore):*' fzf-preview \
-  'git diff --color=always $word 2>/dev/null'
-
-# Systemd unit status preview
-zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview \
-  'SYSTEMD_COLORS=1 systemctl status $word 2>/dev/null'
-
-# Man page preview
-zstyle ':fzf-tab:complete:(\\|*/|)man:*' fzf-preview \
-  'man $word 2>/dev/null'
-
-# File and directory preview for general completion
-zstyle ':fzf-tab:complete:*:*' fzf-preview \
-  'if [[ -f $realpath ]]; then
-     if (( $+commands[bat] )); then
-       bat --style=numbers --color=always --line-range :50 $realpath
-     else
-       head -n 50 $realpath
-     fi
-   elif [[ -d $realpath ]]; then
-     if (( $+commands[eza] )); then
-       eza -1 --color=always --icons=always $realpath
-     else
-       ls -1 --color=always $realpath
-     fi
-   fi'
-
-# Process kill preview
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,%cpu,%mem,command -w"
-zstyle ':fzf-tab:complete:(kill|ps):*' fzf-preview '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
-zstyle ':fzf-tab:complete:(kill|ps):*' fzf-flags --preview-window=down:3:wrap
-
-# ------------------------------------------------------------------------------
-# FZF Engine & Widget Setup (Powered by fd with rich previews)
-# ------------------------------------------------------------------------------
-if (( $+commands[fd] )); then
-  export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_ALT_C_COMMAND='fd --type d --strip-cwd-prefix --hidden --exclude .git'
-
-  # Compgen functions for **<Tab> triggers
-  _fzf_compgen_path() { fd --hidden --exclude .git . "$1" }
-  _fzf_compgen_dir() { fd --type d --hidden --exclude .git . "$1" }
-fi
-
+# FZF search defaults
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --inline-info'
-export FZF_CTRL_T_OPTS="--preview 'if (( $+commands[bat] )); then bat --style=numbers --color=always --line-range :50 {} 2>/dev/null; else cat {} 2>/dev/null; fi'"
-export FZF_ALT_C_OPTS="--preview 'if (( $+commands[eza] )); then eza --tree --level=2 --color=always {} 2>/dev/null; else ls {} 2>/dev/null; fi'"
-export FZF_COMPLETION_TRIGGER='**'
+export FZF_CTRL_T_OPTS='--preview "bat --style=numbers --color=always --line-range :50 {} 2>/dev/null || cat {} 2>/dev/null"'
+export FZF_ALT_C_OPTS='--preview "eza --tree --level=2 --color=always {} 2>/dev/null || ls {} 2>/dev/null"'
 
 # ------------------------------------------------------------------------------
-# Vi Mode Setup (jeffreytse/zsh-vi-mode)
+# 4. Native Vi Mode (Instant 0ms, block/beam cursor)
 # ------------------------------------------------------------------------------
-# Configuration function executed by zsh-vi-mode before initialization
-function zvm_config() {
-  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+bindkey -v
+export KEYTIMEOUT=1
 
-  # Force Block cursor across all modes
-  ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
-  ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLOCK
-  ZVM_VISUAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
-  ZVM_VISUAL_LINE_MODE_CURSOR=$ZVM_CURSOR_BLOCK
-  ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_BLOCK
-
-  # Instant escape response
-  ZVM_KEYTIMEOUT=0.01
-  ZVM_ESCAPE_KEYTIMEOUT=0.01
-
-  # Integrate with system clipboard (Wayland / X11 / macOS)
-  ZVM_SYSTEM_CLIPBOARD_ENABLED=true
-}
-
-# Callback executed after zsh-vi-mode initialization (protects widget keybindings)
-function zvm_after_init() {
-  # Atuin Shell History Integration (cached script generation)
-  if (( $+commands[atuin] )); then
-    if [[ ! -s "$_zcache/atuin.zsh" ]]; then
-      atuin init zsh >| "$_zcache/atuin.zsh" 2>/dev/null
-    fi
-    source "$_zcache/atuin.zsh"
-    bindkey -M viins '^r' atuin-search-viins
-    bindkey -M vicmd '^r' atuin-search-vicmd
-    bindkey -M viins '^[[A' atuin-up-search-viins
-    bindkey -M vicmd '^[[A' atuin-up-search-vicmd
-    bindkey -M vicmd 'k' atuin-up-search-vicmd
+function zle-keymap-select() {
+  if [[ $KEYMAP == vicmd ]]; then
+    print -n '\e[2 q'  # Block cursor in normal mode
+  else
+    print -n '\e[6 q'  # Beam cursor in insert mode
   fi
-
-  # Autosuggestions: Accept suggestion with Ctrl+F (matches Fish configuration)
-  bindkey -M viins '^f' autosuggest-accept
-  bindkey -M viins '^F' autosuggest-accept
 }
+zle -N zle-keymap-select
 
-# Autosuggestions settings
+function zle-line-init() {
+  print -n '\e[6 q'    # Beam cursor on prompt start
+}
+zle -N zle-line-init
+
+# ------------------------------------------------------------------------------
+# 5. Autosuggestions Settings
+# ------------------------------------------------------------------------------
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 ZSH_AUTOSUGGEST_USE_ASYNC=1
-if (( $+commands[atuin] )); then
-  ZSH_AUTOSUGGEST_STRATEGY=(atuin history completion)
-else
-  ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-fi
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # ------------------------------------------------------------------------------
-# Antidote Plugin Manager (Static bundle compilation for instant startup)
+# 6. Antidote Static Plugin Bundle
 # ------------------------------------------------------------------------------
 zsh_plugins="${ZDOTDIR:-$HOME}/.zsh_plugins"
 if [[ ! -s "${zsh_plugins}.zsh" || "${zsh_plugins}.txt" -nt "${zsh_plugins}.zsh" ]]; then
-  antidote_dir="${ZDOTDIR:-$HOME}/.antidote"
-  if [[ ! -d "$antidote_dir" ]]; then
-    git clone --depth=1 https://github.com/mattmc3/antidote.git "$antidote_dir"
-  fi
-  source "$antidote_dir/antidote.zsh"
+  source "${ZDOTDIR:-$HOME}/.antidote/antidote.zsh"
   antidote bundle <"${zsh_plugins}.txt" >|"${zsh_plugins}.zsh"
 fi
 source "${zsh_plugins}.zsh"
 
 # ------------------------------------------------------------------------------
-# Prompt Configuration (Clean, Fast, Responsive)
+# 7. Keybindings
+# ------------------------------------------------------------------------------
+bindkey -M viins '^r' atuin-search-viins
+bindkey -M vicmd '^r' atuin-search-vicmd
+bindkey -M viins '^[[A' atuin-up-search-viins
+bindkey -M vicmd '^[[A' atuin-up-search-vicmd
+bindkey -M vicmd 'k' atuin-up-search-vicmd
+bindkey -M viins '^f' autosuggest-accept
+bindkey -M viins '^F' autosuggest-accept
+
+# ------------------------------------------------------------------------------
+# 8. Prompt
 # ------------------------------------------------------------------------------
 setopt PROMPT_SUBST
-
-# Mode badge (subtle feedback for vi normal / visual modes with block cursor)
-function zvm_prompt_mode() {
-  case $ZVM_MODE in
-    $ZVM_MODE_NORMAL)      echo "%F{yellow}[N]%f " ;;
-    $ZVM_MODE_VISUAL)      echo "%F{magenta}[V]%f " ;;
-    $ZVM_MODE_VISUAL_LINE) echo "%F{magenta}[VL]%f " ;;
-    $ZVM_MODE_REPLACE)     echo "%F{red}[R]%f " ;;
-    *)                     echo "" ;;
-  esac
-}
-
-# Prompt: [Mode] Path ExitIndicator
-PROMPT='$(zvm_prompt_mode)%F{39}%~%f %(?.%F{76}.%F{196})❯%f '
-
-# ------------------------------------------------------------------------------
-# Tool Integrations (Cached shell code to avoid process fork penalties)
-# ------------------------------------------------------------------------------
-# Mise environment manager
-if (( $+commands[mise] )); then
-  if [[ ! -s "$_zcache/mise.zsh" ]]; then
-    mise activate zsh >| "$_zcache/mise.zsh" 2>/dev/null
-  fi
-  source "$_zcache/mise.zsh"
-fi
-
-# Zoxide smart directory jumper
-if (( $+commands[zoxide] )); then
-  if [[ ! -s "$_zcache/zoxide.zsh" ]]; then
-    zoxide init zsh >| "$_zcache/zoxide.zsh" 2>/dev/null
-  fi
-  source "$_zcache/zoxide.zsh"
-fi
-
-# FZF fuzzy finder keybindings
-if (( $+commands[fzf] )); then
-  if [[ ! -s "$_zcache/fzf.zsh" ]]; then
-    fzf --zsh >| "$_zcache/fzf.zsh" 2>/dev/null
-  fi
-  source "$_zcache/fzf.zsh"
-fi
+PROMPT='%F{39}%~%f %(?.%F{76}.%F{196})❯%f '

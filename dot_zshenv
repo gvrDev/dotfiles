@@ -1,0 +1,4 @@
+# ~/.zshenv - Loaded by all Zsh shells (login, interactive, non-interactive)
+
+# Skip global /etc/zprofile, /etc/zshrc, /etc/zlogin (eliminates Fedora /etc/profile.d fork overhead)
+setopt NO_GLOBAL_RCS

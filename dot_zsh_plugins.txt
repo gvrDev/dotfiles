@@ -7,9 +7,6 @@ zsh-users/zsh-completions kind:fpath path:src
 # Modern interactive fuzzy Tab completion
 Aloxaf/fzf-tab
 
-# Vi mode (motions, text objects, surround, system clipboard)
-jeffreytse/zsh-vi-mode
-
 # Autosuggestions (Fish-like ghost text)
 zsh-users/zsh-autosuggestions
 
