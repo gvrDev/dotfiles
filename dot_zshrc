@@ -105,18 +105,23 @@ bindkey -M viins '^F' autosuggest-accept
 # 8. Prompt
 # ------------------------------------------------------------------------------
 autoload -Uz vcs_info
-precmd() { vcs_info }
+
+precmd() {
+  vcs_info
+  if [[ -n "$vcs_info_msg_0_" && -n "$(git status --porcelain 2>/dev/null)" ]]; then
+    GIT_DIRTY=' [*]'
+  else
+    GIT_DIRTY=''
+  fi
+}
 
 setopt PROMPT_SUBST
 
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr '*'
-zstyle ':vcs_info:git:*' unstagedstr '*'
-zstyle ':vcs_info:git:*' formats ' on %F{magenta}%b%f%F{magenta} [%c%u]%f'
-zstyle ':vcs_info:git:*' actionformats ' on %F{magenta}%b%f%F{magenta} [%c%u]%f'
+zstyle ':vcs_info:git:*' formats ' on %F{magenta}%b%f'
+zstyle ':vcs_info:git:*' actionformats ' on %F{magenta}%b%f'
 
-PROMPT='%1~${vcs_info_msg_0_} %(?.%F{76}.%F{196})❯%f '
+PROMPT='%1~${vcs_info_msg_0_}${GIT_DIRTY} %(?.%F{76}.%F{196})❯%f '
 
 # ------------------------------------------------------------------------------
 # 9. Aliases
