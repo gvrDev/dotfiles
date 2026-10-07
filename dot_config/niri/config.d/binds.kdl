@@ -5,7 +5,7 @@ binds {
     Mod+Slash { spawn "flatpak" "run" "com.bitwarden.desktop"; }
 
     Mod+Shift+Slash { show-hotkey-overlay; }
-    Mod+Return hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+D hotkey-overlay-title="Open App Launcher: noctalia launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
 
     // Volume & Mute (triggers DMS Volume OSD)

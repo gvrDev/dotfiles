@@ -36,13 +36,13 @@ local function gh(repo) return 'https://github.com/' .. repo end
 -- Plugins list --
 vim.cmd 'packadd nvim.undotree'
 vim.pack.add {
+  gh 'dgrco/deepwater.nvim',
   gh 'NMAC427/guess-indent.nvim',
   gh 'lewis6991/gitsigns.nvim',
   gh 'dmtrKovalenko/fff.nvim',
   gh 'stevearc/conform.nvim',
   { src = gh 'saghen/blink.cmp', version = vim.version.range '1.*' },
   gh 'mason-org/mason.nvim',
-  gh 'folke/tokyonight.nvim',
   gh 'nvim-mini/mini.pairs',
   gh 'nvim-mini/mini.icons',
   gh 'j-hui/fidget.nvim',
@@ -53,12 +53,6 @@ vim.pack.add {
 
 -- Setup --
 require('guess-indent').setup {}
-require('tokyonight').setup {
-  styles = {
-    comments = { italic = false },
-  },
-}
-vim.cmd.colorscheme 'tokyonight-night'
 require('conform').setup {
   notify_on_error = false,
   formatters_by_ft = {
@@ -137,3 +131,4 @@ require('oil').setup {
     ['.'] = 'actions.toggle_hidden',
   },
 }
+vim.cmd.colorscheme 'deepwater'
