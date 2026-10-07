@@ -1,5 +1,3 @@
-# .zshrc - Clean, high-performance Zsh configuration
-
 # Fallback to systemd user SSH agent socket if available
 if [[ -z "$SSH_AUTH_SOCK" && -S "${XDG_RUNTIME_DIR}/ssh-agent.socket" ]]; then
   export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
@@ -66,16 +64,12 @@ bindkey -v
 export KEYTIMEOUT=1
 
 function zle-keymap-select() {
-  if [[ $KEYMAP == vicmd ]]; then
     print -n '\e[2 q'  # Block cursor in normal mode
-  else
-    print -n '\e[6 q'  # Beam cursor in insert mode
-  fi
 }
 zle -N zle-keymap-select
 
 function zle-line-init() {
-  print -n '\e[6 q'    # Beam cursor on prompt start
+    print -n '\e[2 q'  # Block cursor in normal mode
 }
 zle -N zle-line-init
 
@@ -110,5 +104,26 @@ bindkey -M viins '^F' autosuggest-accept
 # ------------------------------------------------------------------------------
 # 8. Prompt
 # ------------------------------------------------------------------------------
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
 setopt PROMPT_SUBST
-PROMPT='%F{39}%~%f %(?.%F{76}.%F{196})❯%f '
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr '*'
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' formats ' on %F{magenta}%b%f%F{magenta} [%c%u]%f'
+zstyle ':vcs_info:git:*' actionformats ' on %F{magenta}%b%f%F{magenta} [%c%u]%f'
+
+PROMPT='%1~${vcs_info_msg_0_} %(?.%F{76}.%F{196})❯%f '
+
+# ------------------------------------------------------------------------------
+# 9. Aliases
+# ------------------------------------------------------------------------------
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ~="cd ~"
+
+alias ls="eza"
