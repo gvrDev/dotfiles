@@ -48,4 +48,6 @@ vim.lsp.enable {
   'tsc',
   'yamlls',
   'ols',
+  'clangd',
+  'roslyn_ls',
 }
